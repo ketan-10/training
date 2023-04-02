@@ -15,11 +15,6 @@ runMigration() {
         dir=$2
     fi
 
-    # bin/goose_linux -dir ${dir} mysql "${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(127.0.0.1:3306)/${database}?charset=utf8mb4&parseTime=true" up
-    echo "Hey"
-    # echo "bin/goose_linux -dir ${dir} mysql \"${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(127.0.0.1:3306)/${database}?charset=utf8mb4&parseTime=true\" up"
-    # bin/goose_linux -dir migrations mysql "bob:qweqwe@tcp(127.0.0.1:3306)/skoolnet2?charset=utf8mb4&parseTime=true" up
-    # echo "${binary} -dir ${dir} mysql \"${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(127.0.0.1:3306)/${database}?charset=utf8mb4&parseTime=true\" up"
     ${binary} -dir ${dir} mysql "${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(127.0.0.1:3306)/${database}?charset=utf8mb4&parseTime=true" up
 }
 
@@ -30,9 +25,34 @@ cleanMigrate() {
     runMigration ${MYSQL_DATABASE}
 }
 
+
+xo() {
+    # https://stackoverflow.com/questions/58403134/go-permission-denied-when-trying-to-create-a-file-in-a-newly-created-directory
+    rm -rf xo_gen
+    mkdir xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire
+    chmod 0777 -R xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire
+
+    connection=$(echo "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=true" | tr -d '\r')
+    go run ./tools/xo/main.go --connection="$connection"
+}
+
 if [[ $1 = 'migrate' ]]; then
     cleanMigrate
+elif [[ $1 = 'xo' ]]; then
+    xo
+elif [[ $1 = 'goimports' ]]; then
+    ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/enum/*
+    ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/table/*
+    ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/repo/*
+    ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/xo_wire/*
+elif [[ $1 = 'wire' ]]; then
+    /home/ketan/go/bin/wire ./wire_app
 else
+    echo "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=true"
+    # mysql://bob:password@127.0.0.1:3306/classroom?charset=utf8mb4&parseTime=true
+    # go run main.go "mysql://bob:qweqwe@127.0.0.1:3306/skoolnet2?charset=utf8mb4&parseTime=true" --entities-pkg=gen
+    # go run main.go "mysql://bob:password@127.0.0.1:3306/classroom?charset=utf8mb4&parseTime=true" --entities-pkg=gen
     echo "Usage Not found"
     exit 2
 fi
+

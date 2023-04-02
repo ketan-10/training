@@ -1,0 +1,2 @@
+exclude_table:
+  - goose_db_version

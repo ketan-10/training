@@ -1,0 +1,1 @@
+https://thewebivore.com/using-replace-in-go-mod-to-point-to-your-local-module/
