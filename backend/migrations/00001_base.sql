@@ -102,8 +102,8 @@ CREATE TABLE IF NOT EXISTS `trainer_training_mapping` (
     `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`fk_training_event`) REFERENCES `training_event`(`id`) ON DELETE NO ACTION,
-    FOREIGN KEY (`fk_external_resource`) REFERENCES `internal_resources`(`id`) ON DELETE NO ACTION,
-    FOREIGN KEY (`fk_internal_resource`) REFERENCES `external_resources`(`id`) ON DELETE NO ACTION
+    FOREIGN KEY (`fk_external_resource`) REFERENCES `external_resources`(`id`) ON DELETE NO ACTION,
+    FOREIGN KEY (`fk_internal_resource`) REFERENCES `internal_resources`(`id`) ON DELETE NO ACTION
 ) ENGINE=INNODB;
 
 
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `registrations` (
     `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`fk_training`) REFERENCES `training`(`id`) ON DELETE NO ACTION,
-    FOREIGN KEY (`fk_internal_resource`) REFERENCES `external_resources`(`id`) ON DELETE NO ACTION
+    FOREIGN KEY (`fk_internal_resource`) REFERENCES `internal_resources`(`id`) ON DELETE NO ACTION
 ) ENGINE=INNODB;
 
 
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `attendances` (
     `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`fk_training_event`) REFERENCES `training_event`(`id`) ON DELETE NO ACTION,
-    FOREIGN KEY (`fk_internal_resource`) REFERENCES `external_resources`(`id`) ON DELETE NO ACTION
+    FOREIGN KEY (`fk_internal_resource`) REFERENCES `internal_resources`(`id`) ON DELETE NO ACTION
 ) ENGINE=INNODB;
 
 

@@ -84,7 +84,9 @@ func (f *{{ $tableNameCamel }}Filter) Having(h sq.Sqlizer) *{{ $tableNameCamel }
 // TODO: CreateEntity is for graphql I think 🤔
 type {{ $tableNameCamel }}Create struct {
 {{- range .Columns}}
-    {{ camelCase .ColumnName }} {{ .GoType }} `json:"{{.ColumnName}}" db:"{{.ColumnName}}"`
+    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
+    {{ camelCase .ColumnName }} {{- if and .IsEnum (eq .NotNullable false) }} *{{ .GoType }}{{ else }} {{ .GoType }}{{- end}} `json:"{{.ColumnName}}" db:"{{.ColumnName}}"`
+    {{- end}}
 {{- end }}
 }
 
@@ -92,7 +94,9 @@ type {{ $tableNameCamel }}Create struct {
 // For now I am keeping it in, as not sure how it affects
 type {{ $tableNameCamel }}Update struct {
 {{- range .Columns}}
+    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
     {{ camelCase .ColumnName }} *{{ .GoType }} // {{.ColumnName}}
+    {{- end}}
 {{- end }}
 }
 
