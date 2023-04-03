@@ -80,6 +80,18 @@ func (lt *LoaderImp) loadRepository(args *Args, tables []*TableDTO) ([]*TableRel
 
 	for _, table := range tables {
 		indexes, err := lt.IndexList(args.DB, args.DatabaseName, table.TableName)
+
+		// add column details to index for ease of use, can we find a better use?
+		for _, index := range indexes {
+			for _, col := range index.Columns {
+				for _, tableCol := range table.Columns {
+					if tableCol.ColumnName == col.ColumnName {
+						col.Column = tableCol
+					}
+				}
+			}
+		}
+
 		if err != nil {
 			return nil, err
 		}
@@ -169,7 +181,6 @@ func (lt *LoaderImp) loadEnums(args *Args) error {
 		}
 	}
 
-	// fmt.Printf(""enums)
 	return nil
 }
 

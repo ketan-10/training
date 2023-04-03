@@ -3,6 +3,7 @@ package models
 type IndexColumn struct {
 	ColumnName string
 	SequenceNo int
+	Column     *Column // for ease of reach
 }
 
 type Index struct {
@@ -29,8 +30,10 @@ func MySqlIndexes(db XODB, databaseName string, tableName string) ([]*Index, err
 		`column_name, ` +
 		`seq_in_index AS seq_no ` +
 		`FROM information_schema.statistics ` +
-		`WHERE index_name <> 'PRIMARY' AND index_schema = ? AND table_name = ?`
-
+		`WHERE index_schema = ? AND table_name = ? `
+		// + `AND index_name <> 'PRIMARY'`
+		// Why we adding above row?
+		
 	q, err := db.Query(sqlstr, databaseName, tableName)
 	if err != nil {
 		return nil, err

@@ -14,6 +14,9 @@ var HelperFunc template.FuncMap = template.FuncMap{
 	"camelCase": func(input string) string {
 		return snaker.SnakeToCamel(removeSpecialChar.ReplaceAllLiteralString(input, "_"))
 	},
+	"camelCaseVar": func(input string) string {
+		return snaker.ForceLowerCamelIdentifier(removeSpecialChar.ReplaceAllLiteralString(input, "_"))
+	},
 	"joinWith":  joinWith,
 	"shortName": shortName,
 }
