@@ -6,6 +6,7 @@ import (
 
 	"github.com/ketan-10/classroom/xo/loaders/models"
 	"github.com/ketan-10/classroom/xo/templates"
+	"github.com/ketan-10/classroom/xo/utils"
 )
 
 // The loader interface
@@ -37,7 +38,7 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 	}
 	args.DatabaseName = database
 
-	err = lt.loadEnums(args)
+	allEnumDTO, err := lt.loadEnums(args)
 	if err != nil {
 		return err
 	}
@@ -47,12 +48,36 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 		return err
 	}
 
-	fmt.Println("Loading repo..")
-
 	tableRelations, err := lt.loadRepository(args, tables)
 	if err != nil {
 		return err
 	}
+
+	// execute enum
+	for _, enum := range allEnumDTO {
+		err := args.ExecuteTemplate(templates.ENUM, fmt.Sprintf("%s_%s", enum.TableName, enum.ColumnName), enum)
+		if err != nil {
+			return err
+		}
+	}
+	
+	// execute Table 
+	for _, table := range tables {
+		err := args.ExecuteTemplate(templates.TABLE, table.TableName, table)
+		if err != nil {
+			return err
+		}
+	}
+
+	// execute repos
+	for _, tableRelation := range tableRelations {
+		err = args.ExecuteTemplate(templates.REPO, tableRelation.Table.TableName+"_repository", tableRelation)
+		if err != nil {
+			return err
+		}
+	}
+
+	// execute wire.go
 	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableRelations)
 	if err != nil {
 		return err
@@ -68,30 +93,18 @@ func (lt *LoaderImp) loadDatabaseName(args *Args) (string, error) {
 	return lt.DatabaseName(args.DB)
 }
 
-type TableRelation struct {
-	Table       *TableDTO
-	Indexes     []*models.Index
-	ForeignKeys []*models.ForeignKey
-}
 
-func (lt *LoaderImp) loadRepository(args *Args, tables []*TableDTO) ([]*TableRelation, error) {
+func (lt *LoaderImp) loadRepository(args *Args, tables []*models.TableDTO) ([]*models.TableRelation, error) {
 
-	res := []*TableRelation{}
+	res := []*models.TableRelation{}
 
 	for _, table := range tables {
 		indexes, err := lt.IndexList(args.DB, args.DatabaseName, table.TableName)
 
-		// add column details to index for ease of use, can we find a better use?
-		for _, index := range indexes {
-			for _, col := range index.Columns {
-				for _, tableCol := range table.Columns {
-					if tableCol.ColumnName == col.ColumnName {
-						col.Column = tableCol
-					}
-				}
-			}
-		}
-
+		all_indexes := utils.ExpandIndex(indexes)
+		// add column details to index for ease of use
+		utils.AttachColumnDetailsToIndex(all_indexes, table)
+		
 		if err != nil {
 			return nil, err
 		}
@@ -99,89 +112,65 @@ func (lt *LoaderImp) loadRepository(args *Args, tables []*TableDTO) ([]*TableRel
 		if err != nil {
 			return nil, err
 		}
-		tableRelation := &TableRelation{
+		tableRelation := &models.TableRelation{
 			Table:       table,
 			Indexes:     indexes,
 			ForeignKeys: foreignKeys,
 		}
-		err = args.ExecuteTemplate(templates.REPO, table.TableName+"_repository", tableRelation)
-		if err != nil {
-			return nil, err
-		}
+		
 		res = append(res, tableRelation)
 	}
 	return res, nil
 }
 
-type TableDTO struct {
-	TableName string
-	Columns   []*models.Column
-}
 
-func (lt *LoaderImp) loadTables(args *Args) ([]*TableDTO, error) {
+func (lt *LoaderImp) loadTables(args *Args) ([]*models.TableDTO, error) {
 	tables, err := lt.TableList(args.DB, args.DatabaseName)
 	if err != nil {
 		return nil, err
 	}
-	var allTableDTO []*TableDTO
+	var allTableDTO []*models.TableDTO
 
 	for _, table := range tables {
 		columns, err := lt.ColumList(args.DB, args.DatabaseName, table)
 		if err != nil {
 			return nil, err
 		}
-		allTableDTO = append(allTableDTO, &TableDTO{
+		allTableDTO = append(allTableDTO, &models.TableDTO{
 			TableName: table,
 			Columns:   columns,
 		})
 	}
 
-	for _, table := range allTableDTO {
-		err := args.ExecuteTemplate(templates.TABLE, table.TableName, table)
-		if err != nil {
-			return nil, err
-		}
-	}
 	return allTableDTO, nil
 
 }
 
-type EnumDTO struct {
-	*models.Enum
-	DatabaseName string
-	Values       []string
-}
 
-func (lt *LoaderImp) loadEnums(args *Args) error {
+func (lt *LoaderImp) loadEnums(args *Args) ([]*models.EnumDTO, error) {
 	enums, err := lt.EnumList(args.DB, args.DatabaseName)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	var allEnumDTO []*EnumDTO
+	var allEnumDTO []*models.EnumDTO
 	for _, e := range enums {
 		// fmt.Printf("%s, %s \n", e.ColumnName, e.TableName)
 		enumValues, err := lt.loadEnumValues(args, e)
 
 		if err != nil {
-			return err
+			return nil, err
 		}
 
-		allEnumDTO = append(allEnumDTO, &EnumDTO{
-			e,
-			args.DatabaseName,
-			enumValues,
+		allEnumDTO = append(allEnumDTO, &models.EnumDTO{
+			Enum: e,
+			DatabaseName: args.DatabaseName,
+			Values: enumValues,
 		})
 	}
 
-	for _, enum := range allEnumDTO {
-		err := args.ExecuteTemplate(templates.ENUM, fmt.Sprintf("%s_%s", enum.TableName, enum.ColumnName), enum)
-		if err != nil {
-			return err
-		}
-	}
 
-	return nil
+	return allEnumDTO, nil
 }
 
 func (lt *LoaderImp) loadEnumValues(args *Args, enum *models.Enum) ([]string, error) {
