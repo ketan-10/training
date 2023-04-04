@@ -43,7 +43,7 @@ func (arg *Args) ExecuteTemplate(tt templates.TemplateType, fileName string, obj
 	}
 
 	// read template file
-	templateFileLocation := "templates/" + arg.LoaderType.String() + "/" + tt.String() + ".go.tpl"
+	templateFileLocation := "templates/" + arg.LoaderType.String() + "/" + tt.String() + "." + tt.Extension() + ".tpl"
 	file, err := tplbin.Asset(templateFileLocation)
 	if err != nil {
 		return err
@@ -63,4 +63,22 @@ func (arg *Args) ExecuteTemplate(tt templates.TemplateType, fileName string, obj
 	// save the generated buffer
 	arg.Generated = append(arg.Generated, genTmp)
 	return nil
+}
+
+var XoConfig xoConfigType
+
+type xoConfigType struct {
+	ExcludeTable []string `yaml:"exclude_table"`
+	Graphql      struct {
+		IncludeField map[string]map[string]string `yaml:"include_field"`
+	}
+}
+
+func (xc *xoConfigType) IsTableExcluded(tableName string) bool {
+	for _, t := range xc.ExcludeTable {
+		if t == tableName {
+			return true
+		}
+	}
+	return false
 }

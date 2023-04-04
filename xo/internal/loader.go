@@ -48,7 +48,12 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 		return err
 	}
 
-	tableRelations, err := lt.loadRelations(args, tables)
+	tableWithIndexes, err := lt.loadIndex(args, tables)
+	if err != nil {
+		return err
+	}
+
+	tableRelations, err := lt.loadForeignKeys(args, tableWithIndexes)
 	if err != nil {
 		return err
 	}
@@ -60,25 +65,33 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 			return err
 		}
 	}
-	
-	// execute Table 
-	for _, tableRelation := range tableRelations {
-		err := args.ExecuteTemplate(templates.TABLE, tableRelation.Table.TableName, tableRelation)
+
+	// execute Table
+	for _, tableWithIndex := range tableWithIndexes {
+		err := args.ExecuteTemplate(templates.TABLE, tableWithIndex.Table.TableName, tableWithIndex)
 		if err != nil {
 			return err
 		}
 	}
 
 	// execute repos
+	for _, tableWithIndex := range tableWithIndexes {
+		err = args.ExecuteTemplate(templates.REPO, tableWithIndex.Table.TableName+"_repository", tableWithIndex)
+		if err != nil {
+			return err
+		}
+	}
+
+	// execute graphql schema
 	for _, tableRelation := range tableRelations {
-		err = args.ExecuteTemplate(templates.REPO, tableRelation.Table.TableName+"_repository", tableRelation)
+		err = args.ExecuteTemplate(templates.GRAPH_SCHEMA, tableRelation.Table.TableName, tableRelation)
 		if err != nil {
 			return err
 		}
 	}
 
 	// execute wire.go
-	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableRelations)
+	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableWithIndexes)
 	if err != nil {
 		return err
 	}
@@ -93,10 +106,9 @@ func (lt *LoaderImp) loadDatabaseName(args *Args) (string, error) {
 	return lt.DatabaseName(args.DB)
 }
 
+func (lt *LoaderImp) loadIndex(args *Args, tables []*models.TableDTO) ([]*models.TableWithIndex, error) {
 
-func (lt *LoaderImp) loadRelations(args *Args, tables []*models.TableDTO) ([]*models.TableRelation, error) {
-
-	res := []*models.TableRelation{}
+	res := []*models.TableWithIndex{}
 
 	for _, table := range tables {
 		indexes, err := lt.IndexList(args.DB, args.DatabaseName, table.TableName)
@@ -108,18 +120,58 @@ func (lt *LoaderImp) loadRelations(args *Args, tables []*models.TableDTO) ([]*mo
 		if err != nil {
 			return nil, err
 		}
-		foreignKeys, err := lt.ForeignKeysList(args.DB, args.DatabaseName, table.TableName)
+
+		tableWithIndex := &models.TableWithIndex{
+			Table:   table,
+			Indexes: all_indexes,
+		}
+
+		res = append(res, tableWithIndex)
+	}
+	return res, nil
+}
+
+func (lt *LoaderImp) loadForeignKeys(args *Args, tablesAndIndexes []*models.TableWithIndex) ([]*models.TableRelations, error) {
+
+	res := []*models.TableRelations{}
+
+	for _, tablesAndIndex := range tablesAndIndexes {
+
+		// type ForeignKey struct {
+		// 	ForeignKeyName string
+		// 	ColumnName     string
+		// 	RefTableName   string
+		// 	RefColumnName  string
+		//
+		//  Column Column
+		//  RefColumn Column
+		//  RefTable Table
+		// }
+
+		foreignKeys, err := lt.ForeignKeysList(args.DB, args.DatabaseName, tablesAndIndex.Table.TableName)
 		if err != nil {
 			return nil, err
 		}
-		tableRelation := &models.TableRelation{
-			Table:       table,
-			Indexes:     indexes,
-			ForeignKeys: foreignKeys,
+
+		// add column details to foreign keys for ease of use
+		utils.AttachDetailsToForeignKeys(foreignKeys, tablesAndIndex.Table, tablesAndIndexes)
+
+		// empty ref
+		var foreignKeyRef []*models.ForeignKey
+
+		tableRelations := &models.TableRelations{
+			Table:                tablesAndIndex.Table,
+			Indexes:              tablesAndIndex.Indexes,
+			ForeignKeys:          foreignKeys,
+			ForeignKeysRef:       foreignKeyRef,
+			GraphQLIncludeFields: XoConfig.Graphql.IncludeField[tablesAndIndex.Table.TableName],
 		}
-		
-		res = append(res, tableRelation)
+
+		res = append(res, tableRelations)
 	}
+
+	utils.AttachManyToOneForeignKeys(res)
+
 	return res, nil
 }
 
@@ -132,6 +184,10 @@ func (lt *LoaderImp) loadTables(args *Args) ([]*models.TableDTO, error) {
 	var allTableDTO []*models.TableDTO
 
 	for _, table := range tables {
+		if XoConfig.IsTableExcluded(table) {
+			fmt.Println(table)
+			continue
+		}
 		columns, err := lt.ColumList(args.DB, args.DatabaseName, table)
 		if err != nil {
 			return nil, err

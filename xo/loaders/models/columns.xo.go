@@ -22,8 +22,9 @@ type Column struct {
 	IsGenerated  bool           // is auto generated
 
 	// custom
-	GoType    string
-	TableName string
+	GoType      string
+	GraphQLType string
+	TableName   string
 }
 
 func MySqlColumns(db XODB, databaseName string, tableName string) ([]*Column, error) {
@@ -67,6 +68,7 @@ func MySqlColumns(db XODB, databaseName string, tableName string) ([]*Column, er
 		}
 
 		c.GoType = parseSQL2GoType(c)
+		c.GraphQLType = parseGoToGraphqlType(c.GoType)
 
 		res = append(res, &c)
 	}
@@ -241,4 +243,38 @@ func parsePrecision(dt string) (string, int, int) {
 	}
 
 	return dt, precision, scale
+}
+
+func parseGoToGraphqlType(typ string) string {
+	switch typ {
+	case "int":
+		fallthrough
+	case "uint":
+		fallthrough
+	case "int64":
+		typ = "Int"
+	case "string":
+		typ = "String"
+	case "int8":
+		typ = "IntBool"
+	case "float64":
+		typ = "Float"
+	case "bool":
+		typ = "Boolean"
+	case "time.Time":
+		typ = "Datetime"
+	case "mysql.NullTime":
+		typ = "NullTime"
+	case "sql.NullInt64":
+		typ = "NullInt64"
+	case "sql.NullFloat64":
+		typ = "NullFloat64"
+	case "sql.NullString":
+		typ = "NullString"
+	case "sql.NullBool":
+		typ = "NullBool"
+	case "geo.Point":
+		typ = "Point"
+	}
+	return typ
 }

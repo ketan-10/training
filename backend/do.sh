@@ -29,8 +29,8 @@ cleanMigrate() {
 xo() {
     # https://stackoverflow.com/questions/58403134/go-permission-denied-when-trying-to-create-a-file-in-a-newly-created-directory
     rm -rf xo_gen
-    mkdir xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire
-    chmod 0777 -R xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire
+    mkdir xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire xo_gen/schema
+    chmod 0777 -R xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire xo_gen/schema
 
     connection=$(echo "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=true" | tr -d '\r')
     go run ./tools/xo/main.go --connection="$connection"

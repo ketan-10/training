@@ -5,6 +5,12 @@ type ForeignKey struct {
 	ColumnName     string
 	RefTableName   string
 	RefColumnName  string
+
+	// added after
+	Column *Column
+	RefColumn *Column
+	Table *TableDTO
+	RefTable *TableDTO
 }
 
 func MySqlForeignKeys(db XODB, databaseName string, tableName string) ([]*ForeignKey, error) {

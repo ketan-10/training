@@ -7,6 +7,7 @@ import (
 
 	"github.com/alexflint/go-arg"
 	"github.com/ketan-10/classroom/xo/internal"
+	"gopkg.in/yaml.v3"
 
 	// empty import, so that init method will be called, and drivers will be loaded
 	_ "github.com/ketan-10/classroom/xo/loaders"
@@ -17,6 +18,12 @@ func Execute() {
 
 	var err error
 	fmt.Println("Started")
+
+	err = parseXoConfigFile()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 
 	args := internal.GetDefaultArgs()
 
@@ -57,7 +64,7 @@ func generateFiles(args *internal.Args) {
 		if _, err := os.Stat(dirName); os.IsNotExist(err) {
 			os.MkdirAll(dirName, os.ModeDir)
 		}
-		file, err := os.Create(dirName + "/" + gen.FileName + ".go")
+		file, err := os.Create(dirName + "/" + gen.FileName + "." + gen.TemplateType.Extension())
 		if err != nil {
 			panic(err)
 		}
@@ -100,6 +107,20 @@ func getLoaderOfDriver(args *internal.Args) error {
 	args.Loader, ok = internal.AllLoaders[args.LoaderType]
 	if !ok {
 		return fmt.Errorf("for driver %s, no registered loader found", args.LoaderType.String())
+	}
+	return nil
+}
+
+func parseXoConfigFile() error {
+	data, err := os.ReadFile("xo_config.yml")
+	if err != nil {
+		return err
+	}
+	err = yaml.Unmarshal(data, &internal.XoConfig)
+
+	fmt.Println(internal.XoConfig.ExcludeTable)
+	if err != nil {
+		return err
 	}
 	return nil
 }

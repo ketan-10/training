@@ -63,12 +63,53 @@ func ExpandIndex(indexes []*models.Index) []*models.Index {
 	return all_indexes
 }
 
+// attach more detials for ease of use in template
 func AttachColumnDetailsToIndex(indexes []*models.Index, table *models.TableDTO) {
 	for _, index := range indexes {
 		for _, col := range index.Columns {
 			for _, tableCol := range table.Columns {
 				if tableCol.ColumnName == col.ColumnName {
 					col.Column = tableCol
+				}
+			}
+		}
+	}
+}
+
+// attach more detials for ease of use in template
+func AttachDetailsToForeignKeys(foreignKeys []*models.ForeignKey, table *models.TableDTO, tableWithIndexes []*models.TableWithIndex) {
+	for _, key := range foreignKeys {
+		key.Table = table
+		for _, tableCol := range table.Columns {
+			if tableCol.ColumnName == key.ColumnName {
+				key.Column = tableCol
+			}
+		}
+	}
+
+	for _, key := range foreignKeys {
+		for _, tableAndIndex := range tableWithIndexes {
+			if tableAndIndex.Table.TableName == key.RefTableName {
+				key.RefTable = tableAndIndex.Table
+
+				for _, column := range tableAndIndex.Table.Columns {
+					if column.ColumnName == key.RefColumnName {
+						key.RefColumn = column
+					}
+				}
+
+			}
+
+		}
+	}
+}
+
+func AttachManyToOneForeignKeys(res []*models.TableRelations) {
+	for _, tableRelation := range res {
+		for _, key := range tableRelation.ForeignKeys {
+			for _, tr := range res {
+				if tr.Table.TableName == key.RefTableName {
+					tr.ForeignKeysRef = append(tr.ForeignKeysRef, key)
 				}
 			}
 		}
