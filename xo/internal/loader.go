@@ -48,7 +48,7 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 		return err
 	}
 
-	tableRelations, err := lt.loadRepository(args, tables)
+	tableRelations, err := lt.loadRelations(args, tables)
 	if err != nil {
 		return err
 	}
@@ -62,8 +62,8 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 	}
 	
 	// execute Table 
-	for _, table := range tables {
-		err := args.ExecuteTemplate(templates.TABLE, table.TableName, table)
+	for _, tableRelation := range tableRelations {
+		err := args.ExecuteTemplate(templates.TABLE, tableRelation.Table.TableName, tableRelation)
 		if err != nil {
 			return err
 		}
@@ -94,7 +94,7 @@ func (lt *LoaderImp) loadDatabaseName(args *Args) (string, error) {
 }
 
 
-func (lt *LoaderImp) loadRepository(args *Args, tables []*models.TableDTO) ([]*models.TableRelation, error) {
+func (lt *LoaderImp) loadRelations(args *Args, tables []*models.TableDTO) ([]*models.TableRelation, error) {
 
 	res := []*models.TableRelation{}
 
@@ -141,9 +141,7 @@ func (lt *LoaderImp) loadTables(args *Args) ([]*models.TableDTO, error) {
 			Columns:   columns,
 		})
 	}
-
 	return allTableDTO, nil
-
 }
 
 
@@ -168,8 +166,6 @@ func (lt *LoaderImp) loadEnums(args *Args) ([]*models.EnumDTO, error) {
 			Values: enumValues,
 		})
 	}
-
-
 	return allEnumDTO, nil
 }
 
