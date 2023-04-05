@@ -17,8 +17,9 @@ var HelperFunc template.FuncMap = template.FuncMap{
 	"camelCaseVar": func(input string) string {
 		return snaker.ForceLowerCamelIdentifier(removeSpecialChar.ReplaceAllLiteralString(input, "_"))
 	},
-	"joinWith":  joinWith,
-	"shortName": shortName,
+	"joinWith":      joinWith,
+	"shortName":     shortName,
+	"convertToNull": convertToNull,
 }
 
 func joinWith(with string, values ...string) string {
@@ -41,4 +42,14 @@ func shortName(name string) string {
 		short = short + "_"
 	}
 	return short
+}
+
+func convertToNull(name string, typ string) string {
+	switch typ {
+	case "int":
+		return "sql.NullInt64{Valid: true, Int64: int64(" + name + ")}"
+	case "string":
+		return "sql.NullString{Valid: true, String: " + name + "}"
+	}
+	return name
 }
