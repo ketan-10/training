@@ -58,6 +58,11 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 		return err
 	}
 
+	allModels := &models.AllModels{
+		Enums:  allEnumDTO,
+		Tables: tables,
+	}
+
 	// execute enum
 	for _, enum := range allEnumDTO {
 		err := args.ExecuteTemplate(templates.ENUM, fmt.Sprintf("%s_%s", enum.TableName, enum.ColumnName), enum)
@@ -82,6 +87,14 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 		}
 	}
 
+	// execute rlts
+	for _, tableRelation := range tableRelations {
+		err = args.ExecuteTemplate(templates.RLTS, tableRelation.Table.TableName+"_rlts_repository", tableRelation)
+		if err != nil {
+			return err
+		}
+	}
+
 	// execute graphql schema
 	for _, tableRelation := range tableRelations {
 		err = args.ExecuteTemplate(templates.GRAPH_SCHEMA, tableRelation.Table.TableName, tableRelation)
@@ -91,7 +104,25 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 	}
 
 	// execute wire.go
-	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableWithIndexes)
+	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableRelations)
+	if err != nil {
+		return err
+	}
+
+	// execute gqlgen.yml
+	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableRelations)
+	if err != nil {
+		return err
+	}
+
+	// execute gqlgen.yml
+	err = args.ExecuteTemplate(templates.ENUM_SCALAR, "scalar", allModels)
+	if err != nil {
+		return err
+	}
+
+	// execute gqlgen.yml
+	err = args.ExecuteTemplate(templates.GQLGEN, "gqlgen", allModels)
 	if err != nil {
 		return err
 	}

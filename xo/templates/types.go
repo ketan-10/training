@@ -9,6 +9,8 @@ const (
 	XO_WIRE
 	GRAPH_SCHEMA
 	RLTS
+	GQLGEN
+	ENUM_SCALAR
 )
 
 func (tt *TemplateType) String() string {
@@ -25,11 +27,14 @@ func (tt *TemplateType) String() string {
 		return "rlts"
 	case GRAPH_SCHEMA:
 		return "schema"
+	case GQLGEN:
+		return "gqlgen"
+	case ENUM_SCALAR:
+		return "scalar"
 	}
 
 	return ""
 }
-
 
 func (tt *TemplateType) Extension() string {
 	switch *tt {
@@ -44,6 +49,10 @@ func (tt *TemplateType) Extension() string {
 	case RLTS:
 		return "go"
 	case GRAPH_SCHEMA:
+		return "graphql"
+	case GQLGEN:
+		return "yml"
+	case ENUM_SCALAR:
 		return "graphql"
 	}
 
