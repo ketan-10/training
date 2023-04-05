@@ -59,8 +59,27 @@ func ExpandIndex(indexes []*models.Index) []*models.Index {
 			})
 			all_indexes = append(all_indexes, &new_idx)
 		}
+
 	}
-	return all_indexes
+
+	// filter duplicates
+	// {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}
+	// due to duplicate function names
+
+	var filtered_indexes []*models.Index
+	unique := make(map[string]*models.Index)
+	for _, index := range all_indexes {
+		fullColumns := ""
+		for _, col := range index.Columns {
+			fullColumns += col.ColumnName
+		}
+		unique[fullColumns] = index
+	}
+	for _, v := range unique {
+		filtered_indexes = append(filtered_indexes, v)
+	}
+
+	return filtered_indexes
 }
 
 // attach more detials for ease of use in template

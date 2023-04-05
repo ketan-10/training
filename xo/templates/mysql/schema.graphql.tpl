@@ -8,7 +8,7 @@ type {{ $tableNameCamel }} {
 
 {{/* ManyToOne */}}
 {{- range .ForeignKeys }}
-    {{ camelCaseVar .RefTableName }}By{{ camelCaseVar .ColumnName }}(filter: {{ camelCase .RefTableName }}Filter): {{ camelCase .RefTableName }} @filterModifier(from: "{{ $.Table.TableName }}")
+    {{ camelCaseVar .RefTableName }}By{{ camelCase .ColumnName }}(filter: {{ camelCase .RefTableName }}Filter): {{ camelCase .RefTableName }} @filterModifier(from: "{{ $.Table.TableName }}")
 {{- end }}
 
 

@@ -35,21 +35,21 @@ type I{{ $tableNameCamel }}Repository interface {
         {{- if .IsUnique }}
         {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
             {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-        filter *entities.{{ $tableNameCamel }}Filter) (entities.{{ $tableNameCamel }}, error)
+        filter *table.{{ $tableNameCamel }}Filter) (table.{{ $tableNameCamel }}, error)
         
         {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
             {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-        filter *entities.{{ $tableNameCamel }}Filter, suffixes ...sq.Sqlizer) (entities.{{ $tableNameCamel }}, error)
+        filter *table.{{ $tableNameCamel }}Filter, suffixes ...sq.Sqlizer) (table.{{ $tableNameCamel }}, error)
         
         {{- else }}
 
         {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
             {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-        filter *entities.{{ $tableNameCamel }}Filter, pagination *entities.Pagination) (entities.List{{ $tableNameCamel }}, error)
+        filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error)
         
         {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
             {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-        filter *entities.{{ $tableNameCamel }}Filter, pagination *entities.Pagination, suffixes ...sq.Sqlizer) (entities.List{{ $tableNameCamel }}, error)
+        filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (table.List{{ $tableNameCamel }}, error)
 
         {{- end }}
 
@@ -104,12 +104,17 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) Insert{{ $tableNameCam
     var err error
 
     qb := sq.Insert("`{{ .Table.TableName }}`").Columns(
+    
         {{- range .Table.Columns }}
+        {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
             "`{{ .ColumnName }}`",
+        {{- end}}
         {{- end }}
     ).Values(
         {{- range .Table.Columns }}
+        {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
             {{ $shortName }}.{{ camelCase .ColumnName }},
+        {{- end }}
         {{- end }}
     )
     if suffix != nil {
@@ -140,9 +145,11 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) Update{{ $tableNameCam
 
     updateMap := map[string]interface{}{}
     {{- range .Table.Columns }}
+    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
         if ({{ $shortName }}.{{ camelCase .ColumnName }} != nil) {
             updateMap["`{{ .ColumnName }}`"] = *{{ $shortName }}.{{ camelCase .ColumnName }}
         }
+    {{- end }}
     {{- end }}
 
     qb := sq.Update(`{{ .Table.TableName }}`).SetMap(updateMap).Where(sq.Eq{"`id`": id})
@@ -173,7 +180,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) Update{{ $tableNameCam
     // sql query
     qb := sq.Update("`{{ .Table.TableName }}`").SetMap(map[string]interface{}{
     {{- range .Table.Columns }}
-        {{- if ne .ColumnName "id" }}
+        {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
         "`{{ .ColumnName }}`": {{ $shortName }}.{{ camelCase .ColumnName }},
         {{- end }}
     {{- end }}
@@ -321,53 +328,48 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
 
 {{- range .Indexes}}
     {{- if .IsUnique }}
-    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) 
-    {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
+    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-    filter *entities.{{ $tableNameCamel }}Filter) (entities.{{ $tableNameCamel }}, error) {
+    filter *table.{{ $tableNameCamel }}Filter) (table.{{ $tableNameCamel }}, error) {
         return {{ $shortName }}r.{{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }},{{- end -}} filter)
     }
 
-    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) 
-    {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
+    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-    filter *entities.{{ $tableNameCamel }}Filter, suffixes ...sq.Sqlizer) (entities.{{ $tableNameCamel }}, error) {
+    filter *table.{{ $tableNameCamel }}Filter, suffixes ...sq.Sqlizer) (table.{{ $tableNameCamel }}, error) {
         var err error
 
         // sql query
         qb, err := {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "`{{ $.Table.TableName }}`.*", suffixes...)
         if err != nil {
-            return entities.{{ $tableNameCamel }}{}, err
+            return table.{{ $tableNameCamel }}{}, err
         }
         {{- range .Columns }}
             qb = qb.Where(sq.Eq{"`{{ $.Table.TableName }}`.`{{ .ColumnName }}`": {{ camelCaseVar .ColumnName }}})
         {{- end }}
 
         // run query
-        {{ $shortName }} := entities.{{ $tableNameCamel }}{}
+        {{ $shortName }} := table.{{ $tableNameCamel }}{}
         err = {{ $shortName }}r.DB.Get(ctx, &{{ $shortName }}, qb)
         if err != nil {
-            return entities.{{ $tableNameCamel }}{}, err
+            return table.{{ $tableNameCamel }}{}, err
         }
         return {{ $shortName }}, nil
     }
     
     {{- else }}
 
-    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository)     
-    {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
+    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-    filter *entities.{{ $tableNameCamel }}Filter, pagination *entities.Pagination) (entities.List{{ $tableNameCamel }}, error) {
+    filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error) {
         return {{ $shortName }}r.{{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }},{{- end -}} filter, pagination)
     }
 
-    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository)     
-    {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
+    func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) {{- $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-    filter *entities.{{ $tableNameCamel }}Filter, pagination *entities.Pagination, suffixes ...sq.Sqlizer) (list entities.List{{ $tableNameCamel }}, error) {
-        var err error
+    filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (list table.List{{ $tableNameCamel }},err error) {
 
         // sql query
         qb, err := {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "`{{ $.Table.TableName }}`.*", suffixes...)
@@ -383,7 +385,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
         }
 
         // run query
-        if err = {{ $shortName }}r.Db.Select(ctx, &list.Data, qb); err != nil {
+        if err = {{ $shortName }}r.DB.Select(ctx, &list.Data, qb); err != nil {
             return list, err
         }
 
@@ -392,7 +394,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
             return list, nil
         }
 
-        var listMeta entities.ListMetadata
+        var listMeta internal.ListMetadata
         if qb, err = {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
             return list, err
         }
@@ -402,7 +404,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
         {{- range .Columns }}
             qb = qb.Where(sq.Eq{"`{{ $.Table.TableName }}`.`{{ .ColumnName }}`": {{ camelCaseVar .ColumnName }}})
         {{- end }}
-        if err = {{ $shortName }}r.Db.Get(ctx, &listMeta, qb); err != nil {
+        if err = {{ $shortName }}r.DB.Get(ctx, &listMeta, qb); err != nil {
             return list, err
         }
 
