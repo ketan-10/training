@@ -29,7 +29,7 @@ input {{ $tableNameCamel }}Filter {
 
 input {{ $tableNameCamel }}Create {
 {{- range .Table.Columns}}
-    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
+    {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
     {{ camelCaseVar .ColumnName }}: {{.GraphQLType}}{{- if .NotNullable }}!{{- end }}
     {{- end}}
 {{- end }}
@@ -37,7 +37,7 @@ input {{ $tableNameCamel }}Create {
 
 input {{ $tableNameCamel }}Update {
 {{- range .Table.Columns}}
-    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
+    {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
     {{ camelCaseVar .ColumnName }}: {{.GraphQLType}}
     {{- end}}
 {{- end }}

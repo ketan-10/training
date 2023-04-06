@@ -106,13 +106,13 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) Insert{{ $tableNameCam
     qb := sq.Insert("`{{ .Table.TableName }}`").Columns(
     
         {{- range .Table.Columns }}
-        {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
+        {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
             "`{{ .ColumnName }}`",
         {{- end}}
         {{- end }}
     ).Values(
         {{- range .Table.Columns }}
-        {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
+        {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
             {{ $shortName }}.{{ camelCase .ColumnName }},
         {{- end }}
         {{- end }}
@@ -145,7 +145,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) Update{{ $tableNameCam
 
     updateMap := map[string]interface{}{}
     {{- range .Table.Columns }}
-    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
+    {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
         if ({{ $shortName }}.{{ camelCase .ColumnName }} != nil) {
             updateMap["`{{ .ColumnName }}`"] = *{{ $shortName }}.{{ camelCase .ColumnName }}
         }
@@ -180,7 +180,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) Update{{ $tableNameCam
     // sql query
     qb := sq.Update("`{{ .Table.TableName }}`").SetMap(map[string]interface{}{
     {{- range .Table.Columns }}
-        {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
+        {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
         "`{{ .ColumnName }}`": {{ $shortName }}.{{ camelCase .ColumnName }},
         {{- end }}
     {{- end }}

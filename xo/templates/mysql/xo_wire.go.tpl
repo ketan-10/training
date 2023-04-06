@@ -7,6 +7,6 @@ import (
 var RepositorySet = wire.NewSet(
     {{ range . }}
         repo.New{{ camelCase .Table.TableName }}Repository,
-        repo.New{{ camelCase .Table.TableName }}RltsRepository,
+        rlts.New{{ camelCase .Table.TableName }}RltsRepository,
     {{- end }}
 )

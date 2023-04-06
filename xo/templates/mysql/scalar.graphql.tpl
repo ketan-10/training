@@ -1,4 +1,4 @@
 {{ range .Enums}}
-scalar {{ camelCase .Enum.ColumnName }}
+{{- $name := joinWith "_" .Enum.TableName .Enum.ColumnName -}}
+scalar {{ camelCase $name }}
 {{ end }}
-

@@ -1,9 +1,10 @@
 {{ range .Enums}}
-  {{ camelCase .Enum.ColumnName }}:
-    model: {{ camelCase .Enum.ColumnName }}
+{{- $name := joinWith "_" .Enum.TableName .Enum.ColumnName -}}
+{{ camelCase $name }}:
+  model: {{ camelCase $name }}
 {{ end }}
 
 {{ range .Tables}}
-  {{ camelCase .TableName }}:
-    model: {{ camelCase .TableName }}
+{{- camelCase .TableName }}:
+  model: {{ camelCase .TableName }}
 {{ end }}

@@ -5,31 +5,34 @@
 package rlts
 
 type I{{ $tableNameCamel }}RltsRepository interface {
-{{/* ManyToOne */}}
+
+// This Table Pointing to Other Table!!!, ManyToOne <- As Many records from other table can point to this table one record
 {{- range .ForeignKeys }}
-{{/* which table foreign pointing to */}}
-    {{ camelCaseVar .RefTableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .RefTableName }}Filter) (*table.{{ camelCase .RefTableName }}, error)
+    {{ camelCase .RefTableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .RefTableName }}Filter) (*table.{{ camelCase .RefTableName }}, error)
 {{- end }}
 
-{{/* OneToMany */}}
+//  Other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
 {{- range .ForeignKeysRef }}
-{{/* On which table the Foreign key is on */}}
-    {{ camelCaseVar .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (*table.List{{ $tableNameCamel }}, error)
+    {{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error)
 {{- end }}
 
 }
 
 type {{ $tableNameCamel }}RltsRepository struct {
-    {{- range .ForeignKeys}}
-        {{ camelCase .RefTableName }}Repository repo.I{{ camelCase .RefTableName }}Repository
-    {{end}}
-    {{- range .ForeignKeysRef}}
-        {{ camelCase .Table.TableName }}Repository repo.I{{ camelCase .Table.TableName }}Repository
+    
+    {{- range .UniqueTablesForRepoDependency}}
+        {{ camelCase . }}Repository repo.I{{ camelCase . }}Repository
     {{end}}
 }
 
+
+var New{{ $tableNameCamel }}RltsRepository = wire.NewSet(
+    wire.Struct(new({{ $tableNameCamel }}RltsRepository), "*"),
+    wire.Bind(new(I{{ $tableNameCamel }}RltsRepository), new({{ $tableNameCamel }}RltsRepository)),
+)
+
 {{- range .ForeignKeys }}
-func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCaseVar .RefTableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .RefTableName }}Filter) (*table.{{ camelCase .RefTableName }}, error) {
+func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCase .RefTableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .RefTableName }}Filter) (*table.{{ camelCase .RefTableName }}, error) {
     if obj ==  nil {
         return nil, nil
     }
@@ -50,14 +53,14 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCaseVar .R
 
 
 {{- range .ForeignKeysRef }}
-func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCaseVar .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *entities.{{ $tableNameCamel }}, filter *entities.{{ camelCase .Table.TableName }}Filter, pagination *entities.Pagination) (*entities.List{{ $tableNameCamel }}, error) {
+func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (table.List{{ camelCase .Table.TableName }}, error) {
     if obj ==  nil {
-        return table.List{{ $tableNameCamel }}{}, nil
+        return table.List{{ camelCase .Table.TableName }}{}, nil
     }
     {{- if eq .Column.GoType .RefColumn.GoType }}
-    return {{ $shortName }}r.{{ camelCase .RefTableName }}Repository.{{ camelCase .RefTableName }}By{{ camelCase .RefColumnName }}(ctx, obj.{{ camelCase .RefColumn.ColumnName }}, filter, pagination)
+        return {{ $shortName }}r.{{ camelCase .Table.TableName }}Repository.{{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx, obj.{{ camelCase .RefColumn.ColumnName }}, filter, pagination)
     {{- else }}
-    return {{ $shortName }}r.{{ camelCase .RefTableName }}Repository.{{ camelCase .RefTableName }}By{{ camelCase .RefColumnName }}(ctx, {{convertToNull (print "obj." (camelCase .RefColumn.ColumnName)) (camelCase .RefColumn.GoType)}}, filter, pagination)
+        return {{ $shortName }}r.{{ camelCase .Table.TableName }}Repository.{{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx, {{convertToNull (print "obj." (camelCase .RefColumn.ColumnName)) .RefColumn.GoType }}, filter, pagination)
     {{- end }}
 }
 {{- end }}

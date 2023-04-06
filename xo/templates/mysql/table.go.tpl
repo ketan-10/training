@@ -80,7 +80,7 @@ func (f *{{ $tableNameCamel }}Filter) Having(h sq.Sqlizer) *{{ $tableNameCamel }
 
 type {{ $tableNameCamel }}Create struct {
 {{- range .Table.Columns}}
-    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
+    {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
     {{ camelCase .ColumnName }} {{- if and .IsEnum (eq .NotNullable false) }} *{{ .GoType }}{{ else }} {{ .GoType }}{{- end}} `json:"{{.ColumnName}}" db:"{{.ColumnName}}"`
     {{- end}}
 {{- end }}
@@ -90,7 +90,7 @@ type {{ $tableNameCamel }}Create struct {
 // For now I am keeping it in, as not sure how it affects
 type {{ $tableNameCamel }}Update struct {
 {{- range .Table.Columns}}
-    {{- if and (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
+    {{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") }}
     {{ camelCase .ColumnName }} *{{ .GoType }} // {{.ColumnName}}
     {{- end}}
 {{- end }}
@@ -100,9 +100,10 @@ type {{ $tableNameCamel }}Update struct {
 // helper functions
 func (u *{{ $tableNameCamel }}Update) To{{ $tableNameCamel }}Create() (res {{ $tableNameCamel }}Create, err error) {
 {{- range .Table.Columns}}
-{{- if eq .IsGenerated false }}
+
+{{- if and (eq .IsGenerated false) (ne .ColumnName "id") (ne .ColumnName "created_at") (ne .ColumnName "updated_at") (ne .ColumnName "active")}}
     if u.{{ camelCase .ColumnName }} != nil {
-        res.{{ camelCase .ColumnName }} = *u.{{ camelCase .ColumnName }}
+        res.{{ camelCase .ColumnName }} = {{- if or (ne .IsEnum true ) .NotNullable }} *{{- end}}u.{{ camelCase .ColumnName }}
     }
     {{- if eq .NotNullable true -}} 
     {{" "}}else {

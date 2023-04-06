@@ -62,13 +62,15 @@ func ExpandIndex(indexes []*models.Index) []*models.Index {
 
 	}
 
-	// filter duplicates
-	// {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}
-	// due to duplicate function names
+	return FilterIndexes(all_indexes)
+}
 
+// {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}
+// Filter due to duplicate function names
+func FilterIndexes(indexes []*models.Index) []*models.Index {
 	var filtered_indexes []*models.Index
 	unique := make(map[string]*models.Index)
-	for _, index := range all_indexes {
+	for _, index := range indexes {
 		fullColumns := ""
 		for _, col := range index.Columns {
 			fullColumns += col.ColumnName
@@ -78,7 +80,19 @@ func ExpandIndex(indexes []*models.Index) []*models.Index {
 	for _, v := range unique {
 		filtered_indexes = append(filtered_indexes, v)
 	}
+	return filtered_indexes
+}
 
+func FilterIndexesOnlyFirstColumn(indexes []*models.Index) []*models.Index {
+	var filtered_indexes []*models.Index
+	unique := make(map[string]*models.Index)
+	for _, index := range indexes {
+		column := index.Columns[0].ColumnName
+		unique[column] = index
+	}
+	for _, v := range unique {
+		filtered_indexes = append(filtered_indexes, v)
+	}
 	return filtered_indexes
 }
 
@@ -133,4 +147,26 @@ func AttachManyToOneForeignKeys(res []*models.TableRelations) {
 			}
 		}
 	}
+}
+
+func GetUniqueRepoDependeciesTableNameForRLTS(tableRelation *models.TableRelations) []string {
+
+	mymap := make(map[string]bool)
+	var res []string
+	// This Table Pointing to Other Table!!!, ManyToOne <- As Many records from other table can point to this table one record
+	for _, fk := range tableRelation.ForeignKeys {
+		if !mymap[fk.RefTableName] {
+			mymap[fk.RefTableName] = true
+			res = append(res, fk.RefTableName)
+		}
+	}
+
+	//  Other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
+	for _, fk := range tableRelation.ForeignKeysRef {
+		if !mymap[fk.Table.TableName] {
+			mymap[fk.Table.TableName] = true
+			res = append(res, fk.Table.TableName)
+		}
+	}
+	return res
 }

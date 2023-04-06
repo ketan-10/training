@@ -73,7 +73,11 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 
 	// execute Table
 	for _, tableWithIndex := range tableWithIndexes {
-		err := args.ExecuteTemplate(templates.TABLE, tableWithIndex.Table.TableName, tableWithIndex)
+		tableDto := &models.TableWithIndex{
+			Table:   tableWithIndex.Table,
+			Indexes: utils.FilterIndexesOnlyFirstColumn(tableWithIndex.Indexes),
+		}
+		err := args.ExecuteTemplate(templates.TABLE, tableWithIndex.Table.TableName, tableDto)
 		if err != nil {
 			return err
 		}
@@ -89,7 +93,12 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 
 	// execute rlts
 	for _, tableRelation := range tableRelations {
-		err = args.ExecuteTemplate(templates.RLTS, tableRelation.Table.TableName+"_rlts_repository", tableRelation)
+		uniqueTableNames := utils.GetUniqueRepoDependeciesTableNameForRLTS(tableRelation)
+		rltsDto := &models.RltsDTO{
+			TableRelations:                tableRelation,
+			UniqueTablesForRepoDependency: uniqueTableNames,
+		}
+		err = args.ExecuteTemplate(templates.RLTS, tableRelation.Table.TableName+"_rlts_repository", rltsDto)
 		if err != nil {
 			return err
 		}
@@ -97,6 +106,7 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 
 	// execute graphql schema
 	for _, tableRelation := range tableRelations {
+
 		err = args.ExecuteTemplate(templates.GRAPH_SCHEMA, tableRelation.Table.TableName, tableRelation)
 		if err != nil {
 			return err
@@ -147,7 +157,7 @@ func (lt *LoaderImp) loadIndex(args *Args, tables []*models.TableDTO) ([]*models
 		all_indexes := utils.ExpandIndex(indexes)
 		// add column details to index for ease of use
 		utils.AttachColumnDetailsToIndex(all_indexes, table)
-		
+
 		if err != nil {
 			return nil, err
 		}
@@ -191,8 +201,7 @@ func (lt *LoaderImp) loadForeignKeys(args *Args, tablesAndIndexes []*models.Tabl
 		var foreignKeyRef []*models.ForeignKey
 
 		tableRelations := &models.TableRelations{
-			Table:                tablesAndIndex.Table,
-			Indexes:              tablesAndIndex.Indexes,
+			TableWithIndex:       tablesAndIndex,
 			ForeignKeys:          foreignKeys,
 			ForeignKeysRef:       foreignKeyRef,
 			GraphQLIncludeFields: XoConfig.Graphql.IncludeField[tablesAndIndex.Table.TableName],
@@ -205,7 +214,6 @@ func (lt *LoaderImp) loadForeignKeys(args *Args, tablesAndIndexes []*models.Tabl
 
 	return res, nil
 }
-
 
 func (lt *LoaderImp) loadTables(args *Args) ([]*models.TableDTO, error) {
 	tables, err := lt.TableList(args.DB, args.DatabaseName)
@@ -231,7 +239,6 @@ func (lt *LoaderImp) loadTables(args *Args) ([]*models.TableDTO, error) {
 	return allTableDTO, nil
 }
 
-
 func (lt *LoaderImp) loadEnums(args *Args) ([]*models.EnumDTO, error) {
 	enums, err := lt.EnumList(args.DB, args.DatabaseName)
 	if err != nil {
@@ -248,9 +255,9 @@ func (lt *LoaderImp) loadEnums(args *Args) ([]*models.EnumDTO, error) {
 		}
 
 		allEnumDTO = append(allEnumDTO, &models.EnumDTO{
-			Enum: e,
+			Enum:         e,
 			DatabaseName: args.DatabaseName,
-			Values: enumValues,
+			Values:       enumValues,
 		})
 	}
 	return allEnumDTO, nil
