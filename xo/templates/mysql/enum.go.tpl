@@ -28,6 +28,23 @@ func ({{ $shortName }} {{ $camelName }}) GoString() string {
     return {{ $shortName }}.String()
 }
 
+// MarshalGQL implements the graphql.Marshaler interface
+func ({{ $shortName }} {{ $camelName }}) MarshalGQL(w io.Writer) {
+	w.Write([]byte(`"` + {{ $shortName }}.String() + `"`))
+}
+
+// UnmarshalGQL implements the graphql.Marshaler interface
+func ({{ $shortName }} *{{ $camelName }}) UnmarshalGQL(v interface{}) error {
+	if str, ok := v.(string); ok {
+		return {{ $shortName }}.UnmarshalText([]byte(str))
+	}
+	return errors.New("ErrInvalidEnumGraphQL")
+}
+
+// MarshalText marshals {{ $camelName }} into text.
+func ({{ $shortName }} {{ $camelName }}) MarshalText() ([]byte, error) {
+	return []byte({{ $shortName }}.String()), nil
+}
 
 // UnmarshalText unmarshals {{ $camelName }} from text.
 func ({{ $shortName }} *{{ $camelName }}) UnmarshalText(text []byte) error {
