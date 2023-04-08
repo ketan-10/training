@@ -11,6 +11,7 @@ const (
 	RLTS
 	GQLGEN
 	ENUM_SCALAR
+	XO_RESOLVER
 )
 
 func (tt *TemplateType) String() string {
@@ -31,6 +32,8 @@ func (tt *TemplateType) String() string {
 		return "gqlgen"
 	case ENUM_SCALAR:
 		return "scalar"
+	case XO_RESOLVER:
+		return "xo_resolver"
 	}
 
 	return ""
@@ -38,23 +41,21 @@ func (tt *TemplateType) String() string {
 
 func (tt *TemplateType) Extension() string {
 	switch *tt {
-	case ENUM:
+	case ENUM, TABLE, REPO, XO_WIRE, RLTS, XO_RESOLVER:
 		return "go"
-	case TABLE:
-		return "go"
-	case REPO:
-		return "go"
-	case XO_WIRE:
-		return "go"
-	case RLTS:
-		return "go"
-	case GRAPH_SCHEMA:
+	case GRAPH_SCHEMA, ENUM_SCALAR:
 		return "graphql"
 	case GQLGEN:
 		return "yml"
-	case ENUM_SCALAR:
-		return "graphql"
 	}
 
 	return ""
+}
+func (tt *TemplateType) PlaceAtRoot() bool {
+	switch *tt {
+	case XO_WIRE, GQLGEN, ENUM_SCALAR, XO_RESOLVER:
+		return true
+	}
+
+	return false
 }

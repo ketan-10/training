@@ -29,11 +29,11 @@ cleanMigrate() {
 xo() {
     # https://stackoverflow.com/questions/58403134/go-permission-denied-when-trying-to-create-a-file-in-a-newly-created-directory
     rm -rf xo_gen
-    mkdir xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire xo_gen/schema xo_gen/scalar xo_gen/gqlgen xo_gen/rlts
-    chmod 0777 -R xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/xo_wire xo_gen/schema xo_gen/scalar xo_gen/gqlgen xo_gen/rlts
+    mkdir xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/schema xo_gen/rlts
+    chmod 0777 -R xo_gen xo_gen/enum xo_gen/table xo_gen/repo xo_gen/schema xo_gen/rlts
 
     connection=$(echo "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=true" | tr -d '\r')
-    go run ./tools/xo/main.go --connection="$connection"
+    go run ./cmd/xo/main.go --connection="$connection"
 }
 
 if [[ $1 = 'migrate' ]]; then
@@ -45,7 +45,7 @@ elif [[ $1 = 'goimports' ]]; then
     ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/table/*
     ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/repo/*
     ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/rlts/*
-    ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/xo_wire/*
+    ~/go/bin/go-fanout --command="/home/ketan/go/bin/goimports -w" --chunk=5 -- xo_gen/*.go
 elif [[ $1 = 'wire' ]]; then
     /home/ketan/go/bin/wire ./wire_app
 else

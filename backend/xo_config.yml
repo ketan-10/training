@@ -1,6 +1,6 @@
 exclude_table:
   - goose_db_version
 graphql:
-  include_field:
-    attendances: 
-      isTotal: ": Boolean!"
+  # include_field:
+    # attendances: 
+      # isTotal: ": Boolean!"

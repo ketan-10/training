@@ -1,10 +1,10 @@
-package xo_wire
+package xo_gen
 
 import (
 	"github.com/google/wire"
 )
 
-var RepositorySet = wire.NewSet(
+var NewRepositorySet = wire.NewSet(
     {{ range . }}
         repo.New{{ camelCase .Table.TableName }}Repository,
         rlts.New{{ camelCase .Table.TableName }}RltsRepository,

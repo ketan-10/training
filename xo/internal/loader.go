@@ -113,19 +113,19 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 		}
 	}
 
+	// execute xo_resolver.go
+	err = args.ExecuteTemplate(templates.XO_RESOLVER, "xo_resolver", tableRelations)
+	if err != nil {
+		return err
+	}
+
 	// execute wire.go
 	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableRelations)
 	if err != nil {
 		return err
 	}
 
-	// execute gqlgen.yml
-	err = args.ExecuteTemplate(templates.XO_WIRE, "wire.xo", tableRelations)
-	if err != nil {
-		return err
-	}
-
-	// execute gqlgen.yml
+	// execute scalar.graphql
 	err = args.ExecuteTemplate(templates.ENUM_SCALAR, "scalar", allModels)
 	if err != nil {
 		return err

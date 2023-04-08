@@ -9,8 +9,6 @@ import (
 	"github.com/ketan-10/classroom/backend/utils"
 )
 
-type FilterOnField []map[FilterType]interface{}
-
 func AddFilter(qb *sq.SelectBuilder, columnName string, filterOnField FilterOnField) (*sq.SelectBuilder, error) {
 	sqlizer, err := FilterOnFieldToSqlizer(columnName, filterOnField)
 	if err != nil {
@@ -42,7 +40,7 @@ func FilterOnFieldToSqlizer(columnName string, filterOnField FilterOnField) (sq.
 			case Like:
 				and = append(and, sq.Expr(columnName+" LIKE ?", value))
 			case Between:
-				casted, ok := value.([]any)
+				casted, ok := value.([]interface{})
 				if !ok || len(casted) != 2 {
 					return nil, errors.New("invalid filter on between")
 				}

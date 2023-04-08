@@ -60,7 +60,12 @@ func Execute() {
 func generateFiles(args *internal.Args) {
 
 	for _, gen := range args.Generated {
-		dirName := "./" + args.GeneratedDir + "/" + gen.TemplateType.String()
+
+		dirName := "./" + args.GeneratedDir
+		if !gen.TemplateType.PlaceAtRoot() {
+			dirName += "/" + gen.TemplateType.String()
+		}
+
 		if _, err := os.Stat(dirName); os.IsNotExist(err) {
 			os.MkdirAll(dirName, os.ModeDir)
 		}
