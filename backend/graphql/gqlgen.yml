@@ -1,0 +1,178 @@
+# Where are all the schema files located? globs are supported eg  src/**/*.graphqls
+schema:
+  - schema/*.graphql
+  - ../xo_gen/schema/*.graphql
+  - ../xo_gen/scalar.graphql
+
+# Where should the generated server code go?
+exec:
+  filename: ./gen/generated.go
+
+# Uncomment to enable federation
+# federation:
+#   filename: graph/generated/federation.go
+#   package: generated
+
+# Where should any generated models go?
+model:
+  filename: ./gen/models_gen.go
+
+resolver:
+  filename: ./resolver.go
+  type: Resolver
+
+# Where should the resolver implementations go?
+# resolver:
+  # layout: follow-schema
+  # dir: graph
+  # package: graph
+
+# Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
+# struct_tag: json
+
+# Optional: turn on to use []Thing instead of []*Thing
+# omit_slice_element_pointers: false
+
+# Optional: turn off to make struct-type struct fields not use pointers
+# e.g. type Thing struct { FieldA OtherThing } instead of { FieldA *OtherThing }
+# struct_fields_always_pointers: true
+
+# Optional: turn off to make resolvers return values instead of pointers for structs
+# resolvers_always_return_pointers: true
+
+# Optional: set to speed up generation time by not performing a final validation pass.
+# skip_validation: true
+
+# gqlgen will search for any type names in the schema in these go packages
+# if they match it will use them, otherwise it will generate them.
+autobind:
+#  - "github.com/ketan-10/"
+
+# This section declares type mapping between the GraphQL and go type systems
+#
+# The first line in each type will be used as defaults for resolver arguments and
+# modelgen, the others will be allowed when binding to fields. Configure them to
+# your liking
+
+
+models:
+  Pagination:
+    model: ../internal.Pagination
+  FilterOnField:
+    model: ../internal.FilterOnField
+  Datetime:
+    model: ../internal.Datetime
+  IntBool:
+    model: ../internal.IntBool
+  NullInt64:
+    model: ../internal.NullInt64
+  NullFloat64:
+    model: ../internal.NullFloat64
+  NullBool:
+    model: ../internal.NullBool
+  NullString:
+    model: ../internal.NullString
+  NullTime:
+    model: ../internal.NullTime
+  Map:
+    model: ../internal.Map
+  
+
+  TrainingMode:
+    model: ../xo_gen/enum.TrainingMode
+  TrainingType:
+    model: ../xo_gen/enum.TrainingType
+  TrainingEventStatus:
+    model: ../xo_gen/enum.TrainingEventStatus
+  UserRole:
+    model: ../xo_gen/enum.UserRole
+
+
+  Attendances:
+    model: ../xo_gen/table.Attendances
+  AttendancesCreate:
+    model: ../xo_gen/table.AttendancesCreate
+  AttendancesFilter:
+    model: ../xo_gen/table.AttendancesFilter
+  AttendancesUpdate:
+    model: ../xo_gen/table.AttendancesUpdate
+  ListAttendances:
+    model: ../xo_gen/table.ListAttendances
+
+  ListExternalResources:
+    model: ../xo_gen/table.ListExternalResources
+  ExternalResources:
+    model: ../xo_gen/table.ExternalResources
+  ExternalResourcesCreate:
+    model: ../xo_gen/table.ExternalResourcesCreate
+  ExternalResourcesFilter:
+    model: ../xo_gen/table.ExternalResourcesFilter
+  ExternalResourcesUpdate:
+    model: ../xo_gen/table.ExternalResourcesUpdate
+
+  ListInternalResources:
+    model: ../xo_gen/table.ListInternalResources
+  InternalResources:
+    model: ../xo_gen/table.InternalResources
+  InternalResourcesCreate:
+    model: ../xo_gen/table.InternalResourcesCreate
+  InternalResourcesFilter:
+    model: ../xo_gen/table.InternalResourcesFilter
+  InternalResourcesUpdate:
+    model: ../xo_gen/table.InternalResourcesUpdate
+
+  ListRegistrations:
+    model: ../xo_gen/table.ListRegistrations
+  Registrations:
+    model: ../xo_gen/table.Registrations
+  RegistrationsCreate:
+    model: ../xo_gen/table.RegistrationsCreate
+  RegistrationsFilter:
+    model: ../xo_gen/table.RegistrationsFilter
+  RegistrationsUpdate:
+    model: ../xo_gen/table.RegistrationsUpdate
+
+  ListTrainerTrainingMapping:
+    model: ../xo_gen/table.ListTrainerTrainingMapping
+  TrainerTrainingMapping:
+    model: ../xo_gen/table.TrainerTrainingMapping
+  TrainerTrainingMappingCreate:
+    model: ../xo_gen/table.TrainerTrainingMappingCreate
+  TrainerTrainingMappingFilter:
+    model: ../xo_gen/table.TrainerTrainingMappingFilter
+  TrainerTrainingMappingUpdate:
+    model: ../xo_gen/table.TrainerTrainingMappingUpdate
+
+  ListTraining:
+    model: ../xo_gen/table.ListTraining
+  Training:
+    model: ../xo_gen/table.Training
+  TrainingCreate:
+    model: ../xo_gen/table.TrainingCreate
+  TrainingFilter:
+    model: ../xo_gen/table.TrainingFilter
+  TrainingUpdate:
+    model: ../xo_gen/table.TrainingUpdate
+
+  ListTrainingEvent:
+    model: ../xo_gen/table.ListTrainingEvent
+  TrainingEvent:
+    model: ../xo_gen/table.TrainingEvent
+  TrainingEventCreate:
+    model: ../xo_gen/table.TrainingEventCreate
+  TrainingEventFilter:
+    model: ../xo_gen/table.TrainingEventFilter
+  TrainingEventUpdate:
+    model: ../xo_gen/table.TrainingEventUpdate
+
+  ListUser:
+    model: ../xo_gen/table.ListUser
+  User:
+    model: ../xo_gen/table.User
+  UserCreate:
+    model: ../xo_gen/table.UserCreate
+  UserFilter:
+    model: ../xo_gen/table.UserFilter
+  UserUpdate:
+    model: ../xo_gen/table.UserUpdate
+
