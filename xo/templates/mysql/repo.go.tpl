@@ -28,8 +28,8 @@ type I{{ $tableNameCamel }}Repository interface {
     Delete{{ $tableNameCamel }}(ctx context.Context, {{ $shortName }} table.{{ $tableNameCamel }}) error
     Delete{{ $tableNameCamel }}ByID(ctx context.Context, id {{ $idType }}) (bool, error)
     
-    FindAll{{ $tableNameCamel }}(ctx context.Context, {{ $shortName }} *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error)
-    FindAll{{ $tableNameCamel }}WithSuffix(ctx context.Context,{{ $shortName }} *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (table.List{{ $tableNameCamel }}, error)
+    FindAll{{ $tableNameCamel }}(ctx context.Context, {{ $shortName }} *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (*table.List{{ $tableNameCamel }}, error)
+    FindAll{{ $tableNameCamel }}WithSuffix(ctx context.Context,{{ $shortName }} *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.List{{ $tableNameCamel }}, error)
 
     {{- range .Indexes}}
         {{- if .IsUnique }}
@@ -45,11 +45,11 @@ type I{{ $tableNameCamel }}Repository interface {
 
         {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
             {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-        filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error)
+        filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (*table.List{{ $tableNameCamel }}, error)
         
         {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
             {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-        filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (table.List{{ $tableNameCamel }}, error)
+        filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.List{{ $tableNameCamel }}, error)
 
         {{- end }}
 
@@ -287,34 +287,35 @@ func ({{ $shortName }} *{{ $tableNameCamel }}RepositoryQueryBuilder) AddPaginati
     return internal.AddPagination(qb, pagination, "{{ .Table.TableName }}", fields)
 }
 
-func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCamel }}(ctx context.Context, filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (list table.List{{ $tableNameCamel }}, err error) {
+func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCamel }}(ctx context.Context, filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (*table.List{{ $tableNameCamel }}, error) {
     return {{ $shortName }}r.FindAll{{ $tableNameCamel }}WithSuffix(ctx, filter, pagination)
 }
 
-func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCamel }}WithSuffix(ctx context.Context, filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (list table.List{{ $tableNameCamel }}, err error) {
+func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCamel }}WithSuffix(ctx context.Context, filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.List{{ $tableNameCamel }}, error) {
+    var list table.List{{ $tableNameCamel }}
     qb, err := {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "`{{ .Table.TableName }}`.*", suffixes...)
     if err != nil {
-        return table.List{{ $tableNameCamel }}{}, err
+        return &list, err
     }
     qb, err = {{ $shortName }}r.AddPagination(ctx, qb, pagination)
     if err != nil {
-        return table.List{{ $tableNameCamel }}{}, err
+        return &list, err
     }
 
     err = {{ $shortName }}r.DB.Select(ctx, &list.Data, qb)
 
     if err != nil {
-        return list, err
+        return &list, err
     }
 
     if pagination == nil || pagination.PerPage == nil || pagination.Page == nil {
         list.TotalCount = len(list.Data)
-        return list, nil
+        return &list, nil
     }
 
     var listMeta internal.ListMetadata
     if qb, err = {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
-        return table.List{{ $tableNameCamel }}{}, err
+        return &table.List{{ $tableNameCamel }}{}, err
     }
     if filter != nil && len(filter.GroupBys) > 0 {
         qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
@@ -323,7 +324,7 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
 
     list.TotalCount = listMeta.Count
 
-    return list, err
+    return &list, err
 }
 
 {{- range .Indexes}}
@@ -362,41 +363,42 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
 
     func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}(ctx context.Context, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-    filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error) {
+    filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination) (*table.List{{ $tableNameCamel }}, error) {
         return {{ $shortName }}r.{{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }},{{- end -}} filter, pagination)
     }
 
     func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) {{- $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}WithSuffix(ctx context.Context, 
         {{- range .Columns }} {{ camelCaseVar .ColumnName }} {{ .Column.GoType }},{{- end -}}
-    filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (list table.List{{ $tableNameCamel }},err error) {
+    filter *table.{{ $tableNameCamel }}Filter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.List{{ $tableNameCamel }}, error) {
 
+        var list table.List{{ $tableNameCamel }}
         // sql query
         qb, err := {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "`{{ $.Table.TableName }}`.*", suffixes...)
         if err != nil {
-            return list, err
+            return &list, err
         }
         {{- range .Columns }}
             qb = qb.Where(sq.Eq{"`{{ $.Table.TableName }}`.`{{ .ColumnName }}`": {{ camelCaseVar .ColumnName }}})
         {{- end }}
 
         if qb, err = {{ $shortName }}r.AddPagination(ctx, qb, pagination); err != nil {
-            return list, err
+            return &list, err
         }
 
         // run query
         if err = {{ $shortName }}r.DB.Select(ctx, &list.Data, qb); err != nil {
-            return list, err
+            return &list, err
         }
 
         if pagination == nil || pagination.PerPage == nil || pagination.Page == nil {
             list.TotalCount = len(list.Data)
-            return list, nil
+            return &list, nil
         }
 
         var listMeta internal.ListMetadata
         if qb, err = {{ $shortName }}r.FindAll{{ $tableNameCamel }}BaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
-            return list, err
+            return &list, err
         }
         if filter != nil && len(filter.GroupBys) > 0 {
             qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
@@ -405,12 +407,12 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}Repository) FindAll{{ $tableNameCa
             qb = qb.Where(sq.Eq{"`{{ $.Table.TableName }}`.`{{ .ColumnName }}`": {{ camelCaseVar .ColumnName }}})
         {{- end }}
         if err = {{ $shortName }}r.DB.Get(ctx, &listMeta, qb); err != nil {
-            return list, err
+            return &list, err
         }
 
         list.TotalCount = listMeta.Count
 
-        return list, nil
+        return &list, nil
     
         }
     {{- end }}

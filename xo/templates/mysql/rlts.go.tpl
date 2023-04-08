@@ -13,7 +13,7 @@ type I{{ $tableNameCamel }}RltsRepository interface {
 
 //  Other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
 {{- range .ForeignKeysRef }}
-    {{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (table.List{{ $tableNameCamel }}, error)
+    {{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (*table.List{{ camelCase .Table.TableName }}, error)
 {{- end }}
 
 }
@@ -53,9 +53,9 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCase .RefT
 
 
 {{- range .ForeignKeysRef }}
-func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (table.List{{ camelCase .Table.TableName }}, error) {
+func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx context.Context, obj *table.{{ $tableNameCamel }}, filter *table.{{ camelCase .Table.TableName }}Filter, pagination *internal.Pagination) (*table.List{{ camelCase .Table.TableName }}, error) {
     if obj ==  nil {
-        return table.List{{ camelCase .Table.TableName }}{}, nil
+        return &table.List{{ camelCase .Table.TableName }}{}, nil
     }
     {{- if eq .Column.GoType .RefColumn.GoType }}
         return {{ $shortName }}r.{{ camelCase .Table.TableName }}Repository.{{ camelCase .Table.TableName }}By{{ camelCase .ColumnName }}(ctx, obj.{{ camelCase .RefColumn.ColumnName }}, filter, pagination)
