@@ -1,2 +1,3 @@
 **/xo_gen/
 graphql/gen
+wire_app/wire_gen.go
