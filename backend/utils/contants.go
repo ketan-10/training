@@ -1,7 +1,4 @@
 package utils
 
-type ContextKey string
-
-const (
-	Connection ContextKey = "connection"
-)
+// TODO Take from config file
+const JwtSecret = "TODO-get-from-config"

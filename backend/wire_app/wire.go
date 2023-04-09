@@ -10,6 +10,7 @@ import (
 	"github.com/ketan-10/classroom/backend/graphql"
 	"github.com/ketan-10/classroom/backend/internal"
 	"github.com/ketan-10/classroom/backend/xo_gen"
+	"github.com/ketan-10/classroom/backend/middlewares"
 )
 
 // To inject all patch to App
@@ -18,11 +19,20 @@ import (
 
 type App struct {
 	Resolver *graphql.Resolver
+	GraphqlAuthenticateMiddleware           *middlewares.GraphqlAuthenticateMiddleware
+	HeaderMiddleware *middlewares.HeaderMiddleware
 }
+
+var NewMiddlewareSet = wire.NewSet(
+	middlewares.NewGraphqlAuthenticateMiddleware,
+	middlewares.NewHeaderMiddleware,
+)
 
 var globalSet = wire.NewSet(
 	xo_gen.NewRepositorySet,
 	xo_gen.NewXoResolver,
+	graphql.NewServiceSet,
+	NewMiddlewareSet,
 	wire.Struct(new(App), "*"),
 	wire.Struct(new(graphql.Resolver), "*"),
 	internal.NewDB,

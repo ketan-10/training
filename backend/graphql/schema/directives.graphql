@@ -1,0 +1,1 @@
+directive @authenticate on FIELD_DEFINITION

@@ -1,3 +1,4 @@
 type Query {
-    findAllUser(filter: UserFilter, pagination: Pagination): ListUser!
+    findAllUser(filter: UserFilter, pagination: Pagination): ListUser! @authenticate
+    login(email: String!, password: String!): String!
 }

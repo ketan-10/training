@@ -3,14 +3,13 @@ package internal
 import (
 	"context"
 	"database/sql"
-	"errors"
 	"fmt"
 	"log"
 
 	"github.com/elgris/sqrl"
 	"github.com/google/wire"
 	"github.com/jmoiron/sqlx"
-	"github.com/ketan-10/classroom/backend/utils"
+	"github.com/ketan-10/classroom/backend/internal/context_manager"
 )
 
 type IDb interface {
@@ -36,7 +35,7 @@ var NewDB = wire.NewSet(
 
 func OpenConnection(ctx context.Context, options *DBOptions) *DB {
 
-	connection, err := getConnectionContext(ctx)
+	connection, err := context_manager.GetConnectionContext(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +53,7 @@ func (db *DB) Get(ctx context.Context, dest interface{}, sqlizer sqrl.Sqlizer) e
 		return err
 	}
 
-	if tx := getTransactionContext(ctx); tx != nil {
+	if tx := context_manager.GetTransactionContext(ctx); tx != nil {
 		err = tx.GetContext(ctx, dest, query, args...)
 	} else {
 		err = db.DB.GetContext(ctx, dest, query, args...)
@@ -72,7 +71,7 @@ func (db *DB) Select(ctx context.Context, dest interface{}, sqlizer sqrl.Sqlizer
 		return err
 	}
 
-	if tx := getTransactionContext(ctx); tx != nil {
+	if tx := context_manager.GetTransactionContext(ctx); tx != nil {
 		err = tx.SelectContext(ctx, dest, query, args...)
 	} else {
 		err = db.DB.SelectContext(ctx, dest, query, args...)
@@ -98,7 +97,7 @@ func (db *DB) Exec(ctx context.Context, sqlizer sqrl.Sqlizer) (sql.Result, error
 	}
 
 	var res sql.Result
-	if tx := getTransactionContext(ctx); tx != nil {
+	if tx := context_manager.GetTransactionContext(ctx); tx != nil {
 		res, err = tx.ExecContext(ctx, query, args...)
 	} else {
 		res, err = db.DB.ExecContext(ctx, query, args...)
@@ -120,14 +119,10 @@ func (db *DB) BeginTxx(ctx context.Context) (*sqlx.Tx, error) {
 
 // Transaction
 
-type key string
-
-const TransactionKey key = "transaction_key"
-
 func WrapInTransaction(ctx context.Context, db IDb, f func(ctx context.Context) error) error {
 
 	// if transaction already exists
-	tx := getTransactionContext(ctx)
+	tx := context_manager.GetTransactionContext(ctx)
 	if tx != nil {
 		return f(ctx)
 	}
@@ -148,23 +143,6 @@ func WrapInTransaction(ctx context.Context, db IDb, f func(ctx context.Context) 
 
 	}()
 
-	// save tx for next time. if same connection. Maybe not needed for xo-patcher 🤔
-	newContext := context.WithValue(ctx, TransactionKey, tx)
+	newContext := context_manager.WithTransaction(ctx, tx)
 	return f(newContext)
-}
-
-// Get Contexts
-
-func getTransactionContext(ctx context.Context) *sqlx.Tx {
-	if tx, ok := ctx.Value(TransactionKey).(*sqlx.Tx); ok {
-		return tx
-	}
-	return nil
-}
-
-func getConnectionContext(ctx context.Context) (string, error) {
-	if value, ok := ctx.Value(utils.Connection).(string); ok {
-		return value, nil
-	}
-	return "", errors.New("connection context invalid")
 }
