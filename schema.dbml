@@ -1,0 +1,149 @@
+// Use DBML to define your database structure
+// Docs: https://www.dbml.org/docs
+
+
+Table users {
+  id int [primary key]
+  username string
+  email string
+  password string
+  role user_type
+  active bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+Table training {
+  id int [primary key]
+  training_name string 
+  mode training_mode
+  type training_type
+  requested_by int
+  is_registration_required bool
+  tags string
+  active bool
+  created_at timestamp
+  updated_at timestamp
+  created_by int
+}
+
+Ref: training.requested_by > users.id 
+Ref: training.created_by > users.id 
+
+
+Table internal_resources {
+  id int [primary key]
+  pid string
+  full_name string
+  email string
+  phone_number string
+  project_name string
+  designation string
+  active bool
+  created_at timestamp
+  updated_at timestamp
+  created_by int
+}
+
+Ref: internal_resources.created_by > users.id 
+
+
+Table external_resources {
+  id int [primary key]
+  pid string
+  full_name string
+  email string
+  phone_number string 
+  designation string
+  active bool
+  created_at timestamp
+  updated_at timestamp
+  created_by int
+}
+
+Ref: external_resources.created_by > users.id 
+
+
+Table traininer_training_mapping {
+  id int [primary key]
+  fk_training_event int
+  fk_external_resource int
+  fk_internal_resource int
+  active bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: traininer_training_mapping.fk_training_event > training_event.id
+Ref: traininer_training_mapping.fk_external_resource > external_resources.id
+Ref: traininer_training_mapping.fk_internal_resource > internal_resources.id
+
+Table attendance {
+  id int [primary key]
+  fk_internal_resource int
+  fk_training_event int
+  active bool
+  created_at timestamp
+  updated_at timestamp
+}
+Ref: attendance.fk_internal_resource > internal_resources.id
+Ref: attendance.fk_training_event > training_event.id
+
+
+Table registration {
+  id int [primary key]
+  fk_internal_resource int
+  fk_training int
+  active bool
+  created_at timestamp
+  updated_at timestamp
+}
+Ref: registration.fk_internal_resource > internal_resources.id
+Ref: registration.fk_training > training.id
+
+
+Table training_event {
+  id int [primary key]
+  fk_training int
+  status training_status
+  from timestamp
+  completed_on timestamp
+  duration timestamp
+  active bool
+  created_at timestamp
+  updated_at timestamp
+  created_by int
+}
+
+Ref: training_event.fk_training > training.id
+Ref: training_event.created_by > users.id 
+
+
+
+enum training_type {
+  project_base
+  organization_base
+  self_training
+}
+
+enum training_mode {
+  physical
+  virtual
+  online
+}
+
+enum training_status {
+  completed
+  pending 
+  canceled
+  postponed
+  rejected 
+}
+
+// enum belonged to default "public" schema
+enum user_type {
+  internal_team [note: 'Waiting to be processed']
+  manager
+}
+
