@@ -1,3 +1,37 @@
 type Mutation {
-    insertUser(data: UserCreate!): User
+    # User
+    insertUser(data: UserCreate!): User @authenticate
+    updateUserByFields(id: Int!, data: UserUpdate!): User @authenticate
+    deleteUserByID(id: Int!): Boolean! @authenticate
+
+    # ExternalResources 
+    insertExternalResources(data: ExternalResourcesCreate!): ExternalResources @authenticate
+    updateExternalResourcesByFields(id: Int!, data: ExternalResourcesUpdate!): ExternalResources @authenticate
+    deleteExternalResourcesByID(id: Int!): Boolean! @authenticate
+
+    # InternalResources
+    insertInternalResources(data: InternalResourcesCreate!): InternalResources @authenticate
+    updateInternalResourcesByFields(id: Int!, data: InternalResourcesUpdate!): InternalResources @authenticate
+    deleteInternalResourcesByID(id: Int!): Boolean! @authenticate
+
+    # Registrations
+    insertRegistrations(data: RegistrationsCreate!): Registrations @authenticate
+    updateRegistrationsByFields(id: Int!, data: RegistrationsUpdate!): Registrations @authenticate
+    deleteRegistrationsByID(id: Int!): Boolean! @authenticate
+
+    # TrainerTrainingMapping
+    insertTrainerTrainingMapping(data: TrainerTrainingMappingCreate!): TrainerTrainingMapping @authenticate
+    updateTrainerTrainingMappingByFields(id: Int!, data: TrainerTrainingMappingUpdate!): TrainerTrainingMapping @authenticate
+    deleteTrainerTrainingMappingByID(id: Int!): Boolean! @authenticate
+
+    # TrainingEvent
+    insertTrainingEvent(data: TrainingEventCreate!): TrainingEvent @authenticate
+    updateTrainingEventByFields(id: Int!, data: TrainingEventUpdate!): TrainingEvent @authenticate
+    deleteTrainingEventByID(id: Int!): Boolean! @authenticate
+
+    # Training
+    insertTraining(data: TrainingCreate!): Training @authenticate
+    updateTrainingByFields(id: Int!, data: TrainingUpdate!): Training @authenticate
+    deleteTrainingByID(id: Int!): Boolean! @authenticate
+
 }
