@@ -28,7 +28,7 @@ func (f *FilterOnField) UnmarshalGQL(v interface{}) error {
 		return nil
 	}
 	singleMap := map[FilterType]interface{}{}
-	err = json.Unmarshal(vjson, singleMap)
+	err = json.Unmarshal(vjson, &singleMap)
 	if err == nil {
 		*f = []map[FilterType]interface{}{
 			singleMap,

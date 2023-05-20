@@ -37,6 +37,10 @@ func ({{ $shortName }}r *{{ $tableNameCamel }}RltsRepository) {{ camelCase .RefT
         return nil, nil
     }
 
+    if filter == nil {
+		filter = &table.{{ camelCase .RefTableName }}Filter{}
+	}
+
     filter.Add{{ camelCase .RefColumnName }}(internal.Eq, obj.{{ camelCase .ColumnName }})
     result, err := {{ $shortName }}r.{{camelCase .RefTableName}}Repository.FindAll{{camelCase .RefTableName}}(ctx, filter, nil)
 

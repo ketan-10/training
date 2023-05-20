@@ -22,7 +22,11 @@
               All fields will be mandetory
       - Create UpdateTable struct with all fields except (`id`, `created_at`, `updated_at`) <br>
               All fields will be opional, denoted by pointer which can be null.
-      - Create TableFilter struct for all columns, each column will have type `FilterOnField`
+      - Create TableFilter struct for all columns, each column will have type `FilterOnField`, and Some additionalFilters like where, joins etc.
+      - Create A ListTable object, and some helper function on the ListTable struct. <br> 
+        - Filter and Find function.
+        - GetSpecificColumn as a list.
+        - By reading `indexes` a `MapBy` function, which will return Map with key as index column, and value as ListTable if non unique or Table if Unique.
 
 ## XO
 
@@ -85,28 +89,30 @@
   - Here we provide functionality to add filters, So the graqhql query with filters. <br>
     In below example we are using filter with id in findAllUser <br>
     Also we are fetching internal resources created by user, there we add filter for `projectName` <br>
-    So internalResouces will be fetched by "created by userId: `1`, **and** with projectName: `abc`"
+    So internalResouces will be fetched by "created by userId: `2`, `3`, `4` **and** with projectName: `abc`"
 
     ```graphql
     query findusers {
-        findAllUser(filter: {
-            id: 1
-        }) {
-            totalCount
-            data {
-               username
-                internalResourcesByCreatedBy(
-                filter: {
-                    projectName: "abc"
-                }
-                ) {
-                    data {
-                        name
-                    }
-                }
-            
+      findAllUser(filter: {
+        id: {
+          gt: 1
+          lt: 5
+        }
+      }) {
+        totalCount
+        data {
+          username
+          internalResourcesByCreatedBy(
+            filter: {
+              projectName: "abc"
             }
-        } 
+          ) {
+            data {
+              name
+            }
+          }    
+        }
+      } 
     }
     ```
 
@@ -130,11 +136,22 @@
     // enum of 'eq', 'neq', 'gt', 'gte', 'lt', 'lte', 'like', 'between' 
   ```
 
+  - Example of possible filter on a column, it will fetch if column value is `8` or `9`
+
   ```js
     FilterOnField = [
       {
-        "gt": 20,
-        "lt"
+        "gt": 5,
+        "lt": 10
       },
+      {
+        "gt": 7
+      }
     ]
   ```
+
+  - In graphql query we only specify **one** `map[FilterType]interface{}`, but we use it's **Array** to applyFilter, due to we might use multiple filter in sevices or resolver in golang code.
+
+  - All filters are consolidated as `sq.And` and applied on `SelectBuild.where()` in AddFilter.
+
+  - Also We have additional filter like (`Where`, `Join`, `LeftJoin`, `GroupBy`, `Having`) which are applied in `AddAdditionalFilter` method. by converting to sql string and passed to query builder.
