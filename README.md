@@ -10,27 +10,103 @@
     - This way we can keep track of changes to database.
     - Goose will only run new Files. It keeps track of what files have ran in database table called `goose_db_version`.
   - Custom generated code using go-template, by reading MYSQL, Generate following files
-    - By reading Enums:
+    - **By reading Enums:**
       - Create an `uint16` extended type, by enumName.
       - Create contants by `name`+`type` using `itoa` to have int value starting from 0.
       - Create Methods on extended type, so it will implement
         - `graphql.Marshaler` -> So that enum can be Marshal and UnMarshal by gqlgen from Graphql query, as enums are scalar type in .graphql files.
         - `sql/driver.Valuer` and `database/sql.Scanner` -> So that 'repository' can perform *Insert* and *Select* Operations on the enum column.
-    - By reading Table:
+    - **By reading Table:**
       - Create Table struct with all fields and `json:"<column_name>" db:"<column_name>"` to map object to json and db
       - Create CreateTable struct with all fields except (`id`, `created_at`, `updated_at` and `active`) <br>
               All fields will be mandetory
       - Create UpdateTable struct with all fields except (`id`, `created_at`, `updated_at`) <br>
               All fields will be opional, denoted by pointer which can be null.
       - Create TableFilter struct for all columns, each column will have type `FilterOnField`, and Some additionalFilters like where, joins etc.
-      - Create A ListTable object, and some helper function on the ListTable struct. <br> 
+      - Create A ListTable object, and some helper function on the ListTable struct. <br>
         - Filter and Find function.
         - GetSpecificColumn as a list.
         - By reading `indexes` a `MapBy` function, which will return Map with key as index column, and value as ListTable if non unique or Table if Unique.
+    - **To read Indexes:**
+      - We read indexes created on table.
+      - Multi column indexes are expnded.
+        - A multi-column index can still be effective even if you are only searching by a single column that is part of index
+        - For example if you create an index on column (A, B, C). Mysql will create 3 seperate index (A), (A, B), (A, B, C)
+
+      ```json
+      // --> input
+      {
+        name: "hello"
+        id: 1,
+        unique: true,
+        columns: [
+          {name: col1, no: 1},
+          {name: col1, no: 2},
+          {name: col1, no: 3},
+        ]
+      }
+      
+      // --> output
+      {
+        name: "hello"
+        id: 1,
+        unique: true,
+        columns: [
+          {name: col1, no: 1},
+          {name: col1, no: 2},
+          {name: col1, no: 3},
+        ]
+      }
+      {
+        name: "hello"
+        id: 1,
+        unique: true,
+        columns: [
+          {name: col1, no: 1},
+        ]
+      }
+      {
+        name: "hello"
+        id: 1,
+        unique: true,
+        columns: [
+          {name: col1, no: 1},
+          {name: col1, no: 2},
+        ]
+      }
+
+      ```
+
+    - **To Read ForeignKeys:**
+      - We read all the foreignKeys for each table
+      - each Foreign Key have following data:
+
+        ```go
+        type ForeignKey struct {
+          ForeignKeyName string // the constrain name
+          ColumnName     string // column containing the foreign key, usually starts with 'fk_'
+          RefTableName   string // The table name it reffers to
+          RefColumnName  string // the ref table Column to with the key points to, usually 'id' column    
+
+          Column Column // column struct
+          RefColumn Column // ref column struct
+          RefTable Table // ref table struct
+        }
+        ```
+
+      - After accumulating foreign keys for evey table. <br>
+        For each table, we find what other tables are have foreign keys pointing to this table.
+      - When This Table Pointing to Other Table!!!, ManyToOne <- As Many records from other table can point to this table one record
+      - When other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
+
+    - **To generate Repos**:
+      - 
+    - **To generate rlts**:
+      - 
 
 ## XO
 
-- xo
+- **Architecture (TODO)**
 
 ## Backend
 
@@ -155,3 +231,9 @@
   - All filters are consolidated as `sq.And` and applied on `SelectBuild.where()` in AddFilter.
 
   - Also We have additional filter like (`Where`, `Join`, `LeftJoin`, `GroupBy`, `Having`) which are applied in `AddAdditionalFilter` method. by converting to sql string and passed to query builder.
+
+- **Pagination** (TODO)
+- **wire** (TODO)
+- **Login service** (TODO)
+- **Custom Resolvers** (TODO)
+- **Middleware and graphql Directives/Annotation Middleware** (TODO)
