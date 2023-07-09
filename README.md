@@ -274,7 +274,29 @@
 
   - Also We have additional filter like (`Where`, `Join`, `LeftJoin`, `GroupBy`, `Having`) which are applied in `AddAdditionalFilter` method. by converting to sql string and passed to query builder.
 
-- **Pagination** (TODO)
+- **Pagination**
+  - Besides filter we also have pagination as argument on each query in .graphql.
+  - So we also add Pagination to query functions like eg. `findAll` in repository.
+  - Pagination is defined as following in pagination.graphql:
+  
+  ```graphql
+    input Pagination {
+      page: Int
+      perPage: Int
+      sort: [String!]
+    }
+  ```
+
+  - And mapped to internal.Pagination struct in gqlgen-yml 
+
+  ```yaml
+    Pagination:
+      model: ../internal.Pagination
+  ```
+
+  - In repository, pegination is applied with query-builder before applying the query.
+  - Pagination adds `Offset` and `Limit` to query-builder.
+
 - **wire** (TODO)
 - **Login service** (TODO)
 - **Custom Resolvers** (TODO)
