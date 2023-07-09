@@ -138,14 +138,6 @@
       - We also have to find `UniqueTablesForRepoDependency` so that we don't inject same repository dependency multiple time in Rlts-struct for wiregen. 
       - This methods will be used by GraphQL as custom resolver, that's why the argument of the function contains the original entity fetched form parent query.
 
-## XO
-
-- **Architecture**
-  - *main.go*
-    - Parse xo-config
-
-
-
 ## Backend
 
 - **SQL first architecture and Goose:**
@@ -160,7 +152,102 @@
   - For this Custom Resource gqlgen uses following resource Discovery logic.
     - Does the mapping entity provided in `gqlgen.yml` have all the reqired fields, If not then we have custom reolvers.
     - First, Call the `query` method to get the Golang Entity, (Note: Golang Entity is subset of Graphql entity) Then find the resolver for Entity.
-    - The custom resolver methods required for entity is exposed as interface by gqlgen generated code by name `ResolverRoot`. we have to make the struct we pass to gqlgen config have these methods.
+    - The custom resolver methods required for entity is exposed as interface by gqlgen generated code by name `ResolverRoot`. we have to make the struct we pass to gqlgen config have these methods. We generate this in `xo_resolver.go`
+    - ex. given following inputs.
+      - `xo_config.yml` For custom resolver: 
+      
+        ```yaml
+        exclude_table:
+          - goose_db_version
+        graphql:
+          include_field:
+            attendances: 
+              isTotal: ": Boolean!"
+        ```  
+      
+      - `attendances.go` The file will be generated as from database structure as 
+        ```go
+        type Attendance struct {
+          ID int
+          FKTrainingEvent int
+          FkInternalResource int
+          Active bool
+        }
+        ``` 
+      - `attendances.graphql` The graphqlFile generated with database + `xo_config.yml` Custom resolvers, and FK relations if any.
+        ```graphql
+        type Attendance {
+          id: Int!
+          fkTrainingEvent: Int!
+          fkInternalResource: Int!
+          active: Boolean!
+
+          isTotal: Boolean!
+
+          trainingEventByFkTrainingEvent(filter: TrainingEventFilter): TrainingEvent
+          internalResourcesByInternalResource(filter: InternalResourcesFilter): InternalResources
+        }
+        ```
+
+      - `gqlgen.yml` We will attach graphql to Model. 
+        ```yaml
+        Attendances:
+          model: ../xo_gen/table.Attendances
+        ```
+      - Gqlgen will detect the missing fields, as for other fields we already have resolver, so gqlgen will expect `ResolverRoot` as follows (**Generated code bellow**)
+        ```go
+        type ResolverRoot interface {
+          Attendances() AttendancesResolver
+        }
+
+        type AttendancesResolver interface {
+          
+          IsTotal(ctx Context, obj *table.Attendance) (bool, error)
+
+          TrainingEventByFkTrainingEvent(ctx Context, obj *table.Attendance, filter TrainingEventFilter) (*table.TrainingEvent, error)
+          InternalResourcesByInternalResource(ctx Context, obj *table.Attendance, filter InternalResourcesFilter) (*table.InternalResources, error)
+        }
+        ```
+      - The above 3 methods will are implemented in 
+        1. In `IAttendancesRltsRepository` `TrainingEventByFkTrainingEvent` and `InternalResourcesByInternalResource` are defined.
+        2. `IsTotal` in `resolver` folder. 
+      - In resolver folder `attendance_resolver.go`
+        ```go
+          type IAttendanceResolver interface {
+            rlts.IAttendancesRltsRepository
+            IsTotal(ctx Context, obj *table.Attendance) (bool, error)
+          }
+          type AttendanceResolver struct {
+            rlts.IAttendancesRltsRepository
+            // Other dependencies if required by IsTotal func eg UserService
+          }
+          func (ar *AttendanceResolver) IsTotal(ctx Context, obj *table.Attendance) (bool, error){
+            // special logic if needed eg ar.UserService.Id > 0
+            return obj.active;
+          }
+        ```
+      - finally in `xo_resolver.go` we implement `ResolverRoot` 
+        ```go
+          type Resolver struct {
+            repo.IAttendanceRepository
+            rlts.IAttendanceRltsRepository
+            resolver.IAttendanceResolver
+            // .... many more
+          }
+
+          var NewResolver = wire.NewSet(wire.Struct(new(Resolver), "*"))
+
+          func (r Resolver) Attendance() gen.AttendancesResolver {
+            return r.IAttendanceResolver
+          }
+        ``` 
+      - the resolver object is given to global Application object. where wire injects it to App{} (more about wire in latter section)
+        ```go
+          type App{
+            Resolver resolver.Resolver
+          }
+        ``` 
+      - The `ResolverRoot` is passed on application creation in `server.go` as `gen.Config{Resolvers: app.Resolver}`.
 
 - **Go Mod:**
   - As go mod uses direct URLs. And we are using our own library `xo`, <br> Each time we update `xo` we have to push it to github, so that `backend` can `go mod tidy` lattest version.
@@ -297,7 +384,42 @@
   - In repository, pegination is applied with query-builder before applying the query.
   - Pagination adds `Offset` and `Limit` to query-builder.
 
-- **wire** (TODO)
+- **wire**
+  - Wire is a dependency injection library developed by google.
+  - We have extensively used this to inject repository, services.
+  - Anywhere we have to intansiate a struct, we expose it to wire using `wire.NewSet`
+  eg.
+
+    ```go
+    var NewAuthService = wire.NewSet(wire.Struct(new(AuthService), "*"), wire.Bind(new(IAuthService), new(AuthService)))
+    ``` 
+  - On running `do.sh wire` following code processing will happne (might be considered as **compile-time**)
+    - The entire code will be scanned for use of `wire.NewSet()` to accumulate all the possible objects and functions avaliable.
+    - Again wire will scan code to find function with `wire.Build(NewSet)` written. 
+    - This will not be a real function, but like a configuration fucntion which will **never run**. <br>
+    The only use of this function is to tell `wire` generate the following object. eg.
+      ```go
+      func GetApp(ctx context.Context) (*App, func(), error) {
+        wire.Build(globalSet)
+        return &App{}, nil, nil
+      }
+      ```
+    - The **App** object
+      ```go
+      type App struct {
+        AuthService services.IAuthService
+      }
+      ```
+    - eg `globalSet` might be 
+      
+      ```go
+      var globalSet = wire.NewSet(
+        NewAuthService,
+        wire.Struct(new(App), "*"),
+      )
+      ```
+    - Given above function and object wire will generate &App{} object. <br> And generate the same signature function which will return the real object.
+  - So just like any other dependency injection tool. wire helps us to just declear with it's dependencies. and add it to wire. the dependencies will be automatically injected on runtime. <br>
+  - Wire will scan form top to bottom. top being the initial point e.g `GetApp` function.
 - **Login service** (TODO)
-- **Custom Resolvers** (TODO)
 - **Middleware and graphql Directives/Annotation Middleware** (TODO)
