@@ -100,7 +100,7 @@
       - When other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
 
     - **To generate Repos**:
-      We generate repository for each Table with following functions: 
+      We generate repository for each Table with following functions:
       - `Insert<Table>IDResult(<Table>Create, suffix)`:
         - Given the CreateTable struct, insert into table.
         - If present add suffix. example suffix -> "ON DUPLICATE KEY UPDATE". "FOR UPDATE"
@@ -116,26 +116,26 @@
         - Query builder is a struct which is injected as dependency for `<Table>Repository` struct.
         - Query Builder has 2 methods (`FindAllBaseQuery`, `AddPagination`)
         - Both methods return a `github.com/elgris/sqrl.QueryBuilder` object. Which later used by `github.com/jmoiron/sqlx.Select` to fire query and get data.
-        - In `FindAll<Table>BaseQuery(Fields, Filters)` We check for all columns if any filter is applied, if so we add it to queryBuilder. <br> We also pass the **Fields** to the QueryBuilder.Select, which might be eg. (`<table>.*` or `COUNT(1) AS count`) 
+        - In `FindAll<Table>BaseQuery(Fields, Filters)` We check for all columns if any filter is applied, if so we add it to queryBuilder. <br> We also pass the **Fields** to the QueryBuilder.Select, which might be eg. (`<table>.*` or `COUNT(1) AS count`)
         - In `AddPagination(QueryBuilder, PaginationObj) QueryBuilder` We call internal Pagination function in which we add **`Offset`, `Limit` and `Sort`** given by Pagination Object, and return the QueryBuilder.  
       - `FindAll<Table>(tableFitler, pagination)`
-        - In this methods, Given the tableFilter we first call `QueryBuilder.FindAll<Table>BaseQuery` on all fields with `<table>.*` 
-        - Then we call `QueryBuilder.AddPagination` with given arguments. 
+        - In this methods, Given the tableFilter we first call `QueryBuilder.FindAll<Table>BaseQuery` on all fields with `<table>.*`
+        - Then we call `QueryBuilder.AddPagination` with given arguments.
         - Then we fire query with `jmoiron/sqlx.Select()` given `elgris/sqrl.QueryBuilder`
         - Then we again call `QueryBuilder.FindAll<Table>BaseQuery` with `COUNT(1) AS count` as fields to be the **count** with same QueryBuilder.
       - Finally For All **Indexes** on table we create Method `FindAll<Table>By<Index>`
         - Depending if Index is **Unique** or not we return `List<Table>Entity` or `<Table>Entity`.
     - **To generate rlts**:
       - ForeignKeysRef Methods. returning List
-        - For `ForeignKeysRef` other table will have foreign key pointing to our table 
-        - As Every Foreign key is also a Index (in this case) we will have method `FindAll<table>By<index>()` on repository. 
-        - We can directly call the Index method of repository. 
-        - (Note: as the key might be nullable, we accept gotype as Nullable in repository ) So we have to parse the type to Nullable. depending if it's nullable or not we are checking it by `{{- if eq .Column.GoType .RefColumn.GoType }}` 
+        - For `ForeignKeysRef` other table will have foreign key pointing to our table
+        - As Every Foreign key is also a Index (in this case) we will have method `FindAll<table>By<index>()` on repository.
+        - We can directly call the Index method of repository.
+        - (Note: as the key might be nullable, we accept gotype as Nullable in repository ) So we have to parse the type to Nullable. depending if it's nullable or not we are checking it by `{{- if eq .Column.GoType .RefColumn.GoType }}`
       - ForeignKeys Methods. returning Single Item of refered table.
-        - We had multiple ways to do this. The simplest would have been just use `Find<Table>ById()` method on repository. 
+        - We had multiple ways to do this. The simplest would have been just use `Find<Table>ById()` method on repository.
         - But this assumes foreign keys will always be `id` of refered table.
         - In this case we are just adding to `filter` the `refColumnName`
-      - We also have to find `UniqueTablesForRepoDependency` so that we don't inject same repository dependency multiple time in Rlts-struct for wiregen. 
+      - We also have to find `UniqueTablesForRepoDependency` so that we don't inject same repository dependency multiple time in Rlts-struct for wiregen.
       - This methods will be used by GraphQL as custom resolver, that's why the argument of the function contains the original entity fetched form parent query.
 
 ## Backend
@@ -154,8 +154,8 @@
     - First, Call the `query` method to get the Golang Entity, (Note: Golang Entity is subset of Graphql entity) Then find the resolver for Entity.
     - The custom resolver methods required for entity is exposed as interface by gqlgen generated code by name `ResolverRoot`. we have to make the struct we pass to gqlgen config have these methods. We generate this in `xo_resolver.go`
     - ex. given following inputs.
-      - `xo_config.yml` For custom resolver: 
-      
+      - `xo_config.yml` For custom resolver:
+
         ```yaml
         exclude_table:
           - goose_db_version
@@ -164,8 +164,9 @@
             attendances: 
               isTotal: ": Boolean!"
         ```  
-      
-      - `attendances.go` The file will be generated as from database structure as 
+
+      - `attendances.go` The file will be generated as from database structure as
+
         ```go
         type Attendance struct {
           ID int
@@ -173,8 +174,10 @@
           FkInternalResource int
           Active bool
         }
-        ``` 
+        ```
+
       - `attendances.graphql` The graphqlFile generated with database + `xo_config.yml` Custom resolvers, and FK relations if any.
+
         ```graphql
         type Attendance {
           id: Int!
@@ -189,12 +192,15 @@
         }
         ```
 
-      - `gqlgen.yml` We will attach graphql to Model. 
+      - `gqlgen.yml` We will attach graphql to Model.
+
         ```yaml
         Attendances:
           model: ../xo_gen/table.Attendances
         ```
+
       - Gqlgen will detect the missing fields, as for other fields we already have resolver, so gqlgen will expect `ResolverRoot` as follows (**Generated code bellow**)
+
         ```go
         type ResolverRoot interface {
           Attendances() AttendancesResolver
@@ -208,10 +214,12 @@
           InternalResourcesByInternalResource(ctx Context, obj *table.Attendance, filter InternalResourcesFilter) (*table.InternalResources, error)
         }
         ```
-      - The above 3 methods will are implemented in 
+
+      - The above 3 methods will are implemented in
         1. In `IAttendancesRltsRepository` `TrainingEventByFkTrainingEvent` and `InternalResourcesByInternalResource` are defined.
-        2. `IsTotal` in `resolver` folder. 
+        2. `IsTotal` in `resolver` folder.
       - In resolver folder `attendance_resolver.go`
+
         ```go
           type IAttendanceResolver interface {
             rlts.IAttendancesRltsRepository
@@ -226,7 +234,9 @@
             return obj.active;
           }
         ```
-      - finally in `xo_resolver.go` we implement `ResolverRoot` 
+
+      - finally in `xo_resolver.go` we implement `ResolverRoot`
+
         ```go
           type Resolver struct {
             repo.IAttendanceRepository
@@ -240,13 +250,16 @@
           func (r Resolver) Attendance() gen.AttendancesResolver {
             return r.IAttendanceResolver
           }
-        ``` 
+        ```
+
       - the resolver object is given to global Application object. where wire injects it to App{} (more about wire in latter section)
+
         ```go
           type App{
             Resolver resolver.Resolver
           }
-        ``` 
+        ```
+
       - The `ResolverRoot` is passed on application creation in `server.go` as `gen.Config{Resolvers: app.Resolver}`.
 
 - **Go Mod:**
@@ -374,7 +387,7 @@
     }
   ```
 
-  - And mapped to internal.Pagination struct in gqlgen-yml 
+  - And mapped to internal.Pagination struct in gqlgen-yml
 
   ```yaml
     Pagination:
@@ -392,34 +405,106 @@
 
     ```go
     var NewAuthService = wire.NewSet(wire.Struct(new(AuthService), "*"), wire.Bind(new(IAuthService), new(AuthService)))
-    ``` 
+    ```
+
   - On running `do.sh wire` following code processing will happne (might be considered as **compile-time**)
     - The entire code will be scanned for use of `wire.NewSet()` to accumulate all the possible objects and functions avaliable.
-    - Again wire will scan code to find function with `wire.Build(NewSet)` written. 
+    - Again wire will scan code to find function with `wire.Build(NewSet)` written.
     - This will not be a real function, but like a configuration fucntion which will **never run**. <br>
     The only use of this function is to tell `wire` generate the following object. eg.
+
       ```go
       func GetApp(ctx context.Context) (*App, func(), error) {
         wire.Build(globalSet)
         return &App{}, nil, nil
       }
       ```
+
     - The **App** object
+
       ```go
       type App struct {
         AuthService services.IAuthService
       }
       ```
-    - eg `globalSet` might be 
-      
+
+    - eg `globalSet` might be
+
       ```go
       var globalSet = wire.NewSet(
         NewAuthService,
         wire.Struct(new(App), "*"),
       )
       ```
+
     - Given above function and object wire will generate &App{} object. <br> And generate the same signature function which will return the real object.
   - So just like any other dependency injection tool. wire helps us to just declear with it's dependencies. and add it to wire. the dependencies will be automatically injected on runtime. <br>
   - Wire will scan form top to bottom. top being the initial point e.g `GetApp` function.
-- **Login service** (TODO)
-- **Middleware and graphql Directives/Annotation Middleware** (TODO)
+- **Login service**
+  - To create Login Service (Auth service) first we add Query to our schema, and run gqlgen
+
+    ```graphql
+    type Query {
+      login(email: String!, password: String!): String!
+    }
+    ```
+
+  - After running gql-gen we note that our QueryResolver now expects login function.
+
+    ```go
+    type QueryResolver interface {
+      Login(ctx context.Context, email string, password string) (string, error)
+    }
+    ```
+
+  - We implement the login funciton in `services/auth_service.go`.
+
+    ```go
+    type IAuthService interface {
+      Login(ctx context.Context, email string, password string) (string, error)
+    }
+
+    type AuthService struct {
+      UserRepository repo.IUserRepository
+    }
+
+    var NewAuthService = wire.NewSet(wire.Struct(new(AuthService), "*"), wire.Bind(new(IAuthService), new(AuthService)))
+
+    // Login Login for all users in the system
+    func (us *AuthService) Login(ctx context.Context, email string, password string) (string, error) {
+      // generate and return token
+    }
+    ```
+
+  - Finally we add `services.IAuthService` to our resover so it QueryResolver can find it.
+
+    ```go
+    type Resolver struct {
+      xo_gen.XoResolver
+      services.IAuthService
+    }
+
+    func (r *Resolver) Query() gen.QueryResolver {
+      return r
+    }
+    ```
+
+- **Middleware and graphql Directives/Annotation Middleware**
+  - We have 2 types of middlewares
+  - `Chi` middleware used in `router.Use()`
+    - For Chi middleware is executated for **each request**.
+    - In this project we are using it as checking if header have Bearer token. If exists add it to `context`. and call `next()`
+  - `Graphql` middleware used as annotation in .graphql file `@authenticate`
+    - For Graphql middleware it is executated only if query have the annotation eg.
+
+    ```graphql
+    findAllUser(filter: UserFilter, pagination: Pagination): ListUser! @authenticate
+    ```
+
+    - to apply the middleware in `server.go` we do:
+
+    ```go
+    c.Directives.Authenticate = app.GraphqlAuthenticateMiddleware.Handle
+    ```
+
+    - In this middleware we check if the token is valid and should user be allowed further.
