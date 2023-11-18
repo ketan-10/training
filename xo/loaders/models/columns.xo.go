@@ -194,8 +194,8 @@ func parseSQL2GoType(c Column) string {
 		nilVal = "time.Time{}"
 		typ = "time.Time"
 		if nullable {
-			nilVal = "mysql.NullTime{}"
-			typ = "mysql.NullTime"
+			nilVal = "sql.NullTime{}"
+			typ = "sql.NullTime"
 		}
 
 	case "time":
@@ -263,7 +263,7 @@ func parseGoToGraphqlType(typ string) string {
 		typ = "Boolean"
 	case "time.Time":
 		typ = "Datetime"
-	case "mysql.NullTime":
+	case "sql.NullTime":
 		typ = "NullTime"
 	case "sql.NullInt64":
 		typ = "NullInt64"
