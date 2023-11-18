@@ -30,7 +30,7 @@ type DB struct {
 var NewDB = wire.NewSet(
 	wire.Struct(new(DBOptions), "*"),
 	OpenConnection,
-	wire.Bind(new(IDb), new(DB)),
+	wire.Bind(new(IDb), new(*DB)),
 )
 
 func OpenConnection(ctx context.Context, options *DBOptions) *DB {

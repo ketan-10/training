@@ -23,7 +23,7 @@ type AuthService struct {
 	UserRepository repo.IUserRepository
 }
 
-var NewAuthService = wire.NewSet(wire.Struct(new(AuthService), "*"), wire.Bind(new(IAuthService), new(AuthService)))
+var NewAuthService = wire.NewSet(wire.Struct(new(AuthService), "*"), wire.Bind(new(IAuthService), new(*AuthService)))
 
 // Login Login for all users in the system
 func (us *AuthService) Login(ctx context.Context, email string, password string) (string, error) {

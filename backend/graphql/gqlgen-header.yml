@@ -1,0 +1,40 @@
+# Where are all the schema files located? globs are supported eg  src/**/*.graphqls
+schema:
+  - schema/*.graphql
+  - ../xo_gen/schema/*.graphql
+  - ../xo_gen/scalar.graphql
+
+# Where should the generated server code go?
+exec:
+  filename: ./gen/generated.go
+
+# Where should any generated models go?
+model:
+  filename: ./gen/models_gen.go
+
+# Where should the resolver implementations go?
+resolver:
+  filename: ./resolver.go
+  type: Resolver
+
+models:
+  Pagination:
+    model: ../internal.Pagination
+  FilterOnField:
+    model: ../internal.FilterOnField
+  Datetime:
+    model: ../internal.Datetime
+  IntBool:
+    model: ../internal.IntBool
+  NullInt64:
+    model: ../internal.NullInt64
+  NullFloat64:
+    model: ../internal.NullFloat64
+  NullBool:
+    model: ../internal.NullBool
+  NullString:
+    model: ../internal.NullString
+  NullTime:
+    model: ../internal.NullTime
+  Map:
+    model: ../internal.Map
