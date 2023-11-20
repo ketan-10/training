@@ -1,6 +1,6 @@
-# classroom
+# Training Portal
 
-![db-digrams](db-digrams-io.png)
+![db-diagram](training.svg)
 
 - This project created to be used as a starter template.
 - Overview
@@ -268,7 +268,7 @@
       So that we are pointing to local files, so go mod does not query the web.
 
     ```
-    replace github.com/ketan-10/classroom/xo => /home/ketan/go/src/classroom/xo
+    replace github.com/ketan-10/training/xo => /home/ketan/go/src/training/xo
     ```
 
 - **golang**

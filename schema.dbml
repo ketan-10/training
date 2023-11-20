@@ -32,13 +32,13 @@ Ref: training.requested_by > users.id
 Ref: training.created_by > users.id 
 
 
-Table internal_resources {
+Table student {
   id int [primary key]
-  pid string
+  uuid string
   full_name string
   email string
   phone_number string
-  project_name string
+  class_name string
   designation string
   active bool
   created_at timestamp
@@ -46,12 +46,12 @@ Table internal_resources {
   created_by int
 }
 
-Ref: internal_resources.created_by > users.id 
+Ref: student.created_by > users.id 
 
 
-Table external_resources {
+Table trainer {
   id int [primary key]
-  pid string
+  uuid string
   full_name string
   email string
   phone_number string 
@@ -62,44 +62,44 @@ Table external_resources {
   created_by int
 }
 
-Ref: external_resources.created_by > users.id 
+Ref: trainer.created_by > users.id 
 
 
-Table traininer_training_mapping {
+Table trainer_training_mapping {
   id int [primary key]
   fk_training_event int
-  fk_external_resource int
-  fk_internal_resource int
+  fk_trainer int
+  fk_student int
   active bool
   created_at timestamp
   updated_at timestamp
 }
 
-Ref: traininer_training_mapping.fk_training_event > training_event.id
-Ref: traininer_training_mapping.fk_external_resource > external_resources.id
-Ref: traininer_training_mapping.fk_internal_resource > internal_resources.id
+Ref: trainer_training_mapping.fk_training_event > training_event.id
+Ref: trainer_training_mapping.fk_trainer > trainer.id
+Ref: trainer_training_mapping.fk_student > student.id
 
 Table attendance {
   id int [primary key]
-  fk_internal_resource int
+  fk_student int
   fk_training_event int
   active bool
   created_at timestamp
   updated_at timestamp
 }
-Ref: attendance.fk_internal_resource > internal_resources.id
+Ref: attendance.fk_student > student.id
 Ref: attendance.fk_training_event > training_event.id
 
 
 Table registration {
   id int [primary key]
-  fk_internal_resource int
+  fk_student int
   fk_training int
   active bool
   created_at timestamp
   updated_at timestamp
 }
-Ref: registration.fk_internal_resource > internal_resources.id
+Ref: registration.fk_student > student.id
 Ref: registration.fk_training > training.id
 
 
@@ -118,7 +118,6 @@ Table training_event {
 
 Ref: training_event.fk_training > training.id
 Ref: training_event.created_by > users.id 
-
 
 
 enum training_type {
@@ -143,7 +142,6 @@ enum training_status {
 
 // enum belonged to default "public" schema
 enum user_type {
-  internal_team [note: 'Waiting to be processed']
-  manager
+  admin [note: 'Waiting to be processed']
+  requester
 }
-
