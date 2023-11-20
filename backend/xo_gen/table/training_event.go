@@ -7,8 +7,8 @@ import (
 	"time"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/enum"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/enum"
 	"github.com/pkg/errors"
 )
 
@@ -264,6 +264,21 @@ func (l *ListTrainingEvent) Find(f func(item TrainingEvent) bool) (res TrainingE
 	return TrainingEvent{}, false
 }
 
+func (l *ListTrainingEvent) MapByCreatedBy() (m map[sql.NullInt64]ListTrainingEvent) {
+	m = make(map[sql.NullInt64]ListTrainingEvent)
+	for _, item := range l.Data {
+		list := m[item.CreatedBy]
+		list.Data = append(list.Data, item)
+
+		m[item.CreatedBy] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
 func (l *ListTrainingEvent) MapByFkTraining() (m map[int]ListTrainingEvent) {
 	m = make(map[int]ListTrainingEvent)
 	for _, item := range l.Data {
@@ -283,21 +298,6 @@ func (l *ListTrainingEvent) MapByID() (m map[int]TrainingEvent) {
 	m = make(map[int]TrainingEvent, len(l.Data))
 	for _, item := range l.Data {
 		m[item.ID] = item
-	}
-	return m
-}
-
-func (l *ListTrainingEvent) MapByCreatedBy() (m map[sql.NullInt64]ListTrainingEvent) {
-	m = make(map[sql.NullInt64]ListTrainingEvent)
-	for _, item := range l.Data {
-		list := m[item.CreatedBy]
-		list.Data = append(list.Data, item)
-
-		m[item.CreatedBy] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
 	}
 	return m
 }

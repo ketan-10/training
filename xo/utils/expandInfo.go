@@ -1,6 +1,6 @@
 package utils
 
-import "github.com/ketan-10/classroom/xo/loaders/models"
+import "github.com/ketan-10/training/xo/loaders/models"
 
 // --> input
 // {

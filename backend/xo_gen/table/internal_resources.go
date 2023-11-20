@@ -6,7 +6,7 @@ import (
 	"database/sql"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
+	"github.com/ketan-10/training/backend/internal"
 	"github.com/pkg/errors"
 )
 
@@ -283,6 +283,29 @@ func (l *ListInternalResources) Find(f func(item InternalResources) bool) (res I
 	return InternalResources{}, false
 }
 
+func (l *ListInternalResources) MapByName() (m map[string]ListInternalResources) {
+	m = make(map[string]ListInternalResources)
+	for _, item := range l.Data {
+		list := m[item.Name]
+		list.Data = append(list.Data, item)
+
+		m[item.Name] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
+func (l *ListInternalResources) MapByID() (m map[int]InternalResources) {
+	m = make(map[int]InternalResources, len(l.Data))
+	for _, item := range l.Data {
+		m[item.ID] = item
+	}
+	return m
+}
+
 func (l *ListInternalResources) MapByCreatedBy() (m map[sql.NullInt64]ListInternalResources) {
 	m = make(map[sql.NullInt64]ListInternalResources)
 	for _, item := range l.Data {
@@ -324,29 +347,6 @@ func (l *ListInternalResources) MapByResourceID() (m map[string]ListInternalReso
 	for k, v := range m {
 		v.TotalCount = len(v.Data)
 		m[k] = v
-	}
-	return m
-}
-
-func (l *ListInternalResources) MapByName() (m map[string]ListInternalResources) {
-	m = make(map[string]ListInternalResources)
-	for _, item := range l.Data {
-		list := m[item.Name]
-		list.Data = append(list.Data, item)
-
-		m[item.Name] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
-	}
-	return m
-}
-
-func (l *ListInternalResources) MapByID() (m map[int]InternalResources) {
-	m = make(map[int]InternalResources, len(l.Data))
-	for _, item := range l.Data {
-		m[item.ID] = item
 	}
 	return m
 }

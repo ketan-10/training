@@ -88,9 +88,6 @@ elif [[ $1 = 'all' ]]; then
     wire
 else
     echo "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}?charset=utf8mb4&parseTime=true"
-    # mysql://bob:password@127.0.0.1:3306/classroom?charset=utf8mb4&parseTime=true
-    # go run main.go "mysql://bob:qweqwe@127.0.0.1:3306/skoolnet2?charset=utf8mb4&parseTime=true" --entities-pkg=gen
-    # go run main.go "mysql://bob:password@127.0.0.1:3306/classroom?charset=utf8mb4&parseTime=true" --entities-pkg=gen
     echo "Usage Not found"
     exit 2
 fi

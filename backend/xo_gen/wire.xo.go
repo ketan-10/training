@@ -4,8 +4,8 @@ package xo_gen
 
 import (
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/xo_gen/repo"
-	"github.com/ketan-10/classroom/backend/xo_gen/rlts"
+	"github.com/ketan-10/training/backend/xo_gen/repo"
+	"github.com/ketan-10/training/backend/xo_gen/rlts"
 )
 
 var NewRepositorySet = wire.NewSet(

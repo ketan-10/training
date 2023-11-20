@@ -7,8 +7,8 @@ import (
 
 	sq "github.com/elgris/sqrl"
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/table"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/table"
 )
 
 type IRegistrationsRepository interface {

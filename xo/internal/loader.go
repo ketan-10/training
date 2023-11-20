@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ketan-10/classroom/xo/loaders/models"
-	"github.com/ketan-10/classroom/xo/templates"
-	"github.com/ketan-10/classroom/xo/utils"
+	"github.com/ketan-10/training/xo/loaders/models"
+	"github.com/ketan-10/training/xo/templates"
+	"github.com/ketan-10/training/xo/utils"
 )
 
 // The loader interface

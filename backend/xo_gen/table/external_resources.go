@@ -6,7 +6,7 @@ import (
 	"database/sql"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
+	"github.com/ketan-10/training/backend/internal"
 	"github.com/pkg/errors"
 )
 
@@ -262,6 +262,21 @@ func (l *ListExternalResources) Find(f func(item ExternalResources) bool) (res E
 	return ExternalResources{}, false
 }
 
+func (l *ListExternalResources) MapByCreatedBy() (m map[sql.NullInt64]ListExternalResources) {
+	m = make(map[sql.NullInt64]ListExternalResources)
+	for _, item := range l.Data {
+		list := m[item.CreatedBy]
+		list.Data = append(list.Data, item)
+
+		m[item.CreatedBy] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
 func (l *ListExternalResources) MapByEmail() (m map[string]ListExternalResources) {
 	m = make(map[string]ListExternalResources)
 	for _, item := range l.Data {
@@ -296,21 +311,6 @@ func (l *ListExternalResources) MapByID() (m map[int]ExternalResources) {
 	m = make(map[int]ExternalResources, len(l.Data))
 	for _, item := range l.Data {
 		m[item.ID] = item
-	}
-	return m
-}
-
-func (l *ListExternalResources) MapByCreatedBy() (m map[sql.NullInt64]ListExternalResources) {
-	m = make(map[sql.NullInt64]ListExternalResources)
-	for _, item := range l.Data {
-		list := m[item.CreatedBy]
-		list.Data = append(list.Data, item)
-
-		m[item.CreatedBy] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
 	}
 	return m
 }

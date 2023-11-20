@@ -9,15 +9,15 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi/v5"
 	_ "github.com/go-sql-driver/mysql" // empty import, to load drivers
-	"github.com/ketan-10/classroom/backend/graphql/gen"
-	"github.com/ketan-10/classroom/backend/internal/context_manager"
-	"github.com/ketan-10/classroom/backend/wire_app"
+	"github.com/ketan-10/training/backend/graphql/gen"
+	"github.com/ketan-10/training/backend/internal/context_manager"
+	"github.com/ketan-10/training/backend/wire_app"
 )
 
 func main() {
 	port := "8080"
 
-	ctx := context_manager.WithConnection(context.Background(), "bob:password@tcp(127.0.0.1:3306)/classroom?charset=utf8mb4&parseTime=true")
+	ctx := context_manager.WithConnection(context.Background(), "bob:password@tcp(127.0.0.1:3306)/training?charset=utf8mb4&parseTime=true")
 
 	app, _, err := wire_app.GetApp(ctx)
 

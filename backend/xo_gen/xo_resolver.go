@@ -4,9 +4,9 @@ package xo_gen
 
 import (
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/graphql/gen"
-	"github.com/ketan-10/classroom/backend/xo_gen/repo"
-	"github.com/ketan-10/classroom/backend/xo_gen/rlts"
+	"github.com/ketan-10/training/backend/graphql/gen"
+	"github.com/ketan-10/training/backend/xo_gen/repo"
+	"github.com/ketan-10/training/backend/xo_gen/rlts"
 )
 
 type XoResolver struct {

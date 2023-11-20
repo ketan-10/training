@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/internal/context_manager"
+	"github.com/ketan-10/training/backend/internal/context_manager"
 )
 
 type HeaderMiddleware struct {

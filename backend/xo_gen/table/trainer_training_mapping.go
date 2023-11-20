@@ -6,7 +6,7 @@ import (
 	"database/sql"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
+	"github.com/ketan-10/training/backend/internal"
 	"github.com/pkg/errors"
 )
 

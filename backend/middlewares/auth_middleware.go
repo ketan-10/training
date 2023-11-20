@@ -6,8 +6,8 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/internal/context_manager"
-	"github.com/ketan-10/classroom/backend/services"
+	"github.com/ketan-10/training/backend/internal/context_manager"
+	"github.com/ketan-10/training/backend/services"
 )
 
 type GraphqlAuthenticateMiddleware struct {

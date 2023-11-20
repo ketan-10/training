@@ -2,8 +2,8 @@ package loaders
 
 import (
 	_ "github.com/go-sql-driver/mysql" // empty import, to load drivers
-	"github.com/ketan-10/classroom/xo/internal"
-	"github.com/ketan-10/classroom/xo/loaders/models"
+	"github.com/ketan-10/training/xo/internal"
+	"github.com/ketan-10/training/xo/loaders/models"
 )
 
 // init is a special function like main, which will be auto-called on start

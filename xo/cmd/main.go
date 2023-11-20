@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/alexflint/go-arg"
-	"github.com/ketan-10/classroom/xo/internal"
+	"github.com/ketan-10/training/xo/internal"
 	"gopkg.in/yaml.v3"
 
 	// empty import, so that init method will be called, and drivers will be loaded
-	_ "github.com/ketan-10/classroom/xo/loaders"
+	_ "github.com/ketan-10/training/xo/loaders"
 	"github.com/xo/dburl"
 )
 

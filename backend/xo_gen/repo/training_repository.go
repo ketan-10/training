@@ -8,8 +8,8 @@ import (
 
 	sq "github.com/elgris/sqrl"
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/table"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/table"
 )
 
 type ITrainingRepository interface {
@@ -28,10 +28,6 @@ type ITrainingRepository interface {
 	FindAllTraining(ctx context.Context, t *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 	FindAllTrainingWithSuffix(ctx context.Context, t *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error)
 
-	TrainingByTrainingName(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
-
-	TrainingByTrainingNameWithSuffix(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error)
-
 	TrainingByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 
 	TrainingByCreatedByWithSuffix(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error)
@@ -42,6 +38,10 @@ type ITrainingRepository interface {
 	TrainingByRequestedBy(ctx context.Context, requestedBy sql.NullInt64, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 
 	TrainingByRequestedByWithSuffix(ctx context.Context, requestedBy sql.NullInt64, filter *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error)
+
+	TrainingByTrainingName(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
+
+	TrainingByTrainingNameWithSuffix(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error)
 }
 
 type ITrainingRepositoryQueryBuilder interface {
@@ -360,52 +360,6 @@ func (tr *TrainingRepository) FindAllTrainingWithSuffix(ctx context.Context, fil
 	return &list, err
 }
 
-func (tr *TrainingRepository) TrainingByTrainingName(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error) {
-	return tr.TrainingByTrainingNameWithSuffix(ctx, trainingName, filter, pagination)
-}
-
-func (tr *TrainingRepository) TrainingByTrainingNameWithSuffix(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error) {
-
-	var list table.ListTraining
-	// sql query
-	qb, err := tr.FindAllTrainingBaseQuery(ctx, filter, "`training`.*", suffixes...)
-	if err != nil {
-		return &list, err
-	}
-	qb = qb.Where(sq.Eq{"`training`.`training_name`": trainingName})
-
-	if qb, err = tr.AddPagination(ctx, qb, pagination); err != nil {
-		return &list, err
-	}
-
-	// run query
-	if err = tr.DB.Select(ctx, &list.Data, qb); err != nil {
-		return &list, err
-	}
-
-	if pagination == nil || pagination.PerPage == nil || pagination.Page == nil {
-		list.TotalCount = len(list.Data)
-		return &list, nil
-	}
-
-	var listMeta internal.ListMetadata
-	if qb, err = tr.FindAllTrainingBaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
-		return &list, err
-	}
-	if filter != nil && len(filter.GroupBys) > 0 {
-		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
-	}
-	qb = qb.Where(sq.Eq{"`training`.`training_name`": trainingName})
-	if err = tr.DB.Get(ctx, &listMeta, qb); err != nil {
-		return &list, err
-	}
-
-	list.TotalCount = listMeta.Count
-
-	return &list, nil
-
-}
-
 func (tr *TrainingRepository) TrainingByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error) {
 	return tr.TrainingByCreatedByWithSuffix(ctx, createdBy, filter, pagination)
 }
@@ -510,6 +464,52 @@ func (tr *TrainingRepository) TrainingByRequestedByWithSuffix(ctx context.Contex
 		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
 	}
 	qb = qb.Where(sq.Eq{"`training`.`requested_by`": requestedBy})
+	if err = tr.DB.Get(ctx, &listMeta, qb); err != nil {
+		return &list, err
+	}
+
+	list.TotalCount = listMeta.Count
+
+	return &list, nil
+
+}
+
+func (tr *TrainingRepository) TrainingByTrainingName(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error) {
+	return tr.TrainingByTrainingNameWithSuffix(ctx, trainingName, filter, pagination)
+}
+
+func (tr *TrainingRepository) TrainingByTrainingNameWithSuffix(ctx context.Context, trainingName string, filter *table.TrainingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTraining, error) {
+
+	var list table.ListTraining
+	// sql query
+	qb, err := tr.FindAllTrainingBaseQuery(ctx, filter, "`training`.*", suffixes...)
+	if err != nil {
+		return &list, err
+	}
+	qb = qb.Where(sq.Eq{"`training`.`training_name`": trainingName})
+
+	if qb, err = tr.AddPagination(ctx, qb, pagination); err != nil {
+		return &list, err
+	}
+
+	// run query
+	if err = tr.DB.Select(ctx, &list.Data, qb); err != nil {
+		return &list, err
+	}
+
+	if pagination == nil || pagination.PerPage == nil || pagination.Page == nil {
+		list.TotalCount = len(list.Data)
+		return &list, nil
+	}
+
+	var listMeta internal.ListMetadata
+	if qb, err = tr.FindAllTrainingBaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
+		return &list, err
+	}
+	if filter != nil && len(filter.GroupBys) > 0 {
+		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
+	}
+	qb = qb.Where(sq.Eq{"`training`.`training_name`": trainingName})
 	if err = tr.DB.Get(ctx, &listMeta, qb); err != nil {
 		return &list, err
 	}

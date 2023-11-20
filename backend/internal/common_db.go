@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/utils"
+	"github.com/ketan-10/training/backend/utils"
 )
 
 func AddFilter(qb *sq.SelectBuilder, columnName string, filterOnField FilterOnField) (*sq.SelectBuilder, error) {

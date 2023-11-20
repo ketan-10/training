@@ -6,8 +6,8 @@ import (
 	"database/sql"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/enum"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/enum"
 	"github.com/pkg/errors"
 )
 
@@ -225,22 +225,6 @@ func (l *ListUser) Find(f func(item User) bool) (res User, found bool) {
 	}
 	return User{}, false
 }
-
-func (l *ListUser) MapByUsername() (m map[string]ListUser) {
-	m = make(map[string]ListUser)
-	for _, item := range l.Data {
-		list := m[item.Username]
-		list.Data = append(list.Data, item)
-
-		m[item.Username] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
-	}
-	return m
-}
-
 func (l *ListUser) MapByID() (m map[int]User) {
 	m = make(map[int]User, len(l.Data))
 	for _, item := range l.Data {
@@ -256,6 +240,21 @@ func (l *ListUser) MapByEmail() (m map[string]ListUser) {
 		list.Data = append(list.Data, item)
 
 		m[item.Email] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
+func (l *ListUser) MapByUsername() (m map[string]ListUser) {
+	m = make(map[string]ListUser)
+	for _, item := range l.Data {
+		list := m[item.Username]
+		list.Data = append(list.Data, item)
+
+		m[item.Username] = list
 	}
 	for k, v := range m {
 		v.TotalCount = len(v.Data)

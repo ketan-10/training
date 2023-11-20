@@ -6,7 +6,7 @@ import (
 	"database/sql"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
+	"github.com/ketan-10/training/backend/internal"
 	"github.com/pkg/errors"
 )
 
@@ -189,6 +189,13 @@ func (l *ListAttendances) Find(f func(item Attendances) bool) (res Attendances, 
 	}
 	return Attendances{}, false
 }
+func (l *ListAttendances) MapByID() (m map[int]Attendances) {
+	m = make(map[int]Attendances, len(l.Data))
+	for _, item := range l.Data {
+		m[item.ID] = item
+	}
+	return m
+}
 
 func (l *ListAttendances) MapByFkInternalResource() (m map[int]ListAttendances) {
 	m = make(map[int]ListAttendances)
@@ -216,14 +223,6 @@ func (l *ListAttendances) MapByFkTrainingEvent() (m map[int]ListAttendances) {
 	for k, v := range m {
 		v.TotalCount = len(v.Data)
 		m[k] = v
-	}
-	return m
-}
-
-func (l *ListAttendances) MapByID() (m map[int]Attendances) {
-	m = make(map[int]Attendances, len(l.Data))
-	for _, item := range l.Data {
-		m[item.ID] = item
 	}
 	return m
 }

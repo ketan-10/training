@@ -15,9 +15,9 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/enum"
-	"github.com/ketan-10/classroom/backend/xo_gen/table"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/enum"
+	"github.com/ketan-10/training/backend/xo_gen/table"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -2262,7 +2262,7 @@ func (ec *executionContext) field_Attendances_internalResourcesByFkInternalResou
 	var arg0 *table.InternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2277,7 +2277,7 @@ func (ec *executionContext) field_Attendances_trainingEventByFkTrainingEvent_arg
 	var arg0 *table.TrainingEventFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2292,7 +2292,7 @@ func (ec *executionContext) field_ExternalResources_trainerTrainingMappingByFkEx
 	var arg0 *table.TrainerTrainingMappingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2301,7 +2301,7 @@ func (ec *executionContext) field_ExternalResources_trainerTrainingMappingByFkEx
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2316,7 +2316,7 @@ func (ec *executionContext) field_ExternalResources_userByCreatedBy_args(ctx con
 	var arg0 *table.UserFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2331,7 +2331,7 @@ func (ec *executionContext) field_InternalResources_attendancesByFkInternalResou
 	var arg0 *table.AttendancesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2340,7 +2340,7 @@ func (ec *executionContext) field_InternalResources_attendancesByFkInternalResou
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2355,7 +2355,7 @@ func (ec *executionContext) field_InternalResources_registrationsByFkInternalRes
 	var arg0 *table.RegistrationsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
+		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2364,7 +2364,7 @@ func (ec *executionContext) field_InternalResources_registrationsByFkInternalRes
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2379,7 +2379,7 @@ func (ec *executionContext) field_InternalResources_trainerTrainingMappingByFkIn
 	var arg0 *table.TrainerTrainingMappingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2388,7 +2388,7 @@ func (ec *executionContext) field_InternalResources_trainerTrainingMappingByFkIn
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2403,7 +2403,7 @@ func (ec *executionContext) field_InternalResources_userByCreatedBy_args(ctx con
 	var arg0 *table.UserFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2523,7 +2523,7 @@ func (ec *executionContext) field_Mutation_insertExternalResources_args(ctx cont
 	var arg0 table.ExternalResourcesCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNExternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNExternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2538,7 +2538,7 @@ func (ec *executionContext) field_Mutation_insertInternalResources_args(ctx cont
 	var arg0 table.InternalResourcesCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNInternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNInternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2553,7 +2553,7 @@ func (ec *executionContext) field_Mutation_insertRegistrations_args(ctx context.
 	var arg0 table.RegistrationsCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNRegistrationsCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNRegistrationsCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2568,7 +2568,7 @@ func (ec *executionContext) field_Mutation_insertTrainerTrainingMapping_args(ctx
 	var arg0 table.TrainerTrainingMappingCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNTrainerTrainingMappingCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNTrainerTrainingMappingCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2583,7 +2583,7 @@ func (ec *executionContext) field_Mutation_insertTrainingEvent_args(ctx context.
 	var arg0 table.TrainingEventCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNTrainingEventCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNTrainingEventCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2598,7 +2598,7 @@ func (ec *executionContext) field_Mutation_insertTraining_args(ctx context.Conte
 	var arg0 table.TrainingCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNTrainingCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNTrainingCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2613,7 +2613,7 @@ func (ec *executionContext) field_Mutation_insertUser_args(ctx context.Context, 
 	var arg0 table.UserCreate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNUserCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserCreate(ctx, tmp)
+		arg0, err = ec.unmarshalNUserCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2637,7 +2637,7 @@ func (ec *executionContext) field_Mutation_updateExternalResourcesByFields_args(
 	var arg1 table.ExternalResourcesUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNExternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNExternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2661,7 +2661,7 @@ func (ec *executionContext) field_Mutation_updateInternalResourcesByFields_args(
 	var arg1 table.InternalResourcesUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNInternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNInternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2685,7 +2685,7 @@ func (ec *executionContext) field_Mutation_updateRegistrationsByFields_args(ctx 
 	var arg1 table.RegistrationsUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNRegistrationsUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNRegistrationsUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2709,7 +2709,7 @@ func (ec *executionContext) field_Mutation_updateTrainerTrainingMappingByFields_
 	var arg1 table.TrainerTrainingMappingUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNTrainerTrainingMappingUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNTrainerTrainingMappingUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2733,7 +2733,7 @@ func (ec *executionContext) field_Mutation_updateTrainingByFields_args(ctx conte
 	var arg1 table.TrainingUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNTrainingUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNTrainingUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2757,7 +2757,7 @@ func (ec *executionContext) field_Mutation_updateTrainingEventByFields_args(ctx 
 	var arg1 table.TrainingEventUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNTrainingEventUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNTrainingEventUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2781,7 +2781,7 @@ func (ec *executionContext) field_Mutation_updateUserByFields_args(ctx context.C
 	var arg1 table.UserUpdate
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNUserUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserUpdate(ctx, tmp)
+		arg1, err = ec.unmarshalNUserUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2811,7 +2811,7 @@ func (ec *executionContext) field_Query_findAllExternalResources_args(ctx contex
 	var arg0 *table.ExternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2820,7 +2820,7 @@ func (ec *executionContext) field_Query_findAllExternalResources_args(ctx contex
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2835,7 +2835,7 @@ func (ec *executionContext) field_Query_findAllInternalResources_args(ctx contex
 	var arg0 *table.InternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2844,7 +2844,7 @@ func (ec *executionContext) field_Query_findAllInternalResources_args(ctx contex
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2859,7 +2859,7 @@ func (ec *executionContext) field_Query_findAllRegistrations_args(ctx context.Co
 	var arg0 *table.RegistrationsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
+		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2868,7 +2868,7 @@ func (ec *executionContext) field_Query_findAllRegistrations_args(ctx context.Co
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2883,7 +2883,7 @@ func (ec *executionContext) field_Query_findAllTrainerTrainingMapping_args(ctx c
 	var arg0 *table.TrainerTrainingMappingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2892,7 +2892,7 @@ func (ec *executionContext) field_Query_findAllTrainerTrainingMapping_args(ctx c
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2907,7 +2907,7 @@ func (ec *executionContext) field_Query_findAllTrainingEvent_args(ctx context.Co
 	var arg0 *table.TrainingEventFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2916,7 +2916,7 @@ func (ec *executionContext) field_Query_findAllTrainingEvent_args(ctx context.Co
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2931,7 +2931,7 @@ func (ec *executionContext) field_Query_findAllTraining_args(ctx context.Context
 	var arg0 *table.TrainingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2940,7 +2940,7 @@ func (ec *executionContext) field_Query_findAllTraining_args(ctx context.Context
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2955,7 +2955,7 @@ func (ec *executionContext) field_Query_findAllUser_args(ctx context.Context, ra
 	var arg0 *table.UserFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2964,7 +2964,7 @@ func (ec *executionContext) field_Query_findAllUser_args(ctx context.Context, ra
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3003,7 +3003,7 @@ func (ec *executionContext) field_Registrations_internalResourcesByFkInternalRes
 	var arg0 *table.InternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3018,7 +3018,7 @@ func (ec *executionContext) field_Registrations_trainingByFkTraining_args(ctx co
 	var arg0 *table.TrainingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3033,7 +3033,7 @@ func (ec *executionContext) field_TrainerTrainingMapping_externalResourcesByFkEx
 	var arg0 *table.ExternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3048,7 +3048,7 @@ func (ec *executionContext) field_TrainerTrainingMapping_internalResourcesByFkIn
 	var arg0 *table.InternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3063,7 +3063,7 @@ func (ec *executionContext) field_TrainerTrainingMapping_trainingEventByFkTraini
 	var arg0 *table.TrainingEventFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3078,7 +3078,7 @@ func (ec *executionContext) field_TrainingEvent_attendancesByFkTrainingEvent_arg
 	var arg0 *table.AttendancesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3087,7 +3087,7 @@ func (ec *executionContext) field_TrainingEvent_attendancesByFkTrainingEvent_arg
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3102,7 +3102,7 @@ func (ec *executionContext) field_TrainingEvent_trainerTrainingMappingByFkTraini
 	var arg0 *table.TrainerTrainingMappingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3111,7 +3111,7 @@ func (ec *executionContext) field_TrainingEvent_trainerTrainingMappingByFkTraini
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3126,7 +3126,7 @@ func (ec *executionContext) field_TrainingEvent_trainingByFkTraining_args(ctx co
 	var arg0 *table.TrainingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3141,7 +3141,7 @@ func (ec *executionContext) field_TrainingEvent_userByCreatedBy_args(ctx context
 	var arg0 *table.UserFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3156,7 +3156,7 @@ func (ec *executionContext) field_Training_registrationsByFkTraining_args(ctx co
 	var arg0 *table.RegistrationsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
+		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3165,7 +3165,7 @@ func (ec *executionContext) field_Training_registrationsByFkTraining_args(ctx co
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3180,7 +3180,7 @@ func (ec *executionContext) field_Training_trainingEventByFkTraining_args(ctx co
 	var arg0 *table.TrainingEventFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3189,7 +3189,7 @@ func (ec *executionContext) field_Training_trainingEventByFkTraining_args(ctx co
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3204,7 +3204,7 @@ func (ec *executionContext) field_Training_userByCreatedBy_args(ctx context.Cont
 	var arg0 *table.UserFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3219,7 +3219,7 @@ func (ec *executionContext) field_Training_userByRequestedBy_args(ctx context.Co
 	var arg0 *table.UserFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3234,7 +3234,7 @@ func (ec *executionContext) field_User_externalResourcesByCreatedBy_args(ctx con
 	var arg0 *table.ExternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3243,7 +3243,7 @@ func (ec *executionContext) field_User_externalResourcesByCreatedBy_args(ctx con
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3258,7 +3258,7 @@ func (ec *executionContext) field_User_internalResourcesByCreatedBy_args(ctx con
 	var arg0 *table.InternalResourcesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3267,7 +3267,7 @@ func (ec *executionContext) field_User_internalResourcesByCreatedBy_args(ctx con
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3282,7 +3282,7 @@ func (ec *executionContext) field_User_trainingByCreatedBy_args(ctx context.Cont
 	var arg0 *table.TrainingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3291,7 +3291,7 @@ func (ec *executionContext) field_User_trainingByCreatedBy_args(ctx context.Cont
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3306,7 +3306,7 @@ func (ec *executionContext) field_User_trainingByRequestedBy_args(ctx context.Co
 	var arg0 *table.TrainingFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3315,7 +3315,7 @@ func (ec *executionContext) field_User_trainingByRequestedBy_args(ctx context.Co
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3330,7 +3330,7 @@ func (ec *executionContext) field_User_trainingEventByCreatedBy_args(ctx context
 	var arg0 *table.TrainingEventFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3339,7 +3339,7 @@ func (ec *executionContext) field_User_trainingEventByCreatedBy_args(ctx context
 	var arg1 *internal.Pagination
 	if tmp, ok := rawArgs["pagination"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3669,7 +3669,7 @@ func (ec *executionContext) _Attendances_trainingEventByFkTrainingEvent(ctx cont
 	}
 	res := resTmp.(*table.TrainingEvent)
 	fc.Result = res
-	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Attendances_trainingEventByFkTrainingEvent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3751,7 +3751,7 @@ func (ec *executionContext) _Attendances_internalResourcesByFkInternalResource(c
 	}
 	res := resTmp.(*table.InternalResources)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Attendances_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4263,7 +4263,7 @@ func (ec *executionContext) _ExternalResources_userByCreatedBy(ctx context.Conte
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ExternalResources_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4346,7 +4346,7 @@ func (ec *executionContext) _ExternalResources_trainerTrainingMappingByFkExterna
 	}
 	res := resTmp.(*table.ListTrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
+	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4879,7 +4879,7 @@ func (ec *executionContext) _InternalResources_userByCreatedBy(ctx context.Conte
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_InternalResources_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4962,7 +4962,7 @@ func (ec *executionContext) _InternalResources_attendancesByFkInternalResource(c
 	}
 	res := resTmp.(*table.ListAttendances)
 	fc.Result = res
-	return ec.marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx, field.Selections, res)
+	return ec.marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_InternalResources_attendancesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5023,7 +5023,7 @@ func (ec *executionContext) _InternalResources_registrationsByFkInternalResource
 	}
 	res := resTmp.(*table.ListRegistrations)
 	fc.Result = res
-	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
+	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_InternalResources_registrationsByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5084,7 +5084,7 @@ func (ec *executionContext) _InternalResources_trainerTrainingMappingByFkInterna
 	}
 	res := resTmp.(*table.ListTrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
+	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5189,7 +5189,7 @@ func (ec *executionContext) _ListAttendances_data(ctx context.Context, field gra
 	}
 	res := resTmp.([]table.Attendances)
 	fc.Result = res
-	return ec.marshalNAttendances2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendancesᚄ(ctx, field.Selections, res)
+	return ec.marshalNAttendances2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListAttendances_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5295,7 +5295,7 @@ func (ec *executionContext) _ListExternalResources_data(ctx context.Context, fie
 	}
 	res := resTmp.([]table.ExternalResources)
 	fc.Result = res
-	return ec.marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesᚄ(ctx, field.Selections, res)
+	return ec.marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListExternalResources_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5409,7 +5409,7 @@ func (ec *executionContext) _ListInternalResources_data(ctx context.Context, fie
 	}
 	res := resTmp.([]table.InternalResources)
 	fc.Result = res
-	return ec.marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesᚄ(ctx, field.Selections, res)
+	return ec.marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListInternalResources_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5529,7 +5529,7 @@ func (ec *executionContext) _ListRegistrations_data(ctx context.Context, field g
 	}
 	res := resTmp.([]table.Registrations)
 	fc.Result = res
-	return ec.marshalNRegistrations2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsᚄ(ctx, field.Selections, res)
+	return ec.marshalNRegistrations2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListRegistrations_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5635,7 +5635,7 @@ func (ec *executionContext) _ListTrainerTrainingMapping_data(ctx context.Context
 	}
 	res := resTmp.([]table.TrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalNTrainerTrainingMapping2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingᚄ(ctx, field.Selections, res)
+	return ec.marshalNTrainerTrainingMapping2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListTrainerTrainingMapping_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5745,7 +5745,7 @@ func (ec *executionContext) _ListTraining_data(ctx context.Context, field graphq
 	}
 	res := resTmp.([]table.Training)
 	fc.Result = res
-	return ec.marshalNTraining2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingᚄ(ctx, field.Selections, res)
+	return ec.marshalNTraining2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListTraining_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5865,7 +5865,7 @@ func (ec *executionContext) _ListTrainingEvent_data(ctx context.Context, field g
 	}
 	res := resTmp.([]table.TrainingEvent)
 	fc.Result = res
-	return ec.marshalNTrainingEvent2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventᚄ(ctx, field.Selections, res)
+	return ec.marshalNTrainingEvent2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListTrainingEvent_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5983,7 +5983,7 @@ func (ec *executionContext) _ListUser_data(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.([]table.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ListUser_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6061,7 +6061,7 @@ func (ec *executionContext) _Mutation_insertUser(ctx context.Context, field grap
 		if data, ok := tmp.(*table.User); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.User`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.User`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6072,7 +6072,7 @@ func (ec *executionContext) _Mutation_insertUser(ctx context.Context, field grap
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6161,7 +6161,7 @@ func (ec *executionContext) _Mutation_updateUserByFields(ctx context.Context, fi
 		if data, ok := tmp.(*table.User); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.User`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.User`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6172,7 +6172,7 @@ func (ec *executionContext) _Mutation_updateUserByFields(ctx context.Context, fi
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUserByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6336,7 +6336,7 @@ func (ec *executionContext) _Mutation_insertExternalResources(ctx context.Contex
 		if data, ok := tmp.(*table.ExternalResources); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ExternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ExternalResources`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6347,7 +6347,7 @@ func (ec *executionContext) _Mutation_insertExternalResources(ctx context.Contex
 	}
 	res := resTmp.(*table.ExternalResources)
 	fc.Result = res
-	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
+	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertExternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6434,7 +6434,7 @@ func (ec *executionContext) _Mutation_updateExternalResourcesByFields(ctx contex
 		if data, ok := tmp.(*table.ExternalResources); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ExternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ExternalResources`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6445,7 +6445,7 @@ func (ec *executionContext) _Mutation_updateExternalResourcesByFields(ctx contex
 	}
 	res := resTmp.(*table.ExternalResources)
 	fc.Result = res
-	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
+	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateExternalResourcesByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6607,7 +6607,7 @@ func (ec *executionContext) _Mutation_insertInternalResources(ctx context.Contex
 		if data, ok := tmp.(*table.InternalResources); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.InternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.InternalResources`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6618,7 +6618,7 @@ func (ec *executionContext) _Mutation_insertInternalResources(ctx context.Contex
 	}
 	res := resTmp.(*table.InternalResources)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertInternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6711,7 +6711,7 @@ func (ec *executionContext) _Mutation_updateInternalResourcesByFields(ctx contex
 		if data, ok := tmp.(*table.InternalResources); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.InternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.InternalResources`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6722,7 +6722,7 @@ func (ec *executionContext) _Mutation_updateInternalResourcesByFields(ctx contex
 	}
 	res := resTmp.(*table.InternalResources)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateInternalResourcesByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6890,7 +6890,7 @@ func (ec *executionContext) _Mutation_insertRegistrations(ctx context.Context, f
 		if data, ok := tmp.(*table.Registrations); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.Registrations`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Registrations`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6901,7 +6901,7 @@ func (ec *executionContext) _Mutation_insertRegistrations(ctx context.Context, f
 	}
 	res := resTmp.(*table.Registrations)
 	fc.Result = res
-	return ec.marshalORegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx, field.Selections, res)
+	return ec.marshalORegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertRegistrations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6980,7 +6980,7 @@ func (ec *executionContext) _Mutation_updateRegistrationsByFields(ctx context.Co
 		if data, ok := tmp.(*table.Registrations); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.Registrations`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Registrations`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6991,7 +6991,7 @@ func (ec *executionContext) _Mutation_updateRegistrationsByFields(ctx context.Co
 	}
 	res := resTmp.(*table.Registrations)
 	fc.Result = res
-	return ec.marshalORegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx, field.Selections, res)
+	return ec.marshalORegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateRegistrationsByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7145,7 +7145,7 @@ func (ec *executionContext) _Mutation_insertTrainerTrainingMapping(ctx context.C
 		if data, ok := tmp.(*table.TrainerTrainingMapping); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.TrainerTrainingMapping`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.TrainerTrainingMapping`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7156,7 +7156,7 @@ func (ec *executionContext) _Mutation_insertTrainerTrainingMapping(ctx context.C
 	}
 	res := resTmp.(*table.TrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx, field.Selections, res)
+	return ec.marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertTrainerTrainingMapping(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7239,7 +7239,7 @@ func (ec *executionContext) _Mutation_updateTrainerTrainingMappingByFields(ctx c
 		if data, ok := tmp.(*table.TrainerTrainingMapping); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.TrainerTrainingMapping`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.TrainerTrainingMapping`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7250,7 +7250,7 @@ func (ec *executionContext) _Mutation_updateTrainerTrainingMappingByFields(ctx c
 	}
 	res := resTmp.(*table.TrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx, field.Selections, res)
+	return ec.marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateTrainerTrainingMappingByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7408,7 +7408,7 @@ func (ec *executionContext) _Mutation_insertTrainingEvent(ctx context.Context, f
 		if data, ok := tmp.(*table.TrainingEvent); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.TrainingEvent`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.TrainingEvent`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7419,7 +7419,7 @@ func (ec *executionContext) _Mutation_insertTrainingEvent(ctx context.Context, f
 	}
 	res := resTmp.(*table.TrainingEvent)
 	fc.Result = res
-	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertTrainingEvent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7510,7 +7510,7 @@ func (ec *executionContext) _Mutation_updateTrainingEventByFields(ctx context.Co
 		if data, ok := tmp.(*table.TrainingEvent); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.TrainingEvent`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.TrainingEvent`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7521,7 +7521,7 @@ func (ec *executionContext) _Mutation_updateTrainingEventByFields(ctx context.Co
 	}
 	res := resTmp.(*table.TrainingEvent)
 	fc.Result = res
-	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateTrainingEventByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7687,7 +7687,7 @@ func (ec *executionContext) _Mutation_insertTraining(ctx context.Context, field 
 		if data, ok := tmp.(*table.Training); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.Training`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Training`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7698,7 +7698,7 @@ func (ec *executionContext) _Mutation_insertTraining(ctx context.Context, field 
 	}
 	res := resTmp.(*table.Training)
 	fc.Result = res
-	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
+	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_insertTraining(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7791,7 +7791,7 @@ func (ec *executionContext) _Mutation_updateTrainingByFields(ctx context.Context
 		if data, ok := tmp.(*table.Training); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.Training`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Training`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7802,7 +7802,7 @@ func (ec *executionContext) _Mutation_updateTrainingByFields(ctx context.Context
 	}
 	res := resTmp.(*table.Training)
 	fc.Result = res
-	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
+	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateTrainingByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8025,7 +8025,7 @@ func (ec *executionContext) _Query_findAllUser(ctx context.Context, field graphq
 		if data, ok := tmp.(*table.ListUser); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListUser`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListUser`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8039,7 +8039,7 @@ func (ec *executionContext) _Query_findAllUser(ctx context.Context, field graphq
 	}
 	res := resTmp.(*table.ListUser)
 	fc.Result = res
-	return ec.marshalNListUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListUser(ctx, field.Selections, res)
+	return ec.marshalNListUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8106,7 +8106,7 @@ func (ec *executionContext) _Query_findAllExternalResources(ctx context.Context,
 		if data, ok := tmp.(*table.ListExternalResources); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListExternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListExternalResources`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8120,7 +8120,7 @@ func (ec *executionContext) _Query_findAllExternalResources(ctx context.Context,
 	}
 	res := resTmp.(*table.ListExternalResources)
 	fc.Result = res
-	return ec.marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx, field.Selections, res)
+	return ec.marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllExternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8187,7 +8187,7 @@ func (ec *executionContext) _Query_findAllInternalResources(ctx context.Context,
 		if data, ok := tmp.(*table.ListInternalResources); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListInternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListInternalResources`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8201,7 +8201,7 @@ func (ec *executionContext) _Query_findAllInternalResources(ctx context.Context,
 	}
 	res := resTmp.(*table.ListInternalResources)
 	fc.Result = res
-	return ec.marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx, field.Selections, res)
+	return ec.marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllInternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8268,7 +8268,7 @@ func (ec *executionContext) _Query_findAllRegistrations(ctx context.Context, fie
 		if data, ok := tmp.(*table.ListRegistrations); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListRegistrations`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListRegistrations`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8282,7 +8282,7 @@ func (ec *executionContext) _Query_findAllRegistrations(ctx context.Context, fie
 	}
 	res := resTmp.(*table.ListRegistrations)
 	fc.Result = res
-	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
+	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllRegistrations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8349,7 +8349,7 @@ func (ec *executionContext) _Query_findAllTrainerTrainingMapping(ctx context.Con
 		if data, ok := tmp.(*table.ListTrainerTrainingMapping); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListTrainerTrainingMapping`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListTrainerTrainingMapping`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8363,7 +8363,7 @@ func (ec *executionContext) _Query_findAllTrainerTrainingMapping(ctx context.Con
 	}
 	res := resTmp.(*table.ListTrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
+	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllTrainerTrainingMapping(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8430,7 +8430,7 @@ func (ec *executionContext) _Query_findAllTrainingEvent(ctx context.Context, fie
 		if data, ok := tmp.(*table.ListTrainingEvent); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListTrainingEvent`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListTrainingEvent`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8444,7 +8444,7 @@ func (ec *executionContext) _Query_findAllTrainingEvent(ctx context.Context, fie
 	}
 	res := resTmp.(*table.ListTrainingEvent)
 	fc.Result = res
-	return ec.marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllTrainingEvent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8511,7 +8511,7 @@ func (ec *executionContext) _Query_findAllTraining(ctx context.Context, field gr
 		if data, ok := tmp.(*table.ListTraining); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/classroom/backend/xo_gen/table.ListTraining`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListTraining`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8525,7 +8525,7 @@ func (ec *executionContext) _Query_findAllTraining(ctx context.Context, field gr
 	}
 	res := resTmp.(*table.ListTraining)
 	fc.Result = res
-	return ec.marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTraining(ctx, field.Selections, res)
+	return ec.marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_findAllTraining(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8970,7 +8970,7 @@ func (ec *executionContext) _Registrations_trainingByFkTraining(ctx context.Cont
 	}
 	res := resTmp.(*table.Training)
 	fc.Result = res
-	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
+	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Registrations_trainingByFkTraining(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -9054,7 +9054,7 @@ func (ec *executionContext) _Registrations_internalResourcesByFkInternalResource
 	}
 	res := resTmp.(*table.InternalResources)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Registrations_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -9440,7 +9440,7 @@ func (ec *executionContext) _TrainerTrainingMapping_trainingEventByFkTrainingEve
 	}
 	res := resTmp.(*table.TrainingEvent)
 	fc.Result = res
-	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainerTrainingMapping_trainingEventByFkTrainingEvent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -9522,7 +9522,7 @@ func (ec *executionContext) _TrainerTrainingMapping_externalResourcesByFkExterna
 	}
 	res := resTmp.(*table.ExternalResources)
 	fc.Result = res
-	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
+	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -9600,7 +9600,7 @@ func (ec *executionContext) _TrainerTrainingMapping_internalResourcesByFkInterna
 	}
 	res := resTmp.(*table.InternalResources)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -9772,7 +9772,7 @@ func (ec *executionContext) _Training_mode(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(*enum.TrainingMode)
 	fc.Result = res
-	return ec.marshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx, field.Selections, res)
+	return ec.marshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Training_mode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -9813,7 +9813,7 @@ func (ec *executionContext) _Training_type(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(*enum.TrainingType)
 	fc.Result = res
-	return ec.marshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx, field.Selections, res)
+	return ec.marshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Training_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10144,7 +10144,7 @@ func (ec *executionContext) _Training_userByRequestedBy(ctx context.Context, fie
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Training_userByRequestedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10224,7 +10224,7 @@ func (ec *executionContext) _Training_userByCreatedBy(ctx context.Context, field
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Training_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10307,7 +10307,7 @@ func (ec *executionContext) _Training_registrationsByFkTraining(ctx context.Cont
 	}
 	res := resTmp.(*table.ListRegistrations)
 	fc.Result = res
-	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
+	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Training_registrationsByFkTraining(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10368,7 +10368,7 @@ func (ec *executionContext) _Training_trainingEventByFkTraining(ctx context.Cont
 	}
 	res := resTmp.(*table.ListTrainingEvent)
 	fc.Result = res
-	return ec.marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Training_trainingEventByFkTraining(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10517,7 +10517,7 @@ func (ec *executionContext) _TrainingEvent_status(ctx context.Context, field gra
 	}
 	res := resTmp.(enum.TrainingEventStatus)
 	fc.Result = res
-	return ec.marshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx, field.Selections, res)
+	return ec.marshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainingEvent_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10854,7 +10854,7 @@ func (ec *executionContext) _TrainingEvent_trainingByFkTraining(ctx context.Cont
 	}
 	res := resTmp.(*table.Training)
 	fc.Result = res
-	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
+	return ec.marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainingEvent_trainingByFkTraining(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10938,7 +10938,7 @@ func (ec *executionContext) _TrainingEvent_userByCreatedBy(ctx context.Context, 
 	}
 	res := resTmp.(*table.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainingEvent_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11021,7 +11021,7 @@ func (ec *executionContext) _TrainingEvent_attendancesByFkTrainingEvent(ctx cont
 	}
 	res := resTmp.(*table.ListAttendances)
 	fc.Result = res
-	return ec.marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx, field.Selections, res)
+	return ec.marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainingEvent_attendancesByFkTrainingEvent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11082,7 +11082,7 @@ func (ec *executionContext) _TrainingEvent_trainerTrainingMappingByFkTrainingEve
 	}
 	res := resTmp.(*table.ListTrainerTrainingMapping)
 	fc.Result = res
-	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
+	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TrainingEvent_trainerTrainingMappingByFkTrainingEvent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11313,7 +11313,7 @@ func (ec *executionContext) _User_role(ctx context.Context, field graphql.Collec
 	}
 	res := resTmp.(*enum.UserRole)
 	fc.Result = res
-	return ec.marshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐUserRole(ctx, field.Selections, res)
+	return ec.marshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐUserRole(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_role(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11483,7 +11483,7 @@ func (ec *executionContext) _User_externalResourcesByCreatedBy(ctx context.Conte
 	}
 	res := resTmp.(*table.ListExternalResources)
 	fc.Result = res
-	return ec.marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx, field.Selections, res)
+	return ec.marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_externalResourcesByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11544,7 +11544,7 @@ func (ec *executionContext) _User_internalResourcesByCreatedBy(ctx context.Conte
 	}
 	res := resTmp.(*table.ListInternalResources)
 	fc.Result = res
-	return ec.marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx, field.Selections, res)
+	return ec.marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_internalResourcesByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11605,7 +11605,7 @@ func (ec *executionContext) _User_trainingByRequestedBy(ctx context.Context, fie
 	}
 	res := resTmp.(*table.ListTraining)
 	fc.Result = res
-	return ec.marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTraining(ctx, field.Selections, res)
+	return ec.marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_trainingByRequestedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11666,7 +11666,7 @@ func (ec *executionContext) _User_trainingByCreatedBy(ctx context.Context, field
 	}
 	res := resTmp.(*table.ListTraining)
 	fc.Result = res
-	return ec.marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTraining(ctx, field.Selections, res)
+	return ec.marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTraining(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_trainingByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11727,7 +11727,7 @@ func (ec *executionContext) _User_trainingEventByCreatedBy(ctx context.Context, 
 	}
 	res := resTmp.(*table.ListTrainingEvent)
 	fc.Result = res
-	return ec.marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx, field.Selections, res)
+	return ec.marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_trainingEventByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -13589,7 +13589,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13598,7 +13598,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTrainingEvent"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13607,7 +13607,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13616,7 +13616,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13625,7 +13625,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13634,7 +13634,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13784,7 +13784,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13793,7 +13793,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13802,7 +13802,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13811,7 +13811,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13820,7 +13820,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13829,7 +13829,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13838,7 +13838,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13847,7 +13847,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13856,7 +13856,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13865,7 +13865,7 @@ func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14060,7 +14060,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14069,7 +14069,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14078,7 +14078,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14087,7 +14087,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14096,7 +14096,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14105,7 +14105,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("projectName"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14114,7 +14114,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14123,7 +14123,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14132,7 +14132,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14141,7 +14141,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14150,7 +14150,7 @@ func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Co
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14356,7 +14356,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14365,7 +14365,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14374,7 +14374,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTraining"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14383,7 +14383,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14392,7 +14392,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14401,7 +14401,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14524,7 +14524,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14533,7 +14533,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTrainingEvent"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14542,7 +14542,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkExternalResource"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14551,7 +14551,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14560,7 +14560,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14569,7 +14569,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14578,7 +14578,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14672,7 +14672,7 @@ func (ec *executionContext) unmarshalInputTrainingCreate(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mode"))
-			data, err := ec.unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx, v)
+			data, err := ec.unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14681,7 +14681,7 @@ func (ec *executionContext) unmarshalInputTrainingCreate(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("type"))
-			data, err := ec.unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx, v)
+			data, err := ec.unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14755,7 +14755,7 @@ func (ec *executionContext) unmarshalInputTrainingEventCreate(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			data, err := ec.unmarshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx, v)
+			data, err := ec.unmarshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14820,7 +14820,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14829,7 +14829,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTraining"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14838,7 +14838,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14847,7 +14847,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("from"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14856,7 +14856,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("completedOn"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14865,7 +14865,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("duration"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14874,7 +14874,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14883,7 +14883,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14892,7 +14892,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14901,7 +14901,7 @@ func (ec *executionContext) unmarshalInputTrainingEventFilter(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -14939,7 +14939,7 @@ func (ec *executionContext) unmarshalInputTrainingEventUpdate(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			data, err := ec.unmarshalOTrainingEventStatus2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx, v)
+			data, err := ec.unmarshalOTrainingEventStatus2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15013,7 +15013,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15022,7 +15022,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("trainingName"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15031,7 +15031,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mode"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15040,7 +15040,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("type"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15049,7 +15049,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("requestedBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15058,7 +15058,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isRegistrationRequired"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15067,7 +15067,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tags"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15076,7 +15076,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15085,7 +15085,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15094,7 +15094,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15103,7 +15103,7 @@ func (ec *executionContext) unmarshalInputTrainingFilter(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15141,7 +15141,7 @@ func (ec *executionContext) unmarshalInputTrainingUpdate(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mode"))
-			data, err := ec.unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx, v)
+			data, err := ec.unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15150,7 +15150,7 @@ func (ec *executionContext) unmarshalInputTrainingUpdate(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("type"))
-			data, err := ec.unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx, v)
+			data, err := ec.unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15251,7 +15251,7 @@ func (ec *executionContext) unmarshalInputUserCreate(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("role"))
-			data, err := ec.unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐUserRole(ctx, v)
+			data, err := ec.unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐUserRole(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15280,7 +15280,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15289,7 +15289,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15298,7 +15298,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15307,7 +15307,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15316,7 +15316,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("role"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15325,7 +15325,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15334,7 +15334,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15343,7 +15343,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -15399,7 +15399,7 @@ func (ec *executionContext) unmarshalInputUserUpdate(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("role"))
-			data, err := ec.unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐUserRole(ctx, v)
+			data, err := ec.unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐUserRole(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -17905,11 +17905,11 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAttendances2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendances(ctx context.Context, sel ast.SelectionSet, v table.Attendances) graphql.Marshaler {
+func (ec *executionContext) marshalNAttendances2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendances(ctx context.Context, sel ast.SelectionSet, v table.Attendances) graphql.Marshaler {
 	return ec._Attendances(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAttendances2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendancesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Attendances) graphql.Marshaler {
+func (ec *executionContext) marshalNAttendances2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Attendances) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -17933,7 +17933,7 @@ func (ec *executionContext) marshalNAttendances2ᚕgithubᚗcomᚋketanᚑ10ᚋc
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNAttendances2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendances(ctx, sel, v[i])
+			ret[i] = ec.marshalNAttendances2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendances(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -17983,11 +17983,11 @@ func (ec *executionContext) marshalNDatetime2timeᚐTime(ctx context.Context, se
 	return res
 }
 
-func (ec *executionContext) marshalNExternalResources2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx context.Context, sel ast.SelectionSet, v table.ExternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNExternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx context.Context, sel ast.SelectionSet, v table.ExternalResources) graphql.Marshaler {
 	return ec._ExternalResources(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.ExternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.ExternalResources) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18011,7 +18011,7 @@ func (ec *executionContext) marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNExternalResources2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, sel, v[i])
+			ret[i] = ec.marshalNExternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18031,12 +18031,12 @@ func (ec *executionContext) marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalNExternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesCreate(ctx context.Context, v interface{}) (table.ExternalResourcesCreate, error) {
+func (ec *executionContext) unmarshalNExternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesCreate(ctx context.Context, v interface{}) (table.ExternalResourcesCreate, error) {
 	res, err := ec.unmarshalInputExternalResourcesCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNExternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesUpdate(ctx context.Context, v interface{}) (table.ExternalResourcesUpdate, error) {
+func (ec *executionContext) unmarshalNExternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesUpdate(ctx context.Context, v interface{}) (table.ExternalResourcesUpdate, error) {
 	res, err := ec.unmarshalInputExternalResourcesUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -18056,11 +18056,11 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNInternalResources2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx context.Context, sel ast.SelectionSet, v table.InternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNInternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx context.Context, sel ast.SelectionSet, v table.InternalResources) graphql.Marshaler {
 	return ec._InternalResources(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.InternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.InternalResources) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18084,7 +18084,7 @@ func (ec *executionContext) marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNInternalResources2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, sel, v[i])
+			ret[i] = ec.marshalNInternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18104,21 +18104,21 @@ func (ec *executionContext) marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalNInternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesCreate(ctx context.Context, v interface{}) (table.InternalResourcesCreate, error) {
+func (ec *executionContext) unmarshalNInternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesCreate(ctx context.Context, v interface{}) (table.InternalResourcesCreate, error) {
 	res, err := ec.unmarshalInputInternalResourcesCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNInternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesUpdate(ctx context.Context, v interface{}) (table.InternalResourcesUpdate, error) {
+func (ec *executionContext) unmarshalNInternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesUpdate(ctx context.Context, v interface{}) (table.InternalResourcesUpdate, error) {
 	res, err := ec.unmarshalInputInternalResourcesUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNListAttendances2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx context.Context, sel ast.SelectionSet, v table.ListAttendances) graphql.Marshaler {
+func (ec *executionContext) marshalNListAttendances2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx context.Context, sel ast.SelectionSet, v table.ListAttendances) graphql.Marshaler {
 	return ec._ListAttendances(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx context.Context, sel ast.SelectionSet, v *table.ListAttendances) graphql.Marshaler {
+func (ec *executionContext) marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx context.Context, sel ast.SelectionSet, v *table.ListAttendances) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18128,11 +18128,11 @@ func (ec *executionContext) marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10
 	return ec._ListAttendances(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListExternalResources2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx context.Context, sel ast.SelectionSet, v table.ListExternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNListExternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx context.Context, sel ast.SelectionSet, v table.ListExternalResources) graphql.Marshaler {
 	return ec._ListExternalResources(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ListExternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ListExternalResources) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18142,11 +18142,11 @@ func (ec *executionContext) marshalNListExternalResources2ᚖgithubᚗcomᚋketa
 	return ec._ListExternalResources(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListInternalResources2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx context.Context, sel ast.SelectionSet, v table.ListInternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNListInternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx context.Context, sel ast.SelectionSet, v table.ListInternalResources) graphql.Marshaler {
 	return ec._ListInternalResources(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ListInternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ListInternalResources) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18156,11 +18156,11 @@ func (ec *executionContext) marshalNListInternalResources2ᚖgithubᚗcomᚋketa
 	return ec._ListInternalResources(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListRegistrations2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx context.Context, sel ast.SelectionSet, v table.ListRegistrations) graphql.Marshaler {
+func (ec *executionContext) marshalNListRegistrations2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx context.Context, sel ast.SelectionSet, v table.ListRegistrations) graphql.Marshaler {
 	return ec._ListRegistrations(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx context.Context, sel ast.SelectionSet, v *table.ListRegistrations) graphql.Marshaler {
+func (ec *executionContext) marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx context.Context, sel ast.SelectionSet, v *table.ListRegistrations) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18170,11 +18170,11 @@ func (ec *executionContext) marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ
 	return ec._ListRegistrations(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v table.ListTrainerTrainingMapping) graphql.Marshaler {
+func (ec *executionContext) marshalNListTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v table.ListTrainerTrainingMapping) graphql.Marshaler {
 	return ec._ListTrainerTrainingMapping(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v *table.ListTrainerTrainingMapping) graphql.Marshaler {
+func (ec *executionContext) marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v *table.ListTrainerTrainingMapping) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18184,11 +18184,11 @@ func (ec *executionContext) marshalNListTrainerTrainingMapping2ᚖgithubᚗcom�
 	return ec._ListTrainerTrainingMapping(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListTraining2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTraining(ctx context.Context, sel ast.SelectionSet, v table.ListTraining) graphql.Marshaler {
+func (ec *executionContext) marshalNListTraining2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTraining(ctx context.Context, sel ast.SelectionSet, v table.ListTraining) graphql.Marshaler {
 	return ec._ListTraining(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTraining(ctx context.Context, sel ast.SelectionSet, v *table.ListTraining) graphql.Marshaler {
+func (ec *executionContext) marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTraining(ctx context.Context, sel ast.SelectionSet, v *table.ListTraining) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18198,11 +18198,11 @@ func (ec *executionContext) marshalNListTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋ
 	return ec._ListTraining(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListTrainingEvent2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx context.Context, sel ast.SelectionSet, v table.ListTrainingEvent) graphql.Marshaler {
+func (ec *executionContext) marshalNListTrainingEvent2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx context.Context, sel ast.SelectionSet, v table.ListTrainingEvent) graphql.Marshaler {
 	return ec._ListTrainingEvent(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx context.Context, sel ast.SelectionSet, v *table.ListTrainingEvent) graphql.Marshaler {
+func (ec *executionContext) marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainingEvent(ctx context.Context, sel ast.SelectionSet, v *table.ListTrainingEvent) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18212,11 +18212,11 @@ func (ec *executionContext) marshalNListTrainingEvent2ᚖgithubᚗcomᚋketanᚑ
 	return ec._ListTrainingEvent(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListUser2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListUser(ctx context.Context, sel ast.SelectionSet, v table.ListUser) graphql.Marshaler {
+func (ec *executionContext) marshalNListUser2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListUser(ctx context.Context, sel ast.SelectionSet, v table.ListUser) graphql.Marshaler {
 	return ec._ListUser(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNListUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐListUser(ctx context.Context, sel ast.SelectionSet, v *table.ListUser) graphql.Marshaler {
+func (ec *executionContext) marshalNListUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListUser(ctx context.Context, sel ast.SelectionSet, v *table.ListUser) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -18226,11 +18226,11 @@ func (ec *executionContext) marshalNListUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclas
 	return ec._ListUser(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNRegistrations2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx context.Context, sel ast.SelectionSet, v table.Registrations) graphql.Marshaler {
+func (ec *executionContext) marshalNRegistrations2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx context.Context, sel ast.SelectionSet, v table.Registrations) graphql.Marshaler {
 	return ec._Registrations(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNRegistrations2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Registrations) graphql.Marshaler {
+func (ec *executionContext) marshalNRegistrations2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Registrations) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18254,7 +18254,7 @@ func (ec *executionContext) marshalNRegistrations2ᚕgithubᚗcomᚋketanᚑ10�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNRegistrations2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx, sel, v[i])
+			ret[i] = ec.marshalNRegistrations2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18274,12 +18274,12 @@ func (ec *executionContext) marshalNRegistrations2ᚕgithubᚗcomᚋketanᚑ10�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNRegistrationsCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsCreate(ctx context.Context, v interface{}) (table.RegistrationsCreate, error) {
+func (ec *executionContext) unmarshalNRegistrationsCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsCreate(ctx context.Context, v interface{}) (table.RegistrationsCreate, error) {
 	res, err := ec.unmarshalInputRegistrationsCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNRegistrationsUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsUpdate(ctx context.Context, v interface{}) (table.RegistrationsUpdate, error) {
+func (ec *executionContext) unmarshalNRegistrationsUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsUpdate(ctx context.Context, v interface{}) (table.RegistrationsUpdate, error) {
 	res, err := ec.unmarshalInputRegistrationsUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -18299,11 +18299,11 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v table.TrainerTrainingMapping) graphql.Marshaler {
+func (ec *executionContext) marshalNTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v table.TrainerTrainingMapping) graphql.Marshaler {
 	return ec._TrainerTrainingMapping(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTrainerTrainingMapping2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingᚄ(ctx context.Context, sel ast.SelectionSet, v []table.TrainerTrainingMapping) graphql.Marshaler {
+func (ec *executionContext) marshalNTrainerTrainingMapping2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingᚄ(ctx context.Context, sel ast.SelectionSet, v []table.TrainerTrainingMapping) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18327,7 +18327,7 @@ func (ec *executionContext) marshalNTrainerTrainingMapping2ᚕgithubᚗcomᚋket
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx, sel, v[i])
+			ret[i] = ec.marshalNTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18347,21 +18347,21 @@ func (ec *executionContext) marshalNTrainerTrainingMapping2ᚕgithubᚗcomᚋket
 	return ret
 }
 
-func (ec *executionContext) unmarshalNTrainerTrainingMappingCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingCreate(ctx context.Context, v interface{}) (table.TrainerTrainingMappingCreate, error) {
+func (ec *executionContext) unmarshalNTrainerTrainingMappingCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingCreate(ctx context.Context, v interface{}) (table.TrainerTrainingMappingCreate, error) {
 	res, err := ec.unmarshalInputTrainerTrainingMappingCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNTrainerTrainingMappingUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingUpdate(ctx context.Context, v interface{}) (table.TrainerTrainingMappingUpdate, error) {
+func (ec *executionContext) unmarshalNTrainerTrainingMappingUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingUpdate(ctx context.Context, v interface{}) (table.TrainerTrainingMappingUpdate, error) {
 	res, err := ec.unmarshalInputTrainerTrainingMappingUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNTraining2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx context.Context, sel ast.SelectionSet, v table.Training) graphql.Marshaler {
+func (ec *executionContext) marshalNTraining2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx context.Context, sel ast.SelectionSet, v table.Training) graphql.Marshaler {
 	return ec._Training(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTraining2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Training) graphql.Marshaler {
+func (ec *executionContext) marshalNTraining2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Training) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18385,7 +18385,7 @@ func (ec *executionContext) marshalNTraining2ᚕgithubᚗcomᚋketanᚑ10ᚋclas
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTraining2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx, sel, v[i])
+			ret[i] = ec.marshalNTraining2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18405,16 +18405,16 @@ func (ec *executionContext) marshalNTraining2ᚕgithubᚗcomᚋketanᚑ10ᚋclas
 	return ret
 }
 
-func (ec *executionContext) unmarshalNTrainingCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingCreate(ctx context.Context, v interface{}) (table.TrainingCreate, error) {
+func (ec *executionContext) unmarshalNTrainingCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingCreate(ctx context.Context, v interface{}) (table.TrainingCreate, error) {
 	res, err := ec.unmarshalInputTrainingCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNTrainingEvent2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx context.Context, sel ast.SelectionSet, v table.TrainingEvent) graphql.Marshaler {
+func (ec *executionContext) marshalNTrainingEvent2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx context.Context, sel ast.SelectionSet, v table.TrainingEvent) graphql.Marshaler {
 	return ec._TrainingEvent(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTrainingEvent2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventᚄ(ctx context.Context, sel ast.SelectionSet, v []table.TrainingEvent) graphql.Marshaler {
+func (ec *executionContext) marshalNTrainingEvent2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventᚄ(ctx context.Context, sel ast.SelectionSet, v []table.TrainingEvent) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18438,7 +18438,7 @@ func (ec *executionContext) marshalNTrainingEvent2ᚕgithubᚗcomᚋketanᚑ10�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTrainingEvent2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, sel, v[i])
+			ret[i] = ec.marshalNTrainingEvent2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18458,36 +18458,36 @@ func (ec *executionContext) marshalNTrainingEvent2ᚕgithubᚗcomᚋketanᚑ10�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNTrainingEventCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventCreate(ctx context.Context, v interface{}) (table.TrainingEventCreate, error) {
+func (ec *executionContext) unmarshalNTrainingEventCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventCreate(ctx context.Context, v interface{}) (table.TrainingEventCreate, error) {
 	res, err := ec.unmarshalInputTrainingEventCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, v interface{}) (enum.TrainingEventStatus, error) {
+func (ec *executionContext) unmarshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, v interface{}) (enum.TrainingEventStatus, error) {
 	var res enum.TrainingEventStatus
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, sel ast.SelectionSet, v enum.TrainingEventStatus) graphql.Marshaler {
+func (ec *executionContext) marshalNTrainingEventStatus2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, sel ast.SelectionSet, v enum.TrainingEventStatus) graphql.Marshaler {
 	return v
 }
 
-func (ec *executionContext) unmarshalNTrainingEventUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventUpdate(ctx context.Context, v interface{}) (table.TrainingEventUpdate, error) {
+func (ec *executionContext) unmarshalNTrainingEventUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventUpdate(ctx context.Context, v interface{}) (table.TrainingEventUpdate, error) {
 	res, err := ec.unmarshalInputTrainingEventUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNTrainingUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingUpdate(ctx context.Context, v interface{}) (table.TrainingUpdate, error) {
+func (ec *executionContext) unmarshalNTrainingUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingUpdate(ctx context.Context, v interface{}) (table.TrainingUpdate, error) {
 	res, err := ec.unmarshalInputTrainingUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNUser2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx context.Context, sel ast.SelectionSet, v table.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx context.Context, sel ast.SelectionSet, v table.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []table.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []table.User) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -18511,7 +18511,7 @@ func (ec *executionContext) marshalNUser2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUser2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx, sel, v[i])
+			ret[i] = ec.marshalNUser2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -18531,12 +18531,12 @@ func (ec *executionContext) marshalNUser2ᚕgithubᚗcomᚋketanᚑ10ᚋclassroo
 	return ret
 }
 
-func (ec *executionContext) unmarshalNUserCreate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserCreate(ctx context.Context, v interface{}) (table.UserCreate, error) {
+func (ec *executionContext) unmarshalNUserCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserCreate(ctx context.Context, v interface{}) (table.UserCreate, error) {
 	res, err := ec.unmarshalInputUserCreate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNUserUpdate2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserUpdate(ctx context.Context, v interface{}) (table.UserUpdate, error) {
+func (ec *executionContext) unmarshalNUserUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserUpdate(ctx context.Context, v interface{}) (table.UserUpdate, error) {
 	res, err := ec.unmarshalInputUserUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -18794,7 +18794,7 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
-func (ec *executionContext) unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx context.Context, v interface{}) (*table.AttendancesFilter, error) {
+func (ec *executionContext) unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx context.Context, v interface{}) (*table.AttendancesFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -18844,14 +18844,14 @@ func (ec *executionContext) marshalODatetime2ᚖtimeᚐTime(ctx context.Context,
 	return res
 }
 
-func (ec *executionContext) marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ExternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ExternalResources) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._ExternalResources(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx context.Context, v interface{}) (*table.ExternalResourcesFilter, error) {
+func (ec *executionContext) unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx context.Context, v interface{}) (*table.ExternalResourcesFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -18859,7 +18859,7 @@ func (ec *executionContext) unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋ
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx context.Context, v interface{}) (internal.FilterOnField, error) {
+func (ec *executionContext) unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx context.Context, v interface{}) (internal.FilterOnField, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -18868,7 +18868,7 @@ func (ec *executionContext) unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋ
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐFilterOnField(ctx context.Context, sel ast.SelectionSet, v internal.FilterOnField) graphql.Marshaler {
+func (ec *executionContext) marshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx context.Context, sel ast.SelectionSet, v internal.FilterOnField) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -18891,14 +18891,14 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return res
 }
 
-func (ec *executionContext) marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx context.Context, sel ast.SelectionSet, v *table.InternalResources) graphql.Marshaler {
+func (ec *executionContext) marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx context.Context, sel ast.SelectionSet, v *table.InternalResources) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._InternalResources(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx context.Context, v interface{}) (*table.InternalResourcesFilter, error) {
+func (ec *executionContext) unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx context.Context, v interface{}) (*table.InternalResourcesFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -18994,7 +18994,7 @@ func (ec *executionContext) marshalONullTime2databaseᚋsqlᚐNullTime(ctx conte
 	return res
 }
 
-func (ec *executionContext) unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋinternalᚐPagination(ctx context.Context, v interface{}) (*internal.Pagination, error) {
+func (ec *executionContext) unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx context.Context, v interface{}) (*internal.Pagination, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19002,14 +19002,14 @@ func (ec *executionContext) unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋ
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalORegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx context.Context, sel ast.SelectionSet, v *table.Registrations) graphql.Marshaler {
+func (ec *executionContext) marshalORegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrations(ctx context.Context, sel ast.SelectionSet, v *table.Registrations) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Registrations(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx context.Context, v interface{}) (*table.RegistrationsFilter, error) {
+func (ec *executionContext) unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx context.Context, v interface{}) (*table.RegistrationsFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19071,14 +19071,14 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v *table.TrainerTrainingMapping) graphql.Marshaler {
+func (ec *executionContext) marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v *table.TrainerTrainingMapping) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._TrainerTrainingMapping(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx context.Context, v interface{}) (*table.TrainerTrainingMappingFilter, error) {
+func (ec *executionContext) unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx context.Context, v interface{}) (*table.TrainerTrainingMappingFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19086,21 +19086,21 @@ func (ec *executionContext) unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗc
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTraining(ctx context.Context, sel ast.SelectionSet, v *table.Training) graphql.Marshaler {
+func (ec *executionContext) marshalOTraining2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTraining(ctx context.Context, sel ast.SelectionSet, v *table.Training) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Training(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx context.Context, sel ast.SelectionSet, v *table.TrainingEvent) graphql.Marshaler {
+func (ec *executionContext) marshalOTrainingEvent2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEvent(ctx context.Context, sel ast.SelectionSet, v *table.TrainingEvent) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._TrainingEvent(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx context.Context, v interface{}) (*table.TrainingEventFilter, error) {
+func (ec *executionContext) unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx context.Context, v interface{}) (*table.TrainingEventFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19108,7 +19108,7 @@ func (ec *executionContext) unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketa
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOTrainingEventStatus2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, v interface{}) (*enum.TrainingEventStatus, error) {
+func (ec *executionContext) unmarshalOTrainingEventStatus2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, v interface{}) (*enum.TrainingEventStatus, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19117,14 +19117,14 @@ func (ec *executionContext) unmarshalOTrainingEventStatus2ᚖgithubᚗcomᚋketa
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOTrainingEventStatus2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, sel ast.SelectionSet, v *enum.TrainingEventStatus) graphql.Marshaler {
+func (ec *executionContext) marshalOTrainingEventStatus2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingEventStatus(ctx context.Context, sel ast.SelectionSet, v *enum.TrainingEventStatus) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return v
 }
 
-func (ec *executionContext) unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx context.Context, v interface{}) (*table.TrainingFilter, error) {
+func (ec *executionContext) unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingFilter(ctx context.Context, v interface{}) (*table.TrainingFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19132,7 +19132,7 @@ func (ec *executionContext) unmarshalOTrainingFilter2ᚖgithubᚗcomᚋketanᚑ1
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx context.Context, v interface{}) (*enum.TrainingMode, error) {
+func (ec *executionContext) unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx context.Context, v interface{}) (*enum.TrainingMode, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19141,14 +19141,14 @@ func (ec *executionContext) unmarshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx context.Context, sel ast.SelectionSet, v *enum.TrainingMode) graphql.Marshaler {
+func (ec *executionContext) marshalOTrainingMode2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingMode(ctx context.Context, sel ast.SelectionSet, v *enum.TrainingMode) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return v
 }
 
-func (ec *executionContext) unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx context.Context, v interface{}) (*enum.TrainingType, error) {
+func (ec *executionContext) unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx context.Context, v interface{}) (*enum.TrainingType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19157,21 +19157,21 @@ func (ec *executionContext) unmarshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx context.Context, sel ast.SelectionSet, v *enum.TrainingType) graphql.Marshaler {
+func (ec *executionContext) marshalOTrainingType2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐTrainingType(ctx context.Context, sel ast.SelectionSet, v *enum.TrainingType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return v
 }
 
-func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUser(ctx context.Context, sel ast.SelectionSet, v *table.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx context.Context, sel ast.SelectionSet, v *table.User) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._User(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx context.Context, v interface{}) (*table.UserFilter, error) {
+func (ec *executionContext) unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx context.Context, v interface{}) (*table.UserFilter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19179,7 +19179,7 @@ func (ec *executionContext) unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋ
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐUserRole(ctx context.Context, v interface{}) (*enum.UserRole, error) {
+func (ec *executionContext) unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐUserRole(ctx context.Context, v interface{}) (*enum.UserRole, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -19188,7 +19188,7 @@ func (ec *executionContext) unmarshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋcl
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋclassroomᚋbackendᚋxo_genᚋenumᚐUserRole(ctx context.Context, sel ast.SelectionSet, v *enum.UserRole) graphql.Marshaler {
+func (ec *executionContext) marshalOUserRole2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋenumᚐUserRole(ctx context.Context, sel ast.SelectionSet, v *enum.UserRole) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

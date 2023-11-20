@@ -1,4 +1,4 @@
-module github.com/ketan-10/classroom/xo
+module github.com/ketan-10/training/xo
 
 go 1.21.3
 

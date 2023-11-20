@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/ketan-10/classroom/backend/entities"
+	"github.com/ketan-10/training/backend/entities"
 )
 
 type ContextKey string
@@ -32,7 +32,7 @@ func GetConnectionContext(ctx context.Context) (string, error) {
 }
 
 func WithConnection(ctx context.Context, connectionString string) context.Context {
-	return context.WithValue(ctx, Connection, "bob:password@tcp(127.0.0.1:3306)/classroom?charset=utf8mb4&parseTime=true")
+	return context.WithValue(ctx, Connection, "bob:password@tcp(127.0.0.1:3306)/training?charset=utf8mb4&parseTime=true")
 }
 
 func WithTransaction(ctx context.Context, tx *sqlx.Tx) context.Context {

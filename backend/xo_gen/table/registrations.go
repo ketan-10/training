@@ -6,7 +6,7 @@ import (
 	"database/sql"
 
 	sq "github.com/elgris/sqrl"
-	"github.com/ketan-10/classroom/backend/internal"
+	"github.com/ketan-10/training/backend/internal"
 	"github.com/pkg/errors"
 )
 
@@ -189,13 +189,6 @@ func (l *ListRegistrations) Find(f func(item Registrations) bool) (res Registrat
 	}
 	return Registrations{}, false
 }
-func (l *ListRegistrations) MapByID() (m map[int]Registrations) {
-	m = make(map[int]Registrations, len(l.Data))
-	for _, item := range l.Data {
-		m[item.ID] = item
-	}
-	return m
-}
 
 func (l *ListRegistrations) MapByFkInternalResource() (m map[int]ListRegistrations) {
 	m = make(map[int]ListRegistrations)
@@ -223,6 +216,14 @@ func (l *ListRegistrations) MapByFkTraining() (m map[int]ListRegistrations) {
 	for k, v := range m {
 		v.TotalCount = len(v.Data)
 		m[k] = v
+	}
+	return m
+}
+
+func (l *ListRegistrations) MapByID() (m map[int]Registrations) {
+	m = make(map[int]Registrations, len(l.Data))
+	for _, item := range l.Data {
+		m[item.ID] = item
 	}
 	return m
 }

@@ -8,8 +8,8 @@ import (
 
 	sq "github.com/elgris/sqrl"
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/table"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/table"
 )
 
 type ITrainingEventRepository interface {
@@ -28,16 +28,16 @@ type ITrainingEventRepository interface {
 	FindAllTrainingEvent(ctx context.Context, te *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
 	FindAllTrainingEventWithSuffix(ctx context.Context, te *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error)
 
+	TrainingEventByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
+
+	TrainingEventByCreatedByWithSuffix(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error)
+
 	TrainingEventByFkTraining(ctx context.Context, fkTraining int, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
 
 	TrainingEventByFkTrainingWithSuffix(ctx context.Context, fkTraining int, filter *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error)
 	TrainingEventByID(ctx context.Context, id int, filter *table.TrainingEventFilter) (table.TrainingEvent, error)
 
 	TrainingEventByIDWithSuffix(ctx context.Context, id int, filter *table.TrainingEventFilter, suffixes ...sq.Sqlizer) (table.TrainingEvent, error)
-
-	TrainingEventByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
-
-	TrainingEventByCreatedByWithSuffix(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error)
 }
 
 type ITrainingEventRepositoryQueryBuilder interface {
@@ -346,6 +346,52 @@ func (ter *TrainingEventRepository) FindAllTrainingEventWithSuffix(ctx context.C
 	return &list, err
 }
 
+func (ter *TrainingEventRepository) TrainingEventByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error) {
+	return ter.TrainingEventByCreatedByWithSuffix(ctx, createdBy, filter, pagination)
+}
+
+func (ter *TrainingEventRepository) TrainingEventByCreatedByWithSuffix(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error) {
+
+	var list table.ListTrainingEvent
+	// sql query
+	qb, err := ter.FindAllTrainingEventBaseQuery(ctx, filter, "`training_event`.*", suffixes...)
+	if err != nil {
+		return &list, err
+	}
+	qb = qb.Where(sq.Eq{"`training_event`.`created_by`": createdBy})
+
+	if qb, err = ter.AddPagination(ctx, qb, pagination); err != nil {
+		return &list, err
+	}
+
+	// run query
+	if err = ter.DB.Select(ctx, &list.Data, qb); err != nil {
+		return &list, err
+	}
+
+	if pagination == nil || pagination.PerPage == nil || pagination.Page == nil {
+		list.TotalCount = len(list.Data)
+		return &list, nil
+	}
+
+	var listMeta internal.ListMetadata
+	if qb, err = ter.FindAllTrainingEventBaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
+		return &list, err
+	}
+	if filter != nil && len(filter.GroupBys) > 0 {
+		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
+	}
+	qb = qb.Where(sq.Eq{"`training_event`.`created_by`": createdBy})
+	if err = ter.DB.Get(ctx, &listMeta, qb); err != nil {
+		return &list, err
+	}
+
+	list.TotalCount = listMeta.Count
+
+	return &list, nil
+
+}
+
 func (ter *TrainingEventRepository) TrainingEventByFkTraining(ctx context.Context, fkTraining int, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error) {
 	return ter.TrainingEventByFkTrainingWithSuffix(ctx, fkTraining, filter, pagination)
 }
@@ -412,50 +458,4 @@ func (ter *TrainingEventRepository) TrainingEventByIDWithSuffix(ctx context.Cont
 		return table.TrainingEvent{}, err
 	}
 	return te, nil
-}
-
-func (ter *TrainingEventRepository) TrainingEventByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error) {
-	return ter.TrainingEventByCreatedByWithSuffix(ctx, createdBy, filter, pagination)
-}
-
-func (ter *TrainingEventRepository) TrainingEventByCreatedByWithSuffix(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error) {
-
-	var list table.ListTrainingEvent
-	// sql query
-	qb, err := ter.FindAllTrainingEventBaseQuery(ctx, filter, "`training_event`.*", suffixes...)
-	if err != nil {
-		return &list, err
-	}
-	qb = qb.Where(sq.Eq{"`training_event`.`created_by`": createdBy})
-
-	if qb, err = ter.AddPagination(ctx, qb, pagination); err != nil {
-		return &list, err
-	}
-
-	// run query
-	if err = ter.DB.Select(ctx, &list.Data, qb); err != nil {
-		return &list, err
-	}
-
-	if pagination == nil || pagination.PerPage == nil || pagination.Page == nil {
-		list.TotalCount = len(list.Data)
-		return &list, nil
-	}
-
-	var listMeta internal.ListMetadata
-	if qb, err = ter.FindAllTrainingEventBaseQuery(ctx, filter, "COUNT(1) AS count"); err != nil {
-		return &list, err
-	}
-	if filter != nil && len(filter.GroupBys) > 0 {
-		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
-	}
-	qb = qb.Where(sq.Eq{"`training_event`.`created_by`": createdBy})
-	if err = ter.DB.Get(ctx, &listMeta, qb); err != nil {
-		return &list, err
-	}
-
-	list.TotalCount = listMeta.Count
-
-	return &list, nil
-
 }

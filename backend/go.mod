@@ -1,8 +1,8 @@
-module github.com/ketan-10/classroom/backend
+module github.com/ketan-10/training/backend
 
 go 1.21.3
 
-replace github.com/ketan-10/classroom/xo => ../xo
+replace github.com/ketan-10/training/xo => ../xo
 
 require (
 	github.com/99designs/gqlgen v0.17.40
@@ -12,8 +12,8 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/wire v0.5.0
 	github.com/jmoiron/sqlx v1.3.5
-	github.com/ketan-10/classroom/xo v0.0.0-20231118191112-21db31b4a50f
 	github.com/ketan-10/go-fanout v0.0.0-20230916194735-2137f7766ae3
+	github.com/ketan-10/training/xo v0.0.0-20231118191112-21db31b4a50f
 	github.com/pkg/errors v0.9.1
 	github.com/pressly/goose/v3 v3.16.0
 	github.com/vektah/gqlparser/v2 v2.5.10

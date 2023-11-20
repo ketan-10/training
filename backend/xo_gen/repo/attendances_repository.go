@@ -7,8 +7,8 @@ import (
 
 	sq "github.com/elgris/sqrl"
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/xo_gen/table"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/xo_gen/table"
 )
 
 type IAttendancesRepository interface {
@@ -26,6 +26,9 @@ type IAttendancesRepository interface {
 
 	FindAllAttendances(ctx context.Context, a *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
 	FindAllAttendancesWithSuffix(ctx context.Context, a *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error)
+	AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error)
+
+	AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error)
 
 	AttendancesByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
 
@@ -34,9 +37,6 @@ type IAttendancesRepository interface {
 	AttendancesByFkTrainingEvent(ctx context.Context, fkTrainingEvent int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
 
 	AttendancesByFkTrainingEventWithSuffix(ctx context.Context, fkTrainingEvent int, filter *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error)
-	AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error)
-
-	AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error)
 }
 
 type IAttendancesRepositoryQueryBuilder interface {
@@ -304,6 +304,28 @@ func (ar *AttendancesRepository) FindAllAttendancesWithSuffix(ctx context.Contex
 
 	return &list, err
 }
+func (ar *AttendancesRepository) AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error) {
+	return ar.AttendancesByIDWithSuffix(ctx, id, filter)
+}
+
+func (ar *AttendancesRepository) AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error) {
+	var err error
+
+	// sql query
+	qb, err := ar.FindAllAttendancesBaseQuery(ctx, filter, "`attendances`.*", suffixes...)
+	if err != nil {
+		return table.Attendances{}, err
+	}
+	qb = qb.Where(sq.Eq{"`attendances`.`id`": id})
+
+	// run query
+	a := table.Attendances{}
+	err = ar.DB.Get(ctx, &a, qb)
+	if err != nil {
+		return table.Attendances{}, err
+	}
+	return a, nil
+}
 
 func (ar *AttendancesRepository) AttendancesByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error) {
 	return ar.AttendancesByFkInternalResourceWithSuffix(ctx, fkInternalResource, filter, pagination)
@@ -395,26 +417,4 @@ func (ar *AttendancesRepository) AttendancesByFkTrainingEventWithSuffix(ctx cont
 
 	return &list, nil
 
-}
-func (ar *AttendancesRepository) AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error) {
-	return ar.AttendancesByIDWithSuffix(ctx, id, filter)
-}
-
-func (ar *AttendancesRepository) AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error) {
-	var err error
-
-	// sql query
-	qb, err := ar.FindAllAttendancesBaseQuery(ctx, filter, "`attendances`.*", suffixes...)
-	if err != nil {
-		return table.Attendances{}, err
-	}
-	qb = qb.Where(sq.Eq{"`attendances`.`id`": id})
-
-	// run query
-	a := table.Attendances{}
-	err = ar.DB.Get(ctx, &a, qb)
-	if err != nil {
-		return table.Attendances{}, err
-	}
-	return a, nil
 }

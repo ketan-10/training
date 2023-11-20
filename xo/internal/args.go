@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"text/template"
 
-	tplbin "github.com/ketan-10/classroom/xo/templates/go_binddata_gen"
+	tplbin "github.com/ketan-10/training/xo/templates/go_binddata_gen"
 
-	"github.com/ketan-10/classroom/xo/templates"
+	"github.com/ketan-10/training/xo/templates"
 )
 
 type Args struct {

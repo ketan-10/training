@@ -4,7 +4,7 @@
 package main
 
 import (
-	"github.com/ketan-10/classroom/xo/cmd"
+	"github.com/ketan-10/training/xo/cmd"
 )
 
 func main() {

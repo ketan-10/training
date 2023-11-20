@@ -9,13 +9,13 @@ package wire_app
 import (
 	"context"
 	"github.com/google/wire"
-	"github.com/ketan-10/classroom/backend/graphql"
-	"github.com/ketan-10/classroom/backend/internal"
-	"github.com/ketan-10/classroom/backend/middlewares"
-	"github.com/ketan-10/classroom/backend/services"
-	"github.com/ketan-10/classroom/backend/xo_gen"
-	"github.com/ketan-10/classroom/backend/xo_gen/repo"
-	"github.com/ketan-10/classroom/backend/xo_gen/rlts"
+	"github.com/ketan-10/training/backend/graphql"
+	"github.com/ketan-10/training/backend/internal"
+	"github.com/ketan-10/training/backend/middlewares"
+	"github.com/ketan-10/training/backend/services"
+	"github.com/ketan-10/training/backend/xo_gen"
+	"github.com/ketan-10/training/backend/xo_gen/repo"
+	"github.com/ketan-10/training/backend/xo_gen/rlts"
 )
 
 // Injectors from wire.go:
