@@ -27,9 +27,9 @@ type IRegistrationsRepository interface {
 	FindAllRegistrations(ctx context.Context, r *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
 	FindAllRegistrationsWithSuffix(ctx context.Context, r *table.RegistrationsFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListRegistrations, error)
 
-	RegistrationsByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
+	RegistrationsByFkStudent(ctx context.Context, fkStudent int, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
 
-	RegistrationsByFkInternalResourceWithSuffix(ctx context.Context, fkInternalResource int, filter *table.RegistrationsFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListRegistrations, error)
+	RegistrationsByFkStudentWithSuffix(ctx context.Context, fkStudent int, filter *table.RegistrationsFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListRegistrations, error)
 
 	RegistrationsByFkTraining(ctx context.Context, fkTraining int, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
 
@@ -86,10 +86,10 @@ func (rr *RegistrationsRepository) InsertRegistrationsIDResult(ctx context.Conte
 	var err error
 
 	qb := sq.Insert("`registrations`").Columns(
-		"`fk_internal_resource`",
+		"`fk_student`",
 		"`fk_training`",
 	).Values(
-		r.FkInternalResource,
+		r.FkStudent,
 		r.FkTraining,
 	)
 	if suffix != nil {
@@ -119,8 +119,8 @@ func (rr *RegistrationsRepository) UpdateRegistrationsByFields(ctx context.Conte
 	var err error
 
 	updateMap := map[string]interface{}{}
-	if r.FkInternalResource != nil {
-		updateMap["`fk_internal_resource`"] = *r.FkInternalResource
+	if r.FkStudent != nil {
+		updateMap["`fk_student`"] = *r.FkStudent
 	}
 	if r.FkTraining != nil {
 		updateMap["`fk_training`"] = *r.FkTraining
@@ -155,9 +155,9 @@ func (rr *RegistrationsRepository) UpdateRegistrations(ctx context.Context, r ta
 
 	// sql query
 	qb := sq.Update("`registrations`").SetMap(map[string]interface{}{
-		"`fk_internal_resource`": r.FkInternalResource,
-		"`fk_training`":          r.FkTraining,
-		"`active`":               r.Active,
+		"`fk_student`":  r.FkStudent,
+		"`fk_training`": r.FkTraining,
+		"`active`":      r.Active,
 	}).Where(sq.Eq{"`id`": r.ID})
 
 	// run query
@@ -208,7 +208,7 @@ func (rr *RegistrationsRepositoryQueryBuilder) FindAllRegistrationsBaseQuery(ctx
 		if qb, err = internal.AddFilter(qb, "`registrations`.`id`", filter.ID); err != nil {
 			return qb, err
 		}
-		if qb, err = internal.AddFilter(qb, "`registrations`.`fk_internal_resource`", filter.FkInternalResource); err != nil {
+		if qb, err = internal.AddFilter(qb, "`registrations`.`fk_student`", filter.FkStudent); err != nil {
 			return qb, err
 		}
 		if qb, err = internal.AddFilter(qb, "`registrations`.`fk_training`", filter.FkTraining); err != nil {
@@ -256,7 +256,7 @@ func (rr *RegistrationsRepository) AddPagination(ctx context.Context, qb *sq.Sel
 func (r *RegistrationsRepositoryQueryBuilder) AddPagination(ctx context.Context, qb *sq.SelectBuilder, pagination *internal.Pagination) (*sq.SelectBuilder, error) {
 	fields := []string{
 		"id",
-		"fk_internal_resource",
+		"fk_student",
 		"fk_training",
 		"active",
 		"created_at",
@@ -305,11 +305,11 @@ func (rr *RegistrationsRepository) FindAllRegistrationsWithSuffix(ctx context.Co
 	return &list, err
 }
 
-func (rr *RegistrationsRepository) RegistrationsByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error) {
-	return rr.RegistrationsByFkInternalResourceWithSuffix(ctx, fkInternalResource, filter, pagination)
+func (rr *RegistrationsRepository) RegistrationsByFkStudent(ctx context.Context, fkStudent int, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error) {
+	return rr.RegistrationsByFkStudentWithSuffix(ctx, fkStudent, filter, pagination)
 }
 
-func (rr *RegistrationsRepository) RegistrationsByFkInternalResourceWithSuffix(ctx context.Context, fkInternalResource int, filter *table.RegistrationsFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListRegistrations, error) {
+func (rr *RegistrationsRepository) RegistrationsByFkStudentWithSuffix(ctx context.Context, fkStudent int, filter *table.RegistrationsFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListRegistrations, error) {
 
 	var list table.ListRegistrations
 	// sql query
@@ -317,7 +317,7 @@ func (rr *RegistrationsRepository) RegistrationsByFkInternalResourceWithSuffix(c
 	if err != nil {
 		return &list, err
 	}
-	qb = qb.Where(sq.Eq{"`registrations`.`fk_internal_resource`": fkInternalResource})
+	qb = qb.Where(sq.Eq{"`registrations`.`fk_student`": fkStudent})
 
 	if qb, err = rr.AddPagination(ctx, qb, pagination); err != nil {
 		return &list, err
@@ -340,7 +340,7 @@ func (rr *RegistrationsRepository) RegistrationsByFkInternalResourceWithSuffix(c
 	if filter != nil && len(filter.GroupBys) > 0 {
 		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
 	}
-	qb = qb.Where(sq.Eq{"`registrations`.`fk_internal_resource`": fkInternalResource})
+	qb = qb.Where(sq.Eq{"`registrations`.`fk_student`": fkStudent})
 	if err = rr.DB.Get(ctx, &listMeta, qb); err != nil {
 		return &list, err
 	}

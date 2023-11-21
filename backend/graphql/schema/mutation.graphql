@@ -4,15 +4,15 @@ type Mutation {
     updateUserByFields(id: Int!, data: UserUpdate!): User @authenticate
     deleteUserByID(id: Int!): Boolean! @authenticate
 
-    # ExternalResources 
-    insertExternalResources(data: ExternalResourcesCreate!): ExternalResources @authenticate
-    updateExternalResourcesByFields(id: Int!, data: ExternalResourcesUpdate!): ExternalResources @authenticate
-    deleteExternalResourcesByID(id: Int!): Boolean! @authenticate
+    # Trainers
+    insertTrainers(data: TrainersCreate!): Trainers @authenticate
+    updateTrainersByFields(id: Int!, data: TrainersUpdate!): Trainers @authenticate
+    deleteTrainersByID(id: Int!): Boolean! @authenticate
 
-    # InternalResources
-    insertInternalResources(data: InternalResourcesCreate!): InternalResources @authenticate
-    updateInternalResourcesByFields(id: Int!, data: InternalResourcesUpdate!): InternalResources @authenticate
-    deleteInternalResourcesByID(id: Int!): Boolean! @authenticate
+    # Students 
+    insertStudents(data: StudentsCreate!): Students @authenticate
+    updateStudentsByFields(id: Int!, data: StudentsUpdate!): Students @authenticate
+    deleteStudentsByID(id: Int!): Boolean! @authenticate
 
     # Registrations
     insertRegistrations(data: RegistrationsCreate!): Registrations @authenticate

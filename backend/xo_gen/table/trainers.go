@@ -10,9 +10,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-type ExternalResources struct {
+type Trainers struct {
 	ID          int            `json:"id" db:"id"`
-	ResourceID  sql.NullString `json:"resource_id" db:"resource_id"`
+	UUID        sql.NullString `json:"uuid" db:"uuid"`
 	Name        string         `json:"name" db:"name"`
 	Email       string         `json:"email" db:"email"`
 	MobilePhone string         `json:"mobile_phone" db:"mobile_phone"`
@@ -23,9 +23,9 @@ type ExternalResources struct {
 	CreatedBy   sql.NullInt64  `json:"created_by" db:"created_by"`
 }
 
-type ExternalResourcesFilter struct {
+type TrainersFilter struct {
 	ID          internal.FilterOnField
-	ResourceID  internal.FilterOnField
+	UUID        internal.FilterOnField
 	Name        internal.FilterOnField
 	Email       internal.FilterOnField
 	MobilePhone internal.FilterOnField
@@ -41,82 +41,82 @@ type ExternalResourcesFilter struct {
 	Havings     []sq.Sqlizer
 }
 
-func (f *ExternalResourcesFilter) NewFilter() interface{} {
+func (f *TrainersFilter) NewFilter() interface{} {
 	if f == nil {
-		return &ExternalResourcesFilter{}
+		return &TrainersFilter{}
 	}
 	return f
 }
 
-func (f *ExternalResourcesFilter) TableName() string {
-	return "`external_resources`"
+func (f *TrainersFilter) TableName() string {
+	return "`trainers`"
 }
 
-func (f *ExternalResourcesFilter) ModuleName() string {
-	return "external_resources"
+func (f *TrainersFilter) ModuleName() string {
+	return "trainers"
 }
 
-func (f *ExternalResourcesFilter) IsNil() bool {
+func (f *TrainersFilter) IsNil() bool {
 	return f == nil
 }
-func (f *ExternalResourcesFilter) AddID(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddID(filterType internal.FilterType, v interface{}) {
 	f.ID = append(f.ID, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddResourceID(filterType internal.FilterType, v interface{}) {
-	f.ResourceID = append(f.ResourceID, map[internal.FilterType]interface{}{filterType: v})
+func (f *TrainersFilter) AddUUID(filterType internal.FilterType, v interface{}) {
+	f.UUID = append(f.UUID, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddName(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddName(filterType internal.FilterType, v interface{}) {
 	f.Name = append(f.Name, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddEmail(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddEmail(filterType internal.FilterType, v interface{}) {
 	f.Email = append(f.Email, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddMobilePhone(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddMobilePhone(filterType internal.FilterType, v interface{}) {
 	f.MobilePhone = append(f.MobilePhone, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddDesignation(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddDesignation(filterType internal.FilterType, v interface{}) {
 	f.Designation = append(f.Designation, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddActive(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddActive(filterType internal.FilterType, v interface{}) {
 	f.Active = append(f.Active, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddCreatedAt(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddCreatedAt(filterType internal.FilterType, v interface{}) {
 	f.CreatedAt = append(f.CreatedAt, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddUpdatedAt(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddUpdatedAt(filterType internal.FilterType, v interface{}) {
 	f.UpdatedAt = append(f.UpdatedAt, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *ExternalResourcesFilter) AddCreatedBy(filterType internal.FilterType, v interface{}) {
+func (f *TrainersFilter) AddCreatedBy(filterType internal.FilterType, v interface{}) {
 	f.CreatedBy = append(f.CreatedBy, map[internal.FilterType]interface{}{filterType: v})
 }
 
-func (f *ExternalResourcesFilter) Where(v sq.Sqlizer) *ExternalResourcesFilter {
+func (f *TrainersFilter) Where(v sq.Sqlizer) *TrainersFilter {
 	f.Wheres = append(f.Wheres, v)
 	return f
 }
 
-func (f *ExternalResourcesFilter) Join(j sq.Sqlizer) *ExternalResourcesFilter {
+func (f *TrainersFilter) Join(j sq.Sqlizer) *TrainersFilter {
 	f.Joins = append(f.Joins, j)
 	return f
 }
 
-func (f *ExternalResourcesFilter) LeftJoin(j sq.Sqlizer) *ExternalResourcesFilter {
+func (f *TrainersFilter) LeftJoin(j sq.Sqlizer) *TrainersFilter {
 	f.LeftJoins = append(f.LeftJoins, j)
 	return f
 }
 
-func (f *ExternalResourcesFilter) GroupBy(gb string) *ExternalResourcesFilter {
+func (f *TrainersFilter) GroupBy(gb string) *TrainersFilter {
 	f.GroupBys = append(f.GroupBys, gb)
 	return f
 }
 
-func (f *ExternalResourcesFilter) Having(h sq.Sqlizer) *ExternalResourcesFilter {
+func (f *TrainersFilter) Having(h sq.Sqlizer) *TrainersFilter {
 	f.Havings = append(f.Havings, h)
 	return f
 }
 
-type ExternalResourcesCreate struct {
-	ResourceID  sql.NullString `json:"resource_id" db:"resource_id"`
+type TrainersCreate struct {
+	UUID        sql.NullString `json:"uuid" db:"uuid"`
 	Name        string         `json:"name" db:"name"`
 	Email       string         `json:"email" db:"email"`
 	MobilePhone string         `json:"mobile_phone" db:"mobile_phone"`
@@ -126,8 +126,8 @@ type ExternalResourcesCreate struct {
 
 // TODO: We have to exclude AutoGenerated fields
 // For now I am keeping it in, as not sure how it affects
-type ExternalResourcesUpdate struct {
-	ResourceID  *sql.NullString // resource_id
+type TrainersUpdate struct {
+	UUID        *sql.NullString // uuid
 	Name        *string         // name
 	Email       *string         // email
 	MobilePhone *string         // mobile_phone
@@ -137,9 +137,9 @@ type ExternalResourcesUpdate struct {
 }
 
 // helper functions
-func (u *ExternalResourcesUpdate) ToExternalResourcesCreate() (res ExternalResourcesCreate, err error) {
-	if u.ResourceID != nil {
-		res.ResourceID = *u.ResourceID
+func (u *TrainersUpdate) ToTrainersCreate() (res TrainersCreate, err error) {
+	if u.UUID != nil {
+		res.UUID = *u.UUID
 	}
 	if u.Name != nil {
 		res.Name = *u.Name
@@ -167,75 +167,75 @@ func (u *ExternalResourcesUpdate) ToExternalResourcesCreate() (res ExternalResou
 	return res, nil
 }
 
-type ListExternalResources struct {
+type ListTrainers struct {
 	TotalCount int
-	Data       []ExternalResources
+	Data       []Trainers
 }
 
-func (l *ListExternalResources) GetAllID() []int {
+func (l *ListTrainers) GetAllID() []int {
 	var res []int
 	for _, item := range l.Data {
 		res = append(res, item.ID)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllResourceID() []sql.NullString {
+func (l *ListTrainers) GetAllUUID() []sql.NullString {
 	var res []sql.NullString
 	for _, item := range l.Data {
-		res = append(res, item.ResourceID)
+		res = append(res, item.UUID)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllName() []string {
+func (l *ListTrainers) GetAllName() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.Name)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllEmail() []string {
+func (l *ListTrainers) GetAllEmail() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.Email)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllMobilePhone() []string {
+func (l *ListTrainers) GetAllMobilePhone() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.MobilePhone)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllDesignation() []string {
+func (l *ListTrainers) GetAllDesignation() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.Designation)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllActive() []bool {
+func (l *ListTrainers) GetAllActive() []bool {
 	var res []bool
 	for _, item := range l.Data {
 		res = append(res, item.Active)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllCreatedAt() []sql.NullTime {
+func (l *ListTrainers) GetAllCreatedAt() []sql.NullTime {
 	var res []sql.NullTime
 	for _, item := range l.Data {
 		res = append(res, item.CreatedAt)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllUpdatedAt() []sql.NullTime {
+func (l *ListTrainers) GetAllUpdatedAt() []sql.NullTime {
 	var res []sql.NullTime
 	for _, item := range l.Data {
 		res = append(res, item.UpdatedAt)
 	}
 	return res
 }
-func (l *ListExternalResources) GetAllCreatedBy() []sql.NullInt64 {
+func (l *ListTrainers) GetAllCreatedBy() []sql.NullInt64 {
 	var res []sql.NullInt64
 	for _, item := range l.Data {
 		res = append(res, item.CreatedBy)
@@ -243,7 +243,7 @@ func (l *ListExternalResources) GetAllCreatedBy() []sql.NullInt64 {
 	return res
 }
 
-func (l *ListExternalResources) Filter(f func(item ExternalResources) bool) (res ListExternalResources) {
+func (l *ListTrainers) Filter(f func(item Trainers) bool) (res ListTrainers) {
 	for _, item := range l.Data {
 		if f(item) {
 			res.Data = append(res.Data, item)
@@ -253,32 +253,24 @@ func (l *ListExternalResources) Filter(f func(item ExternalResources) bool) (res
 	return res
 }
 
-func (l *ListExternalResources) Find(f func(item ExternalResources) bool) (res ExternalResources, found bool) {
+func (l *ListTrainers) Find(f func(item Trainers) bool) (res Trainers, found bool) {
 	for _, item := range l.Data {
 		if f(item) {
 			return item, true
 		}
 	}
-	return ExternalResources{}, false
+	return Trainers{}, false
 }
-
-func (l *ListExternalResources) MapByCreatedBy() (m map[sql.NullInt64]ListExternalResources) {
-	m = make(map[sql.NullInt64]ListExternalResources)
+func (l *ListTrainers) MapByID() (m map[int]Trainers) {
+	m = make(map[int]Trainers, len(l.Data))
 	for _, item := range l.Data {
-		list := m[item.CreatedBy]
-		list.Data = append(list.Data, item)
-
-		m[item.CreatedBy] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
+		m[item.ID] = item
 	}
 	return m
 }
 
-func (l *ListExternalResources) MapByEmail() (m map[string]ListExternalResources) {
-	m = make(map[string]ListExternalResources)
+func (l *ListTrainers) MapByEmail() (m map[string]ListTrainers) {
+	m = make(map[string]ListTrainers)
 	for _, item := range l.Data {
 		list := m[item.Email]
 		list.Data = append(list.Data, item)
@@ -292,8 +284,8 @@ func (l *ListExternalResources) MapByEmail() (m map[string]ListExternalResources
 	return m
 }
 
-func (l *ListExternalResources) MapByName() (m map[string]ListExternalResources) {
-	m = make(map[string]ListExternalResources)
+func (l *ListTrainers) MapByName() (m map[string]ListTrainers) {
+	m = make(map[string]ListTrainers)
 	for _, item := range l.Data {
 		list := m[item.Name]
 		list.Data = append(list.Data, item)
@@ -307,10 +299,17 @@ func (l *ListExternalResources) MapByName() (m map[string]ListExternalResources)
 	return m
 }
 
-func (l *ListExternalResources) MapByID() (m map[int]ExternalResources) {
-	m = make(map[int]ExternalResources, len(l.Data))
+func (l *ListTrainers) MapByCreatedBy() (m map[sql.NullInt64]ListTrainers) {
+	m = make(map[sql.NullInt64]ListTrainers)
 	for _, item := range l.Data {
-		m[item.ID] = item
+		list := m[item.CreatedBy]
+		list.Data = append(list.Data, item)
+
+		m[item.CreatedBy] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
 	}
 	return m
 }

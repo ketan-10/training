@@ -26,6 +26,9 @@ type IUserRepository interface {
 
 	FindAllUser(ctx context.Context, u *table.UserFilter, pagination *internal.Pagination) (*table.ListUser, error)
 	FindAllUserWithSuffix(ctx context.Context, u *table.UserFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListUser, error)
+	UserByID(ctx context.Context, id int, filter *table.UserFilter) (table.User, error)
+
+	UserByIDWithSuffix(ctx context.Context, id int, filter *table.UserFilter, suffixes ...sq.Sqlizer) (table.User, error)
 	UserByEmailActive(ctx context.Context, email string, active bool, filter *table.UserFilter) (table.User, error)
 
 	UserByEmailActiveWithSuffix(ctx context.Context, email string, active bool, filter *table.UserFilter, suffixes ...sq.Sqlizer) (table.User, error)
@@ -37,9 +40,6 @@ type IUserRepository interface {
 	UserByUsername(ctx context.Context, username string, filter *table.UserFilter, pagination *internal.Pagination) (*table.ListUser, error)
 
 	UserByUsernameWithSuffix(ctx context.Context, username string, filter *table.UserFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListUser, error)
-	UserByID(ctx context.Context, id int, filter *table.UserFilter) (table.User, error)
-
-	UserByIDWithSuffix(ctx context.Context, id int, filter *table.UserFilter, suffixes ...sq.Sqlizer) (table.User, error)
 }
 
 type IUserRepositoryQueryBuilder interface {
@@ -327,6 +327,28 @@ func (ur *UserRepository) FindAllUserWithSuffix(ctx context.Context, filter *tab
 
 	return &list, err
 }
+func (ur *UserRepository) UserByID(ctx context.Context, id int, filter *table.UserFilter) (table.User, error) {
+	return ur.UserByIDWithSuffix(ctx, id, filter)
+}
+
+func (ur *UserRepository) UserByIDWithSuffix(ctx context.Context, id int, filter *table.UserFilter, suffixes ...sq.Sqlizer) (table.User, error) {
+	var err error
+
+	// sql query
+	qb, err := ur.FindAllUserBaseQuery(ctx, filter, "`user`.*", suffixes...)
+	if err != nil {
+		return table.User{}, err
+	}
+	qb = qb.Where(sq.Eq{"`user`.`id`": id})
+
+	// run query
+	u := table.User{}
+	err = ur.DB.Get(ctx, &u, qb)
+	if err != nil {
+		return table.User{}, err
+	}
+	return u, nil
+}
 func (ur *UserRepository) UserByEmailActive(ctx context.Context, email string, active bool, filter *table.UserFilter) (table.User, error) {
 	return ur.UserByEmailActiveWithSuffix(ctx, email, active, filter)
 }
@@ -441,26 +463,4 @@ func (ur *UserRepository) UserByUsernameWithSuffix(ctx context.Context, username
 
 	return &list, nil
 
-}
-func (ur *UserRepository) UserByID(ctx context.Context, id int, filter *table.UserFilter) (table.User, error) {
-	return ur.UserByIDWithSuffix(ctx, id, filter)
-}
-
-func (ur *UserRepository) UserByIDWithSuffix(ctx context.Context, id int, filter *table.UserFilter, suffixes ...sq.Sqlizer) (table.User, error) {
-	var err error
-
-	// sql query
-	qb, err := ur.FindAllUserBaseQuery(ctx, filter, "`user`.*", suffixes...)
-	if err != nil {
-		return table.User{}, err
-	}
-	qb = qb.Where(sq.Eq{"`user`.`id`": id})
-
-	// run query
-	u := table.User{}
-	err = ur.DB.Get(ctx, &u, qb)
-	if err != nil {
-		return table.User{}, err
-	}
-	return u, nil
 }

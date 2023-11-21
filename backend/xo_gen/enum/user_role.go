@@ -11,9 +11,9 @@ import (
 type UserRole uint16
 
 const (
-	UserRoleInternalTeam UserRole = iota
+	UserRoleAdmin UserRole = iota
 
-	UserRoleManager UserRole = iota
+	UserRoleRequester UserRole = iota
 )
 
 func (ur UserRole) String() string {
@@ -21,11 +21,11 @@ func (ur UserRole) String() string {
 
 	switch ur {
 
-	case UserRoleInternalTeam:
-		value = "internal_team"
+	case UserRoleAdmin:
+		value = "admin"
 
-	case UserRoleManager:
-		value = "manager"
+	case UserRoleRequester:
+		value = "requester"
 
 	}
 
@@ -57,11 +57,11 @@ func (ur UserRole) MarshalText() ([]byte, error) {
 // UnmarshalText unmarshals UserRole from text.
 func (ur *UserRole) UnmarshalText(text []byte) error {
 	switch string(text) {
-	case "internal_team":
-		*ur = UserRoleInternalTeam
+	case "admin":
+		*ur = UserRoleAdmin
 
-	case "manager":
-		*ur = UserRoleManager
+	case "requester":
+		*ur = UserRoleRequester
 
 	default:
 		return errors.New("ErrInvalidEnumGraphQL_UserRole")

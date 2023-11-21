@@ -23,30 +23,6 @@
     model: ../xo_gen/table.ListAttendances
 
 
-  ExternalResources:
-    model: ../xo_gen/table.ExternalResources
-  ExternalResourcesCreate:
-    model: ../xo_gen/table.ExternalResourcesCreate
-  ExternalResourcesFilter:
-    model: ../xo_gen/table.ExternalResourcesFilter
-  ExternalResourcesUpdate:
-    model: ../xo_gen/table.ExternalResourcesUpdate
-  ListExternalResources:
-    model: ../xo_gen/table.ListExternalResources
-
-
-  InternalResources:
-    model: ../xo_gen/table.InternalResources
-  InternalResourcesCreate:
-    model: ../xo_gen/table.InternalResourcesCreate
-  InternalResourcesFilter:
-    model: ../xo_gen/table.InternalResourcesFilter
-  InternalResourcesUpdate:
-    model: ../xo_gen/table.InternalResourcesUpdate
-  ListInternalResources:
-    model: ../xo_gen/table.ListInternalResources
-
-
   Registrations:
     model: ../xo_gen/table.Registrations
   RegistrationsCreate:
@@ -59,6 +35,18 @@
     model: ../xo_gen/table.ListRegistrations
 
 
+  Students:
+    model: ../xo_gen/table.Students
+  StudentsCreate:
+    model: ../xo_gen/table.StudentsCreate
+  StudentsFilter:
+    model: ../xo_gen/table.StudentsFilter
+  StudentsUpdate:
+    model: ../xo_gen/table.StudentsUpdate
+  ListStudents:
+    model: ../xo_gen/table.ListStudents
+
+
   TrainerTrainingMapping:
     model: ../xo_gen/table.TrainerTrainingMapping
   TrainerTrainingMappingCreate:
@@ -69,6 +57,18 @@
     model: ../xo_gen/table.TrainerTrainingMappingUpdate
   ListTrainerTrainingMapping:
     model: ../xo_gen/table.ListTrainerTrainingMapping
+
+
+  Trainers:
+    model: ../xo_gen/table.Trainers
+  TrainersCreate:
+    model: ../xo_gen/table.TrainersCreate
+  TrainersFilter:
+    model: ../xo_gen/table.TrainersFilter
+  TrainersUpdate:
+    model: ../xo_gen/table.TrainersUpdate
+  ListTrainers:
+    model: ../xo_gen/table.ListTrainers
 
 
   Training:

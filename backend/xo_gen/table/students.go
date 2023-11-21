@@ -10,13 +10,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-type InternalResources struct {
+type Students struct {
 	ID          int           `json:"id" db:"id"`
-	ResourceID  string        `json:"resource_id" db:"resource_id"`
+	UUID        string        `json:"uuid" db:"uuid"`
 	Name        string        `json:"name" db:"name"`
 	Email       string        `json:"email" db:"email"`
 	MobilePhone string        `json:"mobile_phone" db:"mobile_phone"`
-	ProjectName string        `json:"project_name" db:"project_name"`
+	ClassName   string        `json:"class_name" db:"class_name"`
 	Designation string        `json:"designation" db:"designation"`
 	Active      bool          `json:"active" db:"active"`
 	CreatedAt   sql.NullTime  `json:"created_at" db:"created_at"`
@@ -24,13 +24,13 @@ type InternalResources struct {
 	CreatedBy   sql.NullInt64 `json:"created_by" db:"created_by"`
 }
 
-type InternalResourcesFilter struct {
+type StudentsFilter struct {
 	ID          internal.FilterOnField
-	ResourceID  internal.FilterOnField
+	UUID        internal.FilterOnField
 	Name        internal.FilterOnField
 	Email       internal.FilterOnField
 	MobilePhone internal.FilterOnField
-	ProjectName internal.FilterOnField
+	ClassName   internal.FilterOnField
 	Designation internal.FilterOnField
 	Active      internal.FilterOnField
 	CreatedAt   internal.FilterOnField
@@ -43,110 +43,110 @@ type InternalResourcesFilter struct {
 	Havings     []sq.Sqlizer
 }
 
-func (f *InternalResourcesFilter) NewFilter() interface{} {
+func (f *StudentsFilter) NewFilter() interface{} {
 	if f == nil {
-		return &InternalResourcesFilter{}
+		return &StudentsFilter{}
 	}
 	return f
 }
 
-func (f *InternalResourcesFilter) TableName() string {
-	return "`internal_resources`"
+func (f *StudentsFilter) TableName() string {
+	return "`students`"
 }
 
-func (f *InternalResourcesFilter) ModuleName() string {
-	return "internal_resources"
+func (f *StudentsFilter) ModuleName() string {
+	return "students"
 }
 
-func (f *InternalResourcesFilter) IsNil() bool {
+func (f *StudentsFilter) IsNil() bool {
 	return f == nil
 }
-func (f *InternalResourcesFilter) AddID(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddID(filterType internal.FilterType, v interface{}) {
 	f.ID = append(f.ID, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddResourceID(filterType internal.FilterType, v interface{}) {
-	f.ResourceID = append(f.ResourceID, map[internal.FilterType]interface{}{filterType: v})
+func (f *StudentsFilter) AddUUID(filterType internal.FilterType, v interface{}) {
+	f.UUID = append(f.UUID, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddName(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddName(filterType internal.FilterType, v interface{}) {
 	f.Name = append(f.Name, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddEmail(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddEmail(filterType internal.FilterType, v interface{}) {
 	f.Email = append(f.Email, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddMobilePhone(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddMobilePhone(filterType internal.FilterType, v interface{}) {
 	f.MobilePhone = append(f.MobilePhone, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddProjectName(filterType internal.FilterType, v interface{}) {
-	f.ProjectName = append(f.ProjectName, map[internal.FilterType]interface{}{filterType: v})
+func (f *StudentsFilter) AddClassName(filterType internal.FilterType, v interface{}) {
+	f.ClassName = append(f.ClassName, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddDesignation(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddDesignation(filterType internal.FilterType, v interface{}) {
 	f.Designation = append(f.Designation, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddActive(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddActive(filterType internal.FilterType, v interface{}) {
 	f.Active = append(f.Active, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddCreatedAt(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddCreatedAt(filterType internal.FilterType, v interface{}) {
 	f.CreatedAt = append(f.CreatedAt, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddUpdatedAt(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddUpdatedAt(filterType internal.FilterType, v interface{}) {
 	f.UpdatedAt = append(f.UpdatedAt, map[internal.FilterType]interface{}{filterType: v})
 }
-func (f *InternalResourcesFilter) AddCreatedBy(filterType internal.FilterType, v interface{}) {
+func (f *StudentsFilter) AddCreatedBy(filterType internal.FilterType, v interface{}) {
 	f.CreatedBy = append(f.CreatedBy, map[internal.FilterType]interface{}{filterType: v})
 }
 
-func (f *InternalResourcesFilter) Where(v sq.Sqlizer) *InternalResourcesFilter {
+func (f *StudentsFilter) Where(v sq.Sqlizer) *StudentsFilter {
 	f.Wheres = append(f.Wheres, v)
 	return f
 }
 
-func (f *InternalResourcesFilter) Join(j sq.Sqlizer) *InternalResourcesFilter {
+func (f *StudentsFilter) Join(j sq.Sqlizer) *StudentsFilter {
 	f.Joins = append(f.Joins, j)
 	return f
 }
 
-func (f *InternalResourcesFilter) LeftJoin(j sq.Sqlizer) *InternalResourcesFilter {
+func (f *StudentsFilter) LeftJoin(j sq.Sqlizer) *StudentsFilter {
 	f.LeftJoins = append(f.LeftJoins, j)
 	return f
 }
 
-func (f *InternalResourcesFilter) GroupBy(gb string) *InternalResourcesFilter {
+func (f *StudentsFilter) GroupBy(gb string) *StudentsFilter {
 	f.GroupBys = append(f.GroupBys, gb)
 	return f
 }
 
-func (f *InternalResourcesFilter) Having(h sq.Sqlizer) *InternalResourcesFilter {
+func (f *StudentsFilter) Having(h sq.Sqlizer) *StudentsFilter {
 	f.Havings = append(f.Havings, h)
 	return f
 }
 
-type InternalResourcesCreate struct {
-	ResourceID  string        `json:"resource_id" db:"resource_id"`
+type StudentsCreate struct {
+	UUID        string        `json:"uuid" db:"uuid"`
 	Name        string        `json:"name" db:"name"`
 	Email       string        `json:"email" db:"email"`
 	MobilePhone string        `json:"mobile_phone" db:"mobile_phone"`
-	ProjectName string        `json:"project_name" db:"project_name"`
+	ClassName   string        `json:"class_name" db:"class_name"`
 	Designation string        `json:"designation" db:"designation"`
 	CreatedBy   sql.NullInt64 `json:"created_by" db:"created_by"`
 }
 
 // TODO: We have to exclude AutoGenerated fields
 // For now I am keeping it in, as not sure how it affects
-type InternalResourcesUpdate struct {
-	ResourceID  *string        // resource_id
+type StudentsUpdate struct {
+	UUID        *string        // uuid
 	Name        *string        // name
 	Email       *string        // email
 	MobilePhone *string        // mobile_phone
-	ProjectName *string        // project_name
+	ClassName   *string        // class_name
 	Designation *string        // designation
 	Active      *bool          // active
 	CreatedBy   *sql.NullInt64 // created_by
 }
 
 // helper functions
-func (u *InternalResourcesUpdate) ToInternalResourcesCreate() (res InternalResourcesCreate, err error) {
-	if u.ResourceID != nil {
-		res.ResourceID = *u.ResourceID
+func (u *StudentsUpdate) ToStudentsCreate() (res StudentsCreate, err error) {
+	if u.UUID != nil {
+		res.UUID = *u.UUID
 	} else {
 		return res, errors.New("Value Can not be NULL")
 	}
@@ -165,8 +165,8 @@ func (u *InternalResourcesUpdate) ToInternalResourcesCreate() (res InternalResou
 	} else {
 		return res, errors.New("Value Can not be NULL")
 	}
-	if u.ProjectName != nil {
-		res.ProjectName = *u.ProjectName
+	if u.ClassName != nil {
+		res.ClassName = *u.ClassName
 	} else {
 		return res, errors.New("Value Can not be NULL")
 	}
@@ -181,82 +181,82 @@ func (u *InternalResourcesUpdate) ToInternalResourcesCreate() (res InternalResou
 	return res, nil
 }
 
-type ListInternalResources struct {
+type ListStudents struct {
 	TotalCount int
-	Data       []InternalResources
+	Data       []Students
 }
 
-func (l *ListInternalResources) GetAllID() []int {
+func (l *ListStudents) GetAllID() []int {
 	var res []int
 	for _, item := range l.Data {
 		res = append(res, item.ID)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllResourceID() []string {
+func (l *ListStudents) GetAllUUID() []string {
 	var res []string
 	for _, item := range l.Data {
-		res = append(res, item.ResourceID)
+		res = append(res, item.UUID)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllName() []string {
+func (l *ListStudents) GetAllName() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.Name)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllEmail() []string {
+func (l *ListStudents) GetAllEmail() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.Email)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllMobilePhone() []string {
+func (l *ListStudents) GetAllMobilePhone() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.MobilePhone)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllProjectName() []string {
+func (l *ListStudents) GetAllClassName() []string {
 	var res []string
 	for _, item := range l.Data {
-		res = append(res, item.ProjectName)
+		res = append(res, item.ClassName)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllDesignation() []string {
+func (l *ListStudents) GetAllDesignation() []string {
 	var res []string
 	for _, item := range l.Data {
 		res = append(res, item.Designation)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllActive() []bool {
+func (l *ListStudents) GetAllActive() []bool {
 	var res []bool
 	for _, item := range l.Data {
 		res = append(res, item.Active)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllCreatedAt() []sql.NullTime {
+func (l *ListStudents) GetAllCreatedAt() []sql.NullTime {
 	var res []sql.NullTime
 	for _, item := range l.Data {
 		res = append(res, item.CreatedAt)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllUpdatedAt() []sql.NullTime {
+func (l *ListStudents) GetAllUpdatedAt() []sql.NullTime {
 	var res []sql.NullTime
 	for _, item := range l.Data {
 		res = append(res, item.UpdatedAt)
 	}
 	return res
 }
-func (l *ListInternalResources) GetAllCreatedBy() []sql.NullInt64 {
+func (l *ListStudents) GetAllCreatedBy() []sql.NullInt64 {
 	var res []sql.NullInt64
 	for _, item := range l.Data {
 		res = append(res, item.CreatedBy)
@@ -264,7 +264,7 @@ func (l *ListInternalResources) GetAllCreatedBy() []sql.NullInt64 {
 	return res
 }
 
-func (l *ListInternalResources) Filter(f func(item InternalResources) bool) (res ListInternalResources) {
+func (l *ListStudents) Filter(f func(item Students) bool) (res ListStudents) {
 	for _, item := range l.Data {
 		if f(item) {
 			res.Data = append(res.Data, item)
@@ -274,55 +274,17 @@ func (l *ListInternalResources) Filter(f func(item InternalResources) bool) (res
 	return res
 }
 
-func (l *ListInternalResources) Find(f func(item InternalResources) bool) (res InternalResources, found bool) {
+func (l *ListStudents) Find(f func(item Students) bool) (res Students, found bool) {
 	for _, item := range l.Data {
 		if f(item) {
 			return item, true
 		}
 	}
-	return InternalResources{}, false
+	return Students{}, false
 }
 
-func (l *ListInternalResources) MapByName() (m map[string]ListInternalResources) {
-	m = make(map[string]ListInternalResources)
-	for _, item := range l.Data {
-		list := m[item.Name]
-		list.Data = append(list.Data, item)
-
-		m[item.Name] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
-	}
-	return m
-}
-
-func (l *ListInternalResources) MapByID() (m map[int]InternalResources) {
-	m = make(map[int]InternalResources, len(l.Data))
-	for _, item := range l.Data {
-		m[item.ID] = item
-	}
-	return m
-}
-
-func (l *ListInternalResources) MapByCreatedBy() (m map[sql.NullInt64]ListInternalResources) {
-	m = make(map[sql.NullInt64]ListInternalResources)
-	for _, item := range l.Data {
-		list := m[item.CreatedBy]
-		list.Data = append(list.Data, item)
-
-		m[item.CreatedBy] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
-	}
-	return m
-}
-
-func (l *ListInternalResources) MapByEmail() (m map[string]ListInternalResources) {
-	m = make(map[string]ListInternalResources)
+func (l *ListStudents) MapByEmail() (m map[string]ListStudents) {
+	m = make(map[string]ListStudents)
 	for _, item := range l.Data {
 		list := m[item.Email]
 		list.Data = append(list.Data, item)
@@ -336,17 +298,55 @@ func (l *ListInternalResources) MapByEmail() (m map[string]ListInternalResources
 	return m
 }
 
-func (l *ListInternalResources) MapByResourceID() (m map[string]ListInternalResources) {
-	m = make(map[string]ListInternalResources)
+func (l *ListStudents) MapByUUID() (m map[string]ListStudents) {
+	m = make(map[string]ListStudents)
 	for _, item := range l.Data {
-		list := m[item.ResourceID]
+		list := m[item.UUID]
 		list.Data = append(list.Data, item)
 
-		m[item.ResourceID] = list
+		m[item.UUID] = list
 	}
 	for k, v := range m {
 		v.TotalCount = len(v.Data)
 		m[k] = v
+	}
+	return m
+}
+
+func (l *ListStudents) MapByName() (m map[string]ListStudents) {
+	m = make(map[string]ListStudents)
+	for _, item := range l.Data {
+		list := m[item.Name]
+		list.Data = append(list.Data, item)
+
+		m[item.Name] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
+func (l *ListStudents) MapByCreatedBy() (m map[sql.NullInt64]ListStudents) {
+	m = make(map[sql.NullInt64]ListStudents)
+	for _, item := range l.Data {
+		list := m[item.CreatedBy]
+		list.Data = append(list.Data, item)
+
+		m[item.CreatedBy] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
+func (l *ListStudents) MapByID() (m map[int]Students) {
+	m = make(map[int]Students, len(l.Data))
+	for _, item := range l.Data {
+		m[item.ID] = item
 	}
 	return m
 }

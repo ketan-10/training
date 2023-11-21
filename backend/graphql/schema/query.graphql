@@ -2,8 +2,8 @@ type Query {
     login(email: String!, password: String!): String!
     
     findAllUser(filter: UserFilter, pagination: Pagination): ListUser! @authenticate
-    findAllExternalResources(filter: ExternalResourcesFilter, pagination: Pagination): ListExternalResources! @authenticate
-    findAllInternalResources(filter: InternalResourcesFilter, pagination: Pagination): ListInternalResources! @authenticate
+    findAllTrainers(filter: TrainersFilter, pagination: Pagination): ListTrainers! @authenticate
+    findAllStudents(filter: StudentsFilter, pagination: Pagination): ListStudents! @authenticate
     findAllRegistrations(filter: RegistrationsFilter, pagination: Pagination): ListRegistrations! @authenticate
     findAllTrainerTrainingMapping(filter: TrainerTrainingMappingFilter, pagination: Pagination): ListTrainerTrainingMapping! @authenticate
     findAllTrainingEvent(filter: TrainingEventFilter, pagination: Pagination): ListTrainingEvent! @authenticate

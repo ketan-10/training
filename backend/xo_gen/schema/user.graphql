@@ -14,8 +14,8 @@ type User {
 
 
 
-    externalResourcesByCreatedBy(filter: ExternalResourcesFilter, pagination: Pagination): ListExternalResources!
-    internalResourcesByCreatedBy(filter: InternalResourcesFilter, pagination: Pagination): ListInternalResources!
+    studentsByCreatedBy(filter: StudentsFilter, pagination: Pagination): ListStudents!
+    trainersByCreatedBy(filter: TrainersFilter, pagination: Pagination): ListTrainers!
     trainingByRequestedBy(filter: TrainingFilter, pagination: Pagination): ListTraining!
     trainingByCreatedBy(filter: TrainingFilter, pagination: Pagination): ListTraining!
     trainingEventByCreatedBy(filter: TrainingEventFilter, pagination: Pagination): ListTrainingEvent!

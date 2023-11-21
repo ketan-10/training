@@ -15,7 +15,7 @@ type IRegistrationsRltsRepository interface {
 
 	// This Table Pointing to Other Table!!!, ManyToOne <- As Many records from other table can point to this table one record
 	TrainingByFkTraining(ctx context.Context, obj *table.Registrations, filter *table.TrainingFilter) (*table.Training, error)
-	InternalResourcesByFkInternalResource(ctx context.Context, obj *table.Registrations, filter *table.InternalResourcesFilter) (*table.InternalResources, error)
+	StudentsByFkStudent(ctx context.Context, obj *table.Registrations, filter *table.StudentsFilter) (*table.Students, error)
 
 	//  Other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
 
@@ -24,7 +24,7 @@ type IRegistrationsRltsRepository interface {
 type RegistrationsRltsRepository struct {
 	TrainingRepository repo.ITrainingRepository
 
-	InternalResourcesRepository repo.IInternalResourcesRepository
+	StudentsRepository repo.IStudentsRepository
 }
 
 var NewRegistrationsRltsRepository = wire.NewSet(
@@ -53,17 +53,17 @@ func (rr *RegistrationsRltsRepository) TrainingByFkTraining(ctx context.Context,
 	}
 	return &result.Data[0], nil
 }
-func (rr *RegistrationsRltsRepository) InternalResourcesByFkInternalResource(ctx context.Context, obj *table.Registrations, filter *table.InternalResourcesFilter) (*table.InternalResources, error) {
+func (rr *RegistrationsRltsRepository) StudentsByFkStudent(ctx context.Context, obj *table.Registrations, filter *table.StudentsFilter) (*table.Students, error) {
 	if obj == nil {
 		return nil, nil
 	}
 
 	if filter == nil {
-		filter = &table.InternalResourcesFilter{}
+		filter = &table.StudentsFilter{}
 	}
 
-	filter.AddID(internal.Eq, obj.FkInternalResource)
-	result, err := rr.InternalResourcesRepository.FindAllInternalResources(ctx, filter, nil)
+	filter.AddID(internal.Eq, obj.FkStudent)
+	result, err := rr.StudentsRepository.FindAllStudents(ctx, filter, nil)
 
 	if err != nil {
 		return nil, err

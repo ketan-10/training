@@ -15,8 +15,8 @@ type ITrainerTrainingMappingRltsRepository interface {
 
 	// This Table Pointing to Other Table!!!, ManyToOne <- As Many records from other table can point to this table one record
 	TrainingEventByFkTrainingEvent(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.TrainingEventFilter) (*table.TrainingEvent, error)
-	ExternalResourcesByFkExternalResource(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.ExternalResourcesFilter) (*table.ExternalResources, error)
-	InternalResourcesByFkInternalResource(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.InternalResourcesFilter) (*table.InternalResources, error)
+	TrainersByFkTrainer(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.TrainersFilter) (*table.Trainers, error)
+	StudentsByFkStudent(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.StudentsFilter) (*table.Students, error)
 
 	//  Other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
 
@@ -25,9 +25,9 @@ type ITrainerTrainingMappingRltsRepository interface {
 type TrainerTrainingMappingRltsRepository struct {
 	TrainingEventRepository repo.ITrainingEventRepository
 
-	ExternalResourcesRepository repo.IExternalResourcesRepository
+	TrainersRepository repo.ITrainersRepository
 
-	InternalResourcesRepository repo.IInternalResourcesRepository
+	StudentsRepository repo.IStudentsRepository
 }
 
 var NewTrainerTrainingMappingRltsRepository = wire.NewSet(
@@ -56,17 +56,17 @@ func (ttmr *TrainerTrainingMappingRltsRepository) TrainingEventByFkTrainingEvent
 	}
 	return &result.Data[0], nil
 }
-func (ttmr *TrainerTrainingMappingRltsRepository) ExternalResourcesByFkExternalResource(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.ExternalResourcesFilter) (*table.ExternalResources, error) {
+func (ttmr *TrainerTrainingMappingRltsRepository) TrainersByFkTrainer(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.TrainersFilter) (*table.Trainers, error) {
 	if obj == nil {
 		return nil, nil
 	}
 
 	if filter == nil {
-		filter = &table.ExternalResourcesFilter{}
+		filter = &table.TrainersFilter{}
 	}
 
-	filter.AddID(internal.Eq, obj.FkExternalResource)
-	result, err := ttmr.ExternalResourcesRepository.FindAllExternalResources(ctx, filter, nil)
+	filter.AddID(internal.Eq, obj.FkTrainer)
+	result, err := ttmr.TrainersRepository.FindAllTrainers(ctx, filter, nil)
 
 	if err != nil {
 		return nil, err
@@ -77,17 +77,17 @@ func (ttmr *TrainerTrainingMappingRltsRepository) ExternalResourcesByFkExternalR
 	}
 	return &result.Data[0], nil
 }
-func (ttmr *TrainerTrainingMappingRltsRepository) InternalResourcesByFkInternalResource(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.InternalResourcesFilter) (*table.InternalResources, error) {
+func (ttmr *TrainerTrainingMappingRltsRepository) StudentsByFkStudent(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.StudentsFilter) (*table.Students, error) {
 	if obj == nil {
 		return nil, nil
 	}
 
 	if filter == nil {
-		filter = &table.InternalResourcesFilter{}
+		filter = &table.StudentsFilter{}
 	}
 
-	filter.AddID(internal.Eq, obj.FkInternalResource)
-	result, err := ttmr.InternalResourcesRepository.FindAllInternalResources(ctx, filter, nil)
+	filter.AddID(internal.Eq, obj.FkStudent)
+	result, err := ttmr.StudentsRepository.FindAllStudents(ctx, filter, nil)
 
 	if err != nil {
 		return nil, err

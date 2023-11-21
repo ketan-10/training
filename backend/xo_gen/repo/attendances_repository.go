@@ -26,17 +26,17 @@ type IAttendancesRepository interface {
 
 	FindAllAttendances(ctx context.Context, a *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
 	FindAllAttendancesWithSuffix(ctx context.Context, a *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error)
-	AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error)
 
-	AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error)
+	AttendancesByFkStudent(ctx context.Context, fkStudent int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
 
-	AttendancesByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
-
-	AttendancesByFkInternalResourceWithSuffix(ctx context.Context, fkInternalResource int, filter *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error)
+	AttendancesByFkStudentWithSuffix(ctx context.Context, fkStudent int, filter *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error)
 
 	AttendancesByFkTrainingEvent(ctx context.Context, fkTrainingEvent int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
 
 	AttendancesByFkTrainingEventWithSuffix(ctx context.Context, fkTrainingEvent int, filter *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error)
+	AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error)
+
+	AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error)
 }
 
 type IAttendancesRepositoryQueryBuilder interface {
@@ -87,10 +87,10 @@ func (ar *AttendancesRepository) InsertAttendancesIDResult(ctx context.Context, 
 
 	qb := sq.Insert("`attendances`").Columns(
 		"`fk_training_event`",
-		"`fk_internal_resource`",
+		"`fk_student`",
 	).Values(
 		a.FkTrainingEvent,
-		a.FkInternalResource,
+		a.FkStudent,
 	)
 	if suffix != nil {
 		suffixQuery, suffixArgs, suffixErr := suffix.ToSql()
@@ -122,8 +122,8 @@ func (ar *AttendancesRepository) UpdateAttendancesByFields(ctx context.Context, 
 	if a.FkTrainingEvent != nil {
 		updateMap["`fk_training_event`"] = *a.FkTrainingEvent
 	}
-	if a.FkInternalResource != nil {
-		updateMap["`fk_internal_resource`"] = *a.FkInternalResource
+	if a.FkStudent != nil {
+		updateMap["`fk_student`"] = *a.FkStudent
 	}
 	if a.Active != nil {
 		updateMap["`active`"] = *a.Active
@@ -155,9 +155,9 @@ func (ar *AttendancesRepository) UpdateAttendances(ctx context.Context, a table.
 
 	// sql query
 	qb := sq.Update("`attendances`").SetMap(map[string]interface{}{
-		"`fk_training_event`":    a.FkTrainingEvent,
-		"`fk_internal_resource`": a.FkInternalResource,
-		"`active`":               a.Active,
+		"`fk_training_event`": a.FkTrainingEvent,
+		"`fk_student`":        a.FkStudent,
+		"`active`":            a.Active,
 	}).Where(sq.Eq{"`id`": a.ID})
 
 	// run query
@@ -211,7 +211,7 @@ func (ar *AttendancesRepositoryQueryBuilder) FindAllAttendancesBaseQuery(ctx con
 		if qb, err = internal.AddFilter(qb, "`attendances`.`fk_training_event`", filter.FkTrainingEvent); err != nil {
 			return qb, err
 		}
-		if qb, err = internal.AddFilter(qb, "`attendances`.`fk_internal_resource`", filter.FkInternalResource); err != nil {
+		if qb, err = internal.AddFilter(qb, "`attendances`.`fk_student`", filter.FkStudent); err != nil {
 			return qb, err
 		}
 		if filter.Active == nil {
@@ -257,7 +257,7 @@ func (a *AttendancesRepositoryQueryBuilder) AddPagination(ctx context.Context, q
 	fields := []string{
 		"id",
 		"fk_training_event",
-		"fk_internal_resource",
+		"fk_student",
 		"active",
 		"created_at",
 		"updated_at",
@@ -304,34 +304,12 @@ func (ar *AttendancesRepository) FindAllAttendancesWithSuffix(ctx context.Contex
 
 	return &list, err
 }
-func (ar *AttendancesRepository) AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error) {
-	return ar.AttendancesByIDWithSuffix(ctx, id, filter)
+
+func (ar *AttendancesRepository) AttendancesByFkStudent(ctx context.Context, fkStudent int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error) {
+	return ar.AttendancesByFkStudentWithSuffix(ctx, fkStudent, filter, pagination)
 }
 
-func (ar *AttendancesRepository) AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error) {
-	var err error
-
-	// sql query
-	qb, err := ar.FindAllAttendancesBaseQuery(ctx, filter, "`attendances`.*", suffixes...)
-	if err != nil {
-		return table.Attendances{}, err
-	}
-	qb = qb.Where(sq.Eq{"`attendances`.`id`": id})
-
-	// run query
-	a := table.Attendances{}
-	err = ar.DB.Get(ctx, &a, qb)
-	if err != nil {
-		return table.Attendances{}, err
-	}
-	return a, nil
-}
-
-func (ar *AttendancesRepository) AttendancesByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error) {
-	return ar.AttendancesByFkInternalResourceWithSuffix(ctx, fkInternalResource, filter, pagination)
-}
-
-func (ar *AttendancesRepository) AttendancesByFkInternalResourceWithSuffix(ctx context.Context, fkInternalResource int, filter *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error) {
+func (ar *AttendancesRepository) AttendancesByFkStudentWithSuffix(ctx context.Context, fkStudent int, filter *table.AttendancesFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListAttendances, error) {
 
 	var list table.ListAttendances
 	// sql query
@@ -339,7 +317,7 @@ func (ar *AttendancesRepository) AttendancesByFkInternalResourceWithSuffix(ctx c
 	if err != nil {
 		return &list, err
 	}
-	qb = qb.Where(sq.Eq{"`attendances`.`fk_internal_resource`": fkInternalResource})
+	qb = qb.Where(sq.Eq{"`attendances`.`fk_student`": fkStudent})
 
 	if qb, err = ar.AddPagination(ctx, qb, pagination); err != nil {
 		return &list, err
@@ -362,7 +340,7 @@ func (ar *AttendancesRepository) AttendancesByFkInternalResourceWithSuffix(ctx c
 	if filter != nil && len(filter.GroupBys) > 0 {
 		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
 	}
-	qb = qb.Where(sq.Eq{"`attendances`.`fk_internal_resource`": fkInternalResource})
+	qb = qb.Where(sq.Eq{"`attendances`.`fk_student`": fkStudent})
 	if err = ar.DB.Get(ctx, &listMeta, qb); err != nil {
 		return &list, err
 	}
@@ -417,4 +395,26 @@ func (ar *AttendancesRepository) AttendancesByFkTrainingEventWithSuffix(ctx cont
 
 	return &list, nil
 
+}
+func (ar *AttendancesRepository) AttendancesByID(ctx context.Context, id int, filter *table.AttendancesFilter) (table.Attendances, error) {
+	return ar.AttendancesByIDWithSuffix(ctx, id, filter)
+}
+
+func (ar *AttendancesRepository) AttendancesByIDWithSuffix(ctx context.Context, id int, filter *table.AttendancesFilter, suffixes ...sq.Sqlizer) (table.Attendances, error) {
+	var err error
+
+	// sql query
+	qb, err := ar.FindAllAttendancesBaseQuery(ctx, filter, "`attendances`.*", suffixes...)
+	if err != nil {
+		return table.Attendances{}, err
+	}
+	qb = qb.Where(sq.Eq{"`attendances`.`id`": id})
+
+	// run query
+	a := table.Attendances{}
+	err = ar.DB.Get(ctx, &a, qb)
+	if err != nil {
+		return table.Attendances{}, err
+	}
+	return a, nil
 }

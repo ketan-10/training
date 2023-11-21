@@ -3,14 +3,14 @@
 type Attendances {
     id: Int !
     fkTrainingEvent: Int !
-    fkInternalResource: Int !
+    fkStudent: Int !
     active: Boolean !
     createdAt: NullTime 
     updatedAt: NullTime 
 
 
     trainingEventByFkTrainingEvent(filter: TrainingEventFilter): TrainingEvent
-    internalResourcesByFkInternalResource(filter: InternalResourcesFilter): InternalResources
+    studentsByFkStudent(filter: StudentsFilter): Students
 
 
 
@@ -18,7 +18,7 @@ type Attendances {
 input AttendancesFilter {
     id: FilterOnField
     fkTrainingEvent: FilterOnField
-    fkInternalResource: FilterOnField
+    fkStudent: FilterOnField
     active: FilterOnField
     createdAt: FilterOnField
     updatedAt: FilterOnField
@@ -26,12 +26,12 @@ input AttendancesFilter {
 
 input AttendancesCreate {
     fkTrainingEvent: Int !
-    fkInternalResource: Int !
+    fkStudent: Int !
 }
 
 input AttendancesUpdate {
     fkTrainingEvent: Int 
-    fkInternalResource: Int 
+    fkStudent: Int 
     active: Boolean 
 
 }

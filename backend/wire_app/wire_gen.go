@@ -33,19 +33,28 @@ func GetApp(ctx context.Context) (*App, func(), error) {
 		DB:           db,
 		QueryBuilder: trainingEventRepositoryQueryBuilder,
 	}
-	internalResourcesRepositoryQueryBuilder := &repo.InternalResourcesRepositoryQueryBuilder{}
-	internalResourcesRepository := &repo.InternalResourcesRepository{
+	studentsRepositoryQueryBuilder := &repo.StudentsRepositoryQueryBuilder{}
+	studentsRepository := &repo.StudentsRepository{
 		DB:           db,
-		QueryBuilder: internalResourcesRepositoryQueryBuilder,
+		QueryBuilder: studentsRepositoryQueryBuilder,
 	}
 	attendancesRltsRepository := &rlts.AttendancesRltsRepository{
-		TrainingEventRepository:     trainingEventRepository,
-		InternalResourcesRepository: internalResourcesRepository,
+		TrainingEventRepository: trainingEventRepository,
+		StudentsRepository:      studentsRepository,
 	}
-	externalResourcesRepositoryQueryBuilder := &repo.ExternalResourcesRepositoryQueryBuilder{}
-	externalResourcesRepository := &repo.ExternalResourcesRepository{
+	registrationsRepositoryQueryBuilder := &repo.RegistrationsRepositoryQueryBuilder{}
+	registrationsRepository := &repo.RegistrationsRepository{
 		DB:           db,
-		QueryBuilder: externalResourcesRepositoryQueryBuilder,
+		QueryBuilder: registrationsRepositoryQueryBuilder,
+	}
+	trainingRepositoryQueryBuilder := &repo.TrainingRepositoryQueryBuilder{}
+	trainingRepository := &repo.TrainingRepository{
+		DB:           db,
+		QueryBuilder: trainingRepositoryQueryBuilder,
+	}
+	registrationsRltsRepository := &rlts.RegistrationsRltsRepository{
+		TrainingRepository: trainingRepository,
+		StudentsRepository: studentsRepository,
 	}
 	userRepositoryQueryBuilder := &repo.UserRepositoryQueryBuilder{}
 	userRepository := &repo.UserRepository{
@@ -57,34 +66,25 @@ func GetApp(ctx context.Context) (*App, func(), error) {
 		DB:           db,
 		QueryBuilder: trainerTrainingMappingRepositoryQueryBuilder,
 	}
-	externalResourcesRltsRepository := &rlts.ExternalResourcesRltsRepository{
-		UserRepository:                   userRepository,
-		TrainerTrainingMappingRepository: trainerTrainingMappingRepository,
-	}
-	registrationsRepositoryQueryBuilder := &repo.RegistrationsRepositoryQueryBuilder{}
-	registrationsRepository := &repo.RegistrationsRepository{
-		DB:           db,
-		QueryBuilder: registrationsRepositoryQueryBuilder,
-	}
-	internalResourcesRltsRepository := &rlts.InternalResourcesRltsRepository{
+	studentsRltsRepository := &rlts.StudentsRltsRepository{
 		UserRepository:                   userRepository,
 		AttendancesRepository:            attendancesRepository,
 		RegistrationsRepository:          registrationsRepository,
 		TrainerTrainingMappingRepository: trainerTrainingMappingRepository,
 	}
-	trainingRepositoryQueryBuilder := &repo.TrainingRepositoryQueryBuilder{}
-	trainingRepository := &repo.TrainingRepository{
+	trainersRepositoryQueryBuilder := &repo.TrainersRepositoryQueryBuilder{}
+	trainersRepository := &repo.TrainersRepository{
 		DB:           db,
-		QueryBuilder: trainingRepositoryQueryBuilder,
-	}
-	registrationsRltsRepository := &rlts.RegistrationsRltsRepository{
-		TrainingRepository:          trainingRepository,
-		InternalResourcesRepository: internalResourcesRepository,
+		QueryBuilder: trainersRepositoryQueryBuilder,
 	}
 	trainerTrainingMappingRltsRepository := &rlts.TrainerTrainingMappingRltsRepository{
-		TrainingEventRepository:     trainingEventRepository,
-		ExternalResourcesRepository: externalResourcesRepository,
-		InternalResourcesRepository: internalResourcesRepository,
+		TrainingEventRepository: trainingEventRepository,
+		TrainersRepository:      trainersRepository,
+		StudentsRepository:      studentsRepository,
+	}
+	trainersRltsRepository := &rlts.TrainersRltsRepository{
+		UserRepository:                   userRepository,
+		TrainerTrainingMappingRepository: trainerTrainingMappingRepository,
 	}
 	trainingRltsRepository := &rlts.TrainingRltsRepository{
 		UserRepository:          userRepository,
@@ -98,22 +98,22 @@ func GetApp(ctx context.Context) (*App, func(), error) {
 		TrainerTrainingMappingRepository: trainerTrainingMappingRepository,
 	}
 	userRltsRepository := &rlts.UserRltsRepository{
-		ExternalResourcesRepository: externalResourcesRepository,
-		InternalResourcesRepository: internalResourcesRepository,
-		TrainingRepository:          trainingRepository,
-		TrainingEventRepository:     trainingEventRepository,
+		StudentsRepository:      studentsRepository,
+		TrainersRepository:      trainersRepository,
+		TrainingRepository:      trainingRepository,
+		TrainingEventRepository: trainingEventRepository,
 	}
 	xoResolver := xo_gen.XoResolver{
 		IAttendancesRepository:                attendancesRepository,
 		IAttendancesRltsRepository:            attendancesRltsRepository,
-		IExternalResourcesRepository:          externalResourcesRepository,
-		IExternalResourcesRltsRepository:      externalResourcesRltsRepository,
-		IInternalResourcesRepository:          internalResourcesRepository,
-		IInternalResourcesRltsRepository:      internalResourcesRltsRepository,
 		IRegistrationsRepository:              registrationsRepository,
 		IRegistrationsRltsRepository:          registrationsRltsRepository,
+		IStudentsRepository:                   studentsRepository,
+		IStudentsRltsRepository:               studentsRltsRepository,
 		ITrainerTrainingMappingRepository:     trainerTrainingMappingRepository,
 		ITrainerTrainingMappingRltsRepository: trainerTrainingMappingRltsRepository,
+		ITrainersRepository:                   trainersRepository,
+		ITrainersRltsRepository:               trainersRltsRepository,
 		ITrainingRepository:                   trainingRepository,
 		ITrainingRltsRepository:               trainingRltsRepository,
 		ITrainingEventRepository:              trainingEventRepository,

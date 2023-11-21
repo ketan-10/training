@@ -80,7 +80,7 @@ elif [[ $1 = 'gqlgen' ]]; then
 elif [[ $1 = 'wire' ]]; then
     wire
 elif [[ $1 = 'all' ]]; then
-    migrate
+    cleanMigrate
     xo
     goimports
     yaml_graphql

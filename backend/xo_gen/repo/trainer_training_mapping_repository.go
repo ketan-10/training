@@ -27,13 +27,13 @@ type ITrainerTrainingMappingRepository interface {
 	FindAllTrainerTrainingMapping(ctx context.Context, ttm *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 	FindAllTrainerTrainingMappingWithSuffix(ctx context.Context, ttm *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error)
 
-	TrainerTrainingMappingByFkExternalResource(ctx context.Context, fkExternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
+	TrainerTrainingMappingByFkStudent(ctx context.Context, fkStudent int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 
-	TrainerTrainingMappingByFkExternalResourceWithSuffix(ctx context.Context, fkExternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error)
+	TrainerTrainingMappingByFkStudentWithSuffix(ctx context.Context, fkStudent int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error)
 
-	TrainerTrainingMappingByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
+	TrainerTrainingMappingByFkTrainer(ctx context.Context, fkTrainer int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 
-	TrainerTrainingMappingByFkInternalResourceWithSuffix(ctx context.Context, fkInternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error)
+	TrainerTrainingMappingByFkTrainerWithSuffix(ctx context.Context, fkTrainer int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error)
 
 	TrainerTrainingMappingByFkTrainingEvent(ctx context.Context, fkTrainingEvent int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 
@@ -91,12 +91,12 @@ func (ttmr *TrainerTrainingMappingRepository) InsertTrainerTrainingMappingIDResu
 
 	qb := sq.Insert("`trainer_training_mapping`").Columns(
 		"`fk_training_event`",
-		"`fk_external_resource`",
-		"`fk_internal_resource`",
+		"`fk_trainer`",
+		"`fk_student`",
 	).Values(
 		ttm.FkTrainingEvent,
-		ttm.FkExternalResource,
-		ttm.FkInternalResource,
+		ttm.FkTrainer,
+		ttm.FkStudent,
 	)
 	if suffix != nil {
 		suffixQuery, suffixArgs, suffixErr := suffix.ToSql()
@@ -128,11 +128,11 @@ func (ttmr *TrainerTrainingMappingRepository) UpdateTrainerTrainingMappingByFiel
 	if ttm.FkTrainingEvent != nil {
 		updateMap["`fk_training_event`"] = *ttm.FkTrainingEvent
 	}
-	if ttm.FkExternalResource != nil {
-		updateMap["`fk_external_resource`"] = *ttm.FkExternalResource
+	if ttm.FkTrainer != nil {
+		updateMap["`fk_trainer`"] = *ttm.FkTrainer
 	}
-	if ttm.FkInternalResource != nil {
-		updateMap["`fk_internal_resource`"] = *ttm.FkInternalResource
+	if ttm.FkStudent != nil {
+		updateMap["`fk_student`"] = *ttm.FkStudent
 	}
 	if ttm.Active != nil {
 		updateMap["`active`"] = *ttm.Active
@@ -164,10 +164,10 @@ func (ttmr *TrainerTrainingMappingRepository) UpdateTrainerTrainingMapping(ctx c
 
 	// sql query
 	qb := sq.Update("`trainer_training_mapping`").SetMap(map[string]interface{}{
-		"`fk_training_event`":    ttm.FkTrainingEvent,
-		"`fk_external_resource`": ttm.FkExternalResource,
-		"`fk_internal_resource`": ttm.FkInternalResource,
-		"`active`":               ttm.Active,
+		"`fk_training_event`": ttm.FkTrainingEvent,
+		"`fk_trainer`":        ttm.FkTrainer,
+		"`fk_student`":        ttm.FkStudent,
+		"`active`":            ttm.Active,
 	}).Where(sq.Eq{"`id`": ttm.ID})
 
 	// run query
@@ -221,10 +221,10 @@ func (ttmr *TrainerTrainingMappingRepositoryQueryBuilder) FindAllTrainerTraining
 		if qb, err = internal.AddFilter(qb, "`trainer_training_mapping`.`fk_training_event`", filter.FkTrainingEvent); err != nil {
 			return qb, err
 		}
-		if qb, err = internal.AddFilter(qb, "`trainer_training_mapping`.`fk_external_resource`", filter.FkExternalResource); err != nil {
+		if qb, err = internal.AddFilter(qb, "`trainer_training_mapping`.`fk_trainer`", filter.FkTrainer); err != nil {
 			return qb, err
 		}
-		if qb, err = internal.AddFilter(qb, "`trainer_training_mapping`.`fk_internal_resource`", filter.FkInternalResource); err != nil {
+		if qb, err = internal.AddFilter(qb, "`trainer_training_mapping`.`fk_student`", filter.FkStudent); err != nil {
 			return qb, err
 		}
 		if filter.Active == nil {
@@ -270,8 +270,8 @@ func (ttm *TrainerTrainingMappingRepositoryQueryBuilder) AddPagination(ctx conte
 	fields := []string{
 		"id",
 		"fk_training_event",
-		"fk_external_resource",
-		"fk_internal_resource",
+		"fk_trainer",
+		"fk_student",
 		"active",
 		"created_at",
 		"updated_at",
@@ -319,11 +319,11 @@ func (ttmr *TrainerTrainingMappingRepository) FindAllTrainerTrainingMappingWithS
 	return &list, err
 }
 
-func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkExternalResource(ctx context.Context, fkExternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error) {
-	return ttmr.TrainerTrainingMappingByFkExternalResourceWithSuffix(ctx, fkExternalResource, filter, pagination)
+func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkStudent(ctx context.Context, fkStudent int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error) {
+	return ttmr.TrainerTrainingMappingByFkStudentWithSuffix(ctx, fkStudent, filter, pagination)
 }
 
-func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkExternalResourceWithSuffix(ctx context.Context, fkExternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error) {
+func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkStudentWithSuffix(ctx context.Context, fkStudent int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error) {
 
 	var list table.ListTrainerTrainingMapping
 	// sql query
@@ -331,7 +331,7 @@ func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkExternal
 	if err != nil {
 		return &list, err
 	}
-	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_external_resource`": fkExternalResource})
+	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_student`": fkStudent})
 
 	if qb, err = ttmr.AddPagination(ctx, qb, pagination); err != nil {
 		return &list, err
@@ -354,7 +354,7 @@ func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkExternal
 	if filter != nil && len(filter.GroupBys) > 0 {
 		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
 	}
-	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_external_resource`": fkExternalResource})
+	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_student`": fkStudent})
 	if err = ttmr.DB.Get(ctx, &listMeta, qb); err != nil {
 		return &list, err
 	}
@@ -365,11 +365,11 @@ func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkExternal
 
 }
 
-func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkInternalResource(ctx context.Context, fkInternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error) {
-	return ttmr.TrainerTrainingMappingByFkInternalResourceWithSuffix(ctx, fkInternalResource, filter, pagination)
+func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkTrainer(ctx context.Context, fkTrainer int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error) {
+	return ttmr.TrainerTrainingMappingByFkTrainerWithSuffix(ctx, fkTrainer, filter, pagination)
 }
 
-func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkInternalResourceWithSuffix(ctx context.Context, fkInternalResource int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error) {
+func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkTrainerWithSuffix(ctx context.Context, fkTrainer int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainerTrainingMapping, error) {
 
 	var list table.ListTrainerTrainingMapping
 	// sql query
@@ -377,7 +377,7 @@ func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkInternal
 	if err != nil {
 		return &list, err
 	}
-	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_internal_resource`": fkInternalResource})
+	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_trainer`": fkTrainer})
 
 	if qb, err = ttmr.AddPagination(ctx, qb, pagination); err != nil {
 		return &list, err
@@ -400,7 +400,7 @@ func (ttmr *TrainerTrainingMappingRepository) TrainerTrainingMappingByFkInternal
 	if filter != nil && len(filter.GroupBys) > 0 {
 		qb = sq.Select("COUNT(1) AS count").FromSelect(qb, "a")
 	}
-	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_internal_resource`": fkInternalResource})
+	qb = qb.Where(sq.Eq{"`trainer_training_mapping`.`fk_trainer`": fkTrainer})
 	if err = ttmr.DB.Get(ctx, &listMeta, qb); err != nil {
 		return &list, err
 	}

@@ -43,12 +43,12 @@ type Config struct {
 
 type ResolverRoot interface {
 	Attendances() AttendancesResolver
-	ExternalResources() ExternalResourcesResolver
-	InternalResources() InternalResourcesResolver
 	Mutation() MutationResolver
 	Query() QueryResolver
 	Registrations() RegistrationsResolver
+	Students() StudentsResolver
 	TrainerTrainingMapping() TrainerTrainingMappingResolver
+	Trainers() TrainersResolver
 	Training() TrainingResolver
 	TrainingEvent() TrainingEventResolver
 	User() UserResolver
@@ -60,60 +60,17 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Attendances struct {
-		Active                                func(childComplexity int) int
-		CreatedAt                             func(childComplexity int) int
-		FkInternalResource                    func(childComplexity int) int
-		FkTrainingEvent                       func(childComplexity int) int
-		ID                                    func(childComplexity int) int
-		InternalResourcesByFkInternalResource func(childComplexity int, filter *table.InternalResourcesFilter) int
-		TrainingEventByFkTrainingEvent        func(childComplexity int, filter *table.TrainingEventFilter) int
-		UpdatedAt                             func(childComplexity int) int
-	}
-
-	ExternalResources struct {
-		Active                                     func(childComplexity int) int
-		CreatedAt                                  func(childComplexity int) int
-		CreatedBy                                  func(childComplexity int) int
-		Designation                                func(childComplexity int) int
-		Email                                      func(childComplexity int) int
-		ID                                         func(childComplexity int) int
-		MobilePhone                                func(childComplexity int) int
-		Name                                       func(childComplexity int) int
-		ResourceID                                 func(childComplexity int) int
-		TrainerTrainingMappingByFkExternalResource func(childComplexity int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) int
-		UpdatedAt                                  func(childComplexity int) int
-		UserByCreatedBy                            func(childComplexity int, filter *table.UserFilter) int
-	}
-
-	InternalResources struct {
-		Active                                     func(childComplexity int) int
-		AttendancesByFkInternalResource            func(childComplexity int, filter *table.AttendancesFilter, pagination *internal.Pagination) int
-		CreatedAt                                  func(childComplexity int) int
-		CreatedBy                                  func(childComplexity int) int
-		Designation                                func(childComplexity int) int
-		Email                                      func(childComplexity int) int
-		ID                                         func(childComplexity int) int
-		MobilePhone                                func(childComplexity int) int
-		Name                                       func(childComplexity int) int
-		ProjectName                                func(childComplexity int) int
-		RegistrationsByFkInternalResource          func(childComplexity int, filter *table.RegistrationsFilter, pagination *internal.Pagination) int
-		ResourceID                                 func(childComplexity int) int
-		TrainerTrainingMappingByFkInternalResource func(childComplexity int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) int
-		UpdatedAt                                  func(childComplexity int) int
-		UserByCreatedBy                            func(childComplexity int, filter *table.UserFilter) int
+		Active                         func(childComplexity int) int
+		CreatedAt                      func(childComplexity int) int
+		FkStudent                      func(childComplexity int) int
+		FkTrainingEvent                func(childComplexity int) int
+		ID                             func(childComplexity int) int
+		StudentsByFkStudent            func(childComplexity int, filter *table.StudentsFilter) int
+		TrainingEventByFkTrainingEvent func(childComplexity int, filter *table.TrainingEventFilter) int
+		UpdatedAt                      func(childComplexity int) int
 	}
 
 	ListAttendances struct {
-		Data       func(childComplexity int) int
-		TotalCount func(childComplexity int) int
-	}
-
-	ListExternalResources struct {
-		Data       func(childComplexity int) int
-		TotalCount func(childComplexity int) int
-	}
-
-	ListInternalResources struct {
 		Data       func(childComplexity int) int
 		TotalCount func(childComplexity int) int
 	}
@@ -123,7 +80,17 @@ type ComplexityRoot struct {
 		TotalCount func(childComplexity int) int
 	}
 
+	ListStudents struct {
+		Data       func(childComplexity int) int
+		TotalCount func(childComplexity int) int
+	}
+
 	ListTrainerTrainingMapping struct {
+		Data       func(childComplexity int) int
+		TotalCount func(childComplexity int) int
+	}
+
+	ListTrainers struct {
 		Data       func(childComplexity int) int
 		TotalCount func(childComplexity int) int
 	}
@@ -144,34 +111,34 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		DeleteExternalResourcesByID          func(childComplexity int, id int) int
-		DeleteInternalResourcesByID          func(childComplexity int, id int) int
 		DeleteRegistrationsByID              func(childComplexity int, id int) int
+		DeleteStudentsByID                   func(childComplexity int, id int) int
 		DeleteTrainerTrainingMappingByID     func(childComplexity int, id int) int
+		DeleteTrainersByID                   func(childComplexity int, id int) int
 		DeleteTrainingByID                   func(childComplexity int, id int) int
 		DeleteTrainingEventByID              func(childComplexity int, id int) int
 		DeleteUserByID                       func(childComplexity int, id int) int
-		InsertExternalResources              func(childComplexity int, data table.ExternalResourcesCreate) int
-		InsertInternalResources              func(childComplexity int, data table.InternalResourcesCreate) int
 		InsertRegistrations                  func(childComplexity int, data table.RegistrationsCreate) int
+		InsertStudents                       func(childComplexity int, data table.StudentsCreate) int
 		InsertTrainerTrainingMapping         func(childComplexity int, data table.TrainerTrainingMappingCreate) int
+		InsertTrainers                       func(childComplexity int, data table.TrainersCreate) int
 		InsertTraining                       func(childComplexity int, data table.TrainingCreate) int
 		InsertTrainingEvent                  func(childComplexity int, data table.TrainingEventCreate) int
 		InsertUser                           func(childComplexity int, data table.UserCreate) int
-		UpdateExternalResourcesByFields      func(childComplexity int, id int, data table.ExternalResourcesUpdate) int
-		UpdateInternalResourcesByFields      func(childComplexity int, id int, data table.InternalResourcesUpdate) int
 		UpdateRegistrationsByFields          func(childComplexity int, id int, data table.RegistrationsUpdate) int
+		UpdateStudentsByFields               func(childComplexity int, id int, data table.StudentsUpdate) int
 		UpdateTrainerTrainingMappingByFields func(childComplexity int, id int, data table.TrainerTrainingMappingUpdate) int
+		UpdateTrainersByFields               func(childComplexity int, id int, data table.TrainersUpdate) int
 		UpdateTrainingByFields               func(childComplexity int, id int, data table.TrainingUpdate) int
 		UpdateTrainingEventByFields          func(childComplexity int, id int, data table.TrainingEventUpdate) int
 		UpdateUserByFields                   func(childComplexity int, id int, data table.UserUpdate) int
 	}
 
 	Query struct {
-		FindAllExternalResources      func(childComplexity int, filter *table.ExternalResourcesFilter, pagination *internal.Pagination) int
-		FindAllInternalResources      func(childComplexity int, filter *table.InternalResourcesFilter, pagination *internal.Pagination) int
 		FindAllRegistrations          func(childComplexity int, filter *table.RegistrationsFilter, pagination *internal.Pagination) int
+		FindAllStudents               func(childComplexity int, filter *table.StudentsFilter, pagination *internal.Pagination) int
 		FindAllTrainerTrainingMapping func(childComplexity int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) int
+		FindAllTrainers               func(childComplexity int, filter *table.TrainersFilter, pagination *internal.Pagination) int
 		FindAllTraining               func(childComplexity int, filter *table.TrainingFilter, pagination *internal.Pagination) int
 		FindAllTrainingEvent          func(childComplexity int, filter *table.TrainingEventFilter, pagination *internal.Pagination) int
 		FindAllUser                   func(childComplexity int, filter *table.UserFilter, pagination *internal.Pagination) int
@@ -179,27 +146,60 @@ type ComplexityRoot struct {
 	}
 
 	Registrations struct {
-		Active                                func(childComplexity int) int
-		CreatedAt                             func(childComplexity int) int
-		FkInternalResource                    func(childComplexity int) int
-		FkTraining                            func(childComplexity int) int
-		ID                                    func(childComplexity int) int
-		InternalResourcesByFkInternalResource func(childComplexity int, filter *table.InternalResourcesFilter) int
-		TrainingByFkTraining                  func(childComplexity int, filter *table.TrainingFilter) int
-		UpdatedAt                             func(childComplexity int) int
+		Active               func(childComplexity int) int
+		CreatedAt            func(childComplexity int) int
+		FkStudent            func(childComplexity int) int
+		FkTraining           func(childComplexity int) int
+		ID                   func(childComplexity int) int
+		StudentsByFkStudent  func(childComplexity int, filter *table.StudentsFilter) int
+		TrainingByFkTraining func(childComplexity int, filter *table.TrainingFilter) int
+		UpdatedAt            func(childComplexity int) int
+	}
+
+	Students struct {
+		Active                            func(childComplexity int) int
+		AttendancesByFkStudent            func(childComplexity int, filter *table.AttendancesFilter, pagination *internal.Pagination) int
+		ClassName                         func(childComplexity int) int
+		CreatedAt                         func(childComplexity int) int
+		CreatedBy                         func(childComplexity int) int
+		Designation                       func(childComplexity int) int
+		Email                             func(childComplexity int) int
+		ID                                func(childComplexity int) int
+		MobilePhone                       func(childComplexity int) int
+		Name                              func(childComplexity int) int
+		RegistrationsByFkStudent          func(childComplexity int, filter *table.RegistrationsFilter, pagination *internal.Pagination) int
+		TrainerTrainingMappingByFkStudent func(childComplexity int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) int
+		UUID                              func(childComplexity int) int
+		UpdatedAt                         func(childComplexity int) int
+		UserByCreatedBy                   func(childComplexity int, filter *table.UserFilter) int
 	}
 
 	TrainerTrainingMapping struct {
-		Active                                func(childComplexity int) int
-		CreatedAt                             func(childComplexity int) int
-		ExternalResourcesByFkExternalResource func(childComplexity int, filter *table.ExternalResourcesFilter) int
-		FkExternalResource                    func(childComplexity int) int
-		FkInternalResource                    func(childComplexity int) int
-		FkTrainingEvent                       func(childComplexity int) int
-		ID                                    func(childComplexity int) int
-		InternalResourcesByFkInternalResource func(childComplexity int, filter *table.InternalResourcesFilter) int
-		TrainingEventByFkTrainingEvent        func(childComplexity int, filter *table.TrainingEventFilter) int
-		UpdatedAt                             func(childComplexity int) int
+		Active                         func(childComplexity int) int
+		CreatedAt                      func(childComplexity int) int
+		FkStudent                      func(childComplexity int) int
+		FkTrainer                      func(childComplexity int) int
+		FkTrainingEvent                func(childComplexity int) int
+		ID                             func(childComplexity int) int
+		StudentsByFkStudent            func(childComplexity int, filter *table.StudentsFilter) int
+		TrainersByFkTrainer            func(childComplexity int, filter *table.TrainersFilter) int
+		TrainingEventByFkTrainingEvent func(childComplexity int, filter *table.TrainingEventFilter) int
+		UpdatedAt                      func(childComplexity int) int
+	}
+
+	Trainers struct {
+		Active                            func(childComplexity int) int
+		CreatedAt                         func(childComplexity int) int
+		CreatedBy                         func(childComplexity int) int
+		Designation                       func(childComplexity int) int
+		Email                             func(childComplexity int) int
+		ID                                func(childComplexity int) int
+		MobilePhone                       func(childComplexity int) int
+		Name                              func(childComplexity int) int
+		TrainerTrainingMappingByFkTrainer func(childComplexity int, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) int
+		UUID                              func(childComplexity int) int
+		UpdatedAt                         func(childComplexity int) int
+		UserByCreatedBy                   func(childComplexity int, filter *table.UserFilter) int
 	}
 
 	Training struct {
@@ -238,46 +238,36 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
-		Active                       func(childComplexity int) int
-		CreatedAt                    func(childComplexity int) int
-		Email                        func(childComplexity int) int
-		ExternalResourcesByCreatedBy func(childComplexity int, filter *table.ExternalResourcesFilter, pagination *internal.Pagination) int
-		ID                           func(childComplexity int) int
-		InternalResourcesByCreatedBy func(childComplexity int, filter *table.InternalResourcesFilter, pagination *internal.Pagination) int
-		Password                     func(childComplexity int) int
-		Role                         func(childComplexity int) int
-		TrainingByCreatedBy          func(childComplexity int, filter *table.TrainingFilter, pagination *internal.Pagination) int
-		TrainingByRequestedBy        func(childComplexity int, filter *table.TrainingFilter, pagination *internal.Pagination) int
-		TrainingEventByCreatedBy     func(childComplexity int, filter *table.TrainingEventFilter, pagination *internal.Pagination) int
-		UpdatedAt                    func(childComplexity int) int
-		Username                     func(childComplexity int) int
+		Active                   func(childComplexity int) int
+		CreatedAt                func(childComplexity int) int
+		Email                    func(childComplexity int) int
+		ID                       func(childComplexity int) int
+		Password                 func(childComplexity int) int
+		Role                     func(childComplexity int) int
+		StudentsByCreatedBy      func(childComplexity int, filter *table.StudentsFilter, pagination *internal.Pagination) int
+		TrainersByCreatedBy      func(childComplexity int, filter *table.TrainersFilter, pagination *internal.Pagination) int
+		TrainingByCreatedBy      func(childComplexity int, filter *table.TrainingFilter, pagination *internal.Pagination) int
+		TrainingByRequestedBy    func(childComplexity int, filter *table.TrainingFilter, pagination *internal.Pagination) int
+		TrainingEventByCreatedBy func(childComplexity int, filter *table.TrainingEventFilter, pagination *internal.Pagination) int
+		UpdatedAt                func(childComplexity int) int
+		Username                 func(childComplexity int) int
 	}
 }
 
 type AttendancesResolver interface {
 	TrainingEventByFkTrainingEvent(ctx context.Context, obj *table.Attendances, filter *table.TrainingEventFilter) (*table.TrainingEvent, error)
-	InternalResourcesByFkInternalResource(ctx context.Context, obj *table.Attendances, filter *table.InternalResourcesFilter) (*table.InternalResources, error)
-}
-type ExternalResourcesResolver interface {
-	UserByCreatedBy(ctx context.Context, obj *table.ExternalResources, filter *table.UserFilter) (*table.User, error)
-	TrainerTrainingMappingByFkExternalResource(ctx context.Context, obj *table.ExternalResources, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
-}
-type InternalResourcesResolver interface {
-	UserByCreatedBy(ctx context.Context, obj *table.InternalResources, filter *table.UserFilter) (*table.User, error)
-	AttendancesByFkInternalResource(ctx context.Context, obj *table.InternalResources, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
-	RegistrationsByFkInternalResource(ctx context.Context, obj *table.InternalResources, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
-	TrainerTrainingMappingByFkInternalResource(ctx context.Context, obj *table.InternalResources, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
+	StudentsByFkStudent(ctx context.Context, obj *table.Attendances, filter *table.StudentsFilter) (*table.Students, error)
 }
 type MutationResolver interface {
 	InsertUser(ctx context.Context, data table.UserCreate) (*table.User, error)
 	UpdateUserByFields(ctx context.Context, id int, data table.UserUpdate) (*table.User, error)
 	DeleteUserByID(ctx context.Context, id int) (bool, error)
-	InsertExternalResources(ctx context.Context, data table.ExternalResourcesCreate) (*table.ExternalResources, error)
-	UpdateExternalResourcesByFields(ctx context.Context, id int, data table.ExternalResourcesUpdate) (*table.ExternalResources, error)
-	DeleteExternalResourcesByID(ctx context.Context, id int) (bool, error)
-	InsertInternalResources(ctx context.Context, data table.InternalResourcesCreate) (*table.InternalResources, error)
-	UpdateInternalResourcesByFields(ctx context.Context, id int, data table.InternalResourcesUpdate) (*table.InternalResources, error)
-	DeleteInternalResourcesByID(ctx context.Context, id int) (bool, error)
+	InsertTrainers(ctx context.Context, data table.TrainersCreate) (*table.Trainers, error)
+	UpdateTrainersByFields(ctx context.Context, id int, data table.TrainersUpdate) (*table.Trainers, error)
+	DeleteTrainersByID(ctx context.Context, id int) (bool, error)
+	InsertStudents(ctx context.Context, data table.StudentsCreate) (*table.Students, error)
+	UpdateStudentsByFields(ctx context.Context, id int, data table.StudentsUpdate) (*table.Students, error)
+	DeleteStudentsByID(ctx context.Context, id int) (bool, error)
 	InsertRegistrations(ctx context.Context, data table.RegistrationsCreate) (*table.Registrations, error)
 	UpdateRegistrationsByFields(ctx context.Context, id int, data table.RegistrationsUpdate) (*table.Registrations, error)
 	DeleteRegistrationsByID(ctx context.Context, id int) (bool, error)
@@ -294,8 +284,8 @@ type MutationResolver interface {
 type QueryResolver interface {
 	Login(ctx context.Context, email string, password string) (string, error)
 	FindAllUser(ctx context.Context, filter *table.UserFilter, pagination *internal.Pagination) (*table.ListUser, error)
-	FindAllExternalResources(ctx context.Context, filter *table.ExternalResourcesFilter, pagination *internal.Pagination) (*table.ListExternalResources, error)
-	FindAllInternalResources(ctx context.Context, filter *table.InternalResourcesFilter, pagination *internal.Pagination) (*table.ListInternalResources, error)
+	FindAllTrainers(ctx context.Context, filter *table.TrainersFilter, pagination *internal.Pagination) (*table.ListTrainers, error)
+	FindAllStudents(ctx context.Context, filter *table.StudentsFilter, pagination *internal.Pagination) (*table.ListStudents, error)
 	FindAllRegistrations(ctx context.Context, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
 	FindAllTrainerTrainingMapping(ctx context.Context, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 	FindAllTrainingEvent(ctx context.Context, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
@@ -303,12 +293,22 @@ type QueryResolver interface {
 }
 type RegistrationsResolver interface {
 	TrainingByFkTraining(ctx context.Context, obj *table.Registrations, filter *table.TrainingFilter) (*table.Training, error)
-	InternalResourcesByFkInternalResource(ctx context.Context, obj *table.Registrations, filter *table.InternalResourcesFilter) (*table.InternalResources, error)
+	StudentsByFkStudent(ctx context.Context, obj *table.Registrations, filter *table.StudentsFilter) (*table.Students, error)
+}
+type StudentsResolver interface {
+	UserByCreatedBy(ctx context.Context, obj *table.Students, filter *table.UserFilter) (*table.User, error)
+	AttendancesByFkStudent(ctx context.Context, obj *table.Students, filter *table.AttendancesFilter, pagination *internal.Pagination) (*table.ListAttendances, error)
+	RegistrationsByFkStudent(ctx context.Context, obj *table.Students, filter *table.RegistrationsFilter, pagination *internal.Pagination) (*table.ListRegistrations, error)
+	TrainerTrainingMappingByFkStudent(ctx context.Context, obj *table.Students, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 }
 type TrainerTrainingMappingResolver interface {
 	TrainingEventByFkTrainingEvent(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.TrainingEventFilter) (*table.TrainingEvent, error)
-	ExternalResourcesByFkExternalResource(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.ExternalResourcesFilter) (*table.ExternalResources, error)
-	InternalResourcesByFkInternalResource(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.InternalResourcesFilter) (*table.InternalResources, error)
+	TrainersByFkTrainer(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.TrainersFilter) (*table.Trainers, error)
+	StudentsByFkStudent(ctx context.Context, obj *table.TrainerTrainingMapping, filter *table.StudentsFilter) (*table.Students, error)
+}
+type TrainersResolver interface {
+	UserByCreatedBy(ctx context.Context, obj *table.Trainers, filter *table.UserFilter) (*table.User, error)
+	TrainerTrainingMappingByFkTrainer(ctx context.Context, obj *table.Trainers, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 }
 type TrainingResolver interface {
 	UserByRequestedBy(ctx context.Context, obj *table.Training, filter *table.UserFilter) (*table.User, error)
@@ -323,8 +323,8 @@ type TrainingEventResolver interface {
 	TrainerTrainingMappingByFkTrainingEvent(ctx context.Context, obj *table.TrainingEvent, filter *table.TrainerTrainingMappingFilter, pagination *internal.Pagination) (*table.ListTrainerTrainingMapping, error)
 }
 type UserResolver interface {
-	ExternalResourcesByCreatedBy(ctx context.Context, obj *table.User, filter *table.ExternalResourcesFilter, pagination *internal.Pagination) (*table.ListExternalResources, error)
-	InternalResourcesByCreatedBy(ctx context.Context, obj *table.User, filter *table.InternalResourcesFilter, pagination *internal.Pagination) (*table.ListInternalResources, error)
+	StudentsByCreatedBy(ctx context.Context, obj *table.User, filter *table.StudentsFilter, pagination *internal.Pagination) (*table.ListStudents, error)
+	TrainersByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainersFilter, pagination *internal.Pagination) (*table.ListTrainers, error)
 	TrainingByRequestedBy(ctx context.Context, obj *table.User, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 	TrainingByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 	TrainingEventByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
@@ -363,12 +363,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Attendances.CreatedAt(childComplexity), true
 
-	case "Attendances.fkInternalResource":
-		if e.complexity.Attendances.FkInternalResource == nil {
+	case "Attendances.fkStudent":
+		if e.complexity.Attendances.FkStudent == nil {
 			break
 		}
 
-		return e.complexity.Attendances.FkInternalResource(childComplexity), true
+		return e.complexity.Attendances.FkStudent(childComplexity), true
 
 	case "Attendances.fkTrainingEvent":
 		if e.complexity.Attendances.FkTrainingEvent == nil {
@@ -384,17 +384,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Attendances.ID(childComplexity), true
 
-	case "Attendances.internalResourcesByFkInternalResource":
-		if e.complexity.Attendances.InternalResourcesByFkInternalResource == nil {
+	case "Attendances.studentsByFkStudent":
+		if e.complexity.Attendances.StudentsByFkStudent == nil {
 			break
 		}
 
-		args, err := ec.field_Attendances_internalResourcesByFkInternalResource_args(context.TODO(), rawArgs)
+		args, err := ec.field_Attendances_studentsByFkStudent_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Attendances.InternalResourcesByFkInternalResource(childComplexity, args["filter"].(*table.InternalResourcesFilter)), true
+		return e.complexity.Attendances.StudentsByFkStudent(childComplexity, args["filter"].(*table.StudentsFilter)), true
 
 	case "Attendances.trainingEventByFkTrainingEvent":
 		if e.complexity.Attendances.TrainingEventByFkTrainingEvent == nil {
@@ -415,225 +415,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Attendances.UpdatedAt(childComplexity), true
 
-	case "ExternalResources.active":
-		if e.complexity.ExternalResources.Active == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.Active(childComplexity), true
-
-	case "ExternalResources.createdAt":
-		if e.complexity.ExternalResources.CreatedAt == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.CreatedAt(childComplexity), true
-
-	case "ExternalResources.createdBy":
-		if e.complexity.ExternalResources.CreatedBy == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.CreatedBy(childComplexity), true
-
-	case "ExternalResources.designation":
-		if e.complexity.ExternalResources.Designation == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.Designation(childComplexity), true
-
-	case "ExternalResources.email":
-		if e.complexity.ExternalResources.Email == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.Email(childComplexity), true
-
-	case "ExternalResources.id":
-		if e.complexity.ExternalResources.ID == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.ID(childComplexity), true
-
-	case "ExternalResources.mobilePhone":
-		if e.complexity.ExternalResources.MobilePhone == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.MobilePhone(childComplexity), true
-
-	case "ExternalResources.name":
-		if e.complexity.ExternalResources.Name == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.Name(childComplexity), true
-
-	case "ExternalResources.resourceID":
-		if e.complexity.ExternalResources.ResourceID == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.ResourceID(childComplexity), true
-
-	case "ExternalResources.trainerTrainingMappingByFkExternalResource":
-		if e.complexity.ExternalResources.TrainerTrainingMappingByFkExternalResource == nil {
-			break
-		}
-
-		args, err := ec.field_ExternalResources_trainerTrainingMappingByFkExternalResource_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.ExternalResources.TrainerTrainingMappingByFkExternalResource(childComplexity, args["filter"].(*table.TrainerTrainingMappingFilter), args["pagination"].(*internal.Pagination)), true
-
-	case "ExternalResources.updatedAt":
-		if e.complexity.ExternalResources.UpdatedAt == nil {
-			break
-		}
-
-		return e.complexity.ExternalResources.UpdatedAt(childComplexity), true
-
-	case "ExternalResources.userByCreatedBy":
-		if e.complexity.ExternalResources.UserByCreatedBy == nil {
-			break
-		}
-
-		args, err := ec.field_ExternalResources_userByCreatedBy_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.ExternalResources.UserByCreatedBy(childComplexity, args["filter"].(*table.UserFilter)), true
-
-	case "InternalResources.active":
-		if e.complexity.InternalResources.Active == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.Active(childComplexity), true
-
-	case "InternalResources.attendancesByFkInternalResource":
-		if e.complexity.InternalResources.AttendancesByFkInternalResource == nil {
-			break
-		}
-
-		args, err := ec.field_InternalResources_attendancesByFkInternalResource_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.InternalResources.AttendancesByFkInternalResource(childComplexity, args["filter"].(*table.AttendancesFilter), args["pagination"].(*internal.Pagination)), true
-
-	case "InternalResources.createdAt":
-		if e.complexity.InternalResources.CreatedAt == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.CreatedAt(childComplexity), true
-
-	case "InternalResources.createdBy":
-		if e.complexity.InternalResources.CreatedBy == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.CreatedBy(childComplexity), true
-
-	case "InternalResources.designation":
-		if e.complexity.InternalResources.Designation == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.Designation(childComplexity), true
-
-	case "InternalResources.email":
-		if e.complexity.InternalResources.Email == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.Email(childComplexity), true
-
-	case "InternalResources.id":
-		if e.complexity.InternalResources.ID == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.ID(childComplexity), true
-
-	case "InternalResources.mobilePhone":
-		if e.complexity.InternalResources.MobilePhone == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.MobilePhone(childComplexity), true
-
-	case "InternalResources.name":
-		if e.complexity.InternalResources.Name == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.Name(childComplexity), true
-
-	case "InternalResources.projectName":
-		if e.complexity.InternalResources.ProjectName == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.ProjectName(childComplexity), true
-
-	case "InternalResources.registrationsByFkInternalResource":
-		if e.complexity.InternalResources.RegistrationsByFkInternalResource == nil {
-			break
-		}
-
-		args, err := ec.field_InternalResources_registrationsByFkInternalResource_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.InternalResources.RegistrationsByFkInternalResource(childComplexity, args["filter"].(*table.RegistrationsFilter), args["pagination"].(*internal.Pagination)), true
-
-	case "InternalResources.resourceID":
-		if e.complexity.InternalResources.ResourceID == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.ResourceID(childComplexity), true
-
-	case "InternalResources.trainerTrainingMappingByFkInternalResource":
-		if e.complexity.InternalResources.TrainerTrainingMappingByFkInternalResource == nil {
-			break
-		}
-
-		args, err := ec.field_InternalResources_trainerTrainingMappingByFkInternalResource_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.InternalResources.TrainerTrainingMappingByFkInternalResource(childComplexity, args["filter"].(*table.TrainerTrainingMappingFilter), args["pagination"].(*internal.Pagination)), true
-
-	case "InternalResources.updatedAt":
-		if e.complexity.InternalResources.UpdatedAt == nil {
-			break
-		}
-
-		return e.complexity.InternalResources.UpdatedAt(childComplexity), true
-
-	case "InternalResources.userByCreatedBy":
-		if e.complexity.InternalResources.UserByCreatedBy == nil {
-			break
-		}
-
-		args, err := ec.field_InternalResources_userByCreatedBy_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.InternalResources.UserByCreatedBy(childComplexity, args["filter"].(*table.UserFilter)), true
-
 	case "ListAttendances.data":
 		if e.complexity.ListAttendances.Data == nil {
 			break
@@ -647,34 +428,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ListAttendances.TotalCount(childComplexity), true
-
-	case "ListExternalResources.data":
-		if e.complexity.ListExternalResources.Data == nil {
-			break
-		}
-
-		return e.complexity.ListExternalResources.Data(childComplexity), true
-
-	case "ListExternalResources.totalCount":
-		if e.complexity.ListExternalResources.TotalCount == nil {
-			break
-		}
-
-		return e.complexity.ListExternalResources.TotalCount(childComplexity), true
-
-	case "ListInternalResources.data":
-		if e.complexity.ListInternalResources.Data == nil {
-			break
-		}
-
-		return e.complexity.ListInternalResources.Data(childComplexity), true
-
-	case "ListInternalResources.totalCount":
-		if e.complexity.ListInternalResources.TotalCount == nil {
-			break
-		}
-
-		return e.complexity.ListInternalResources.TotalCount(childComplexity), true
 
 	case "ListRegistrations.data":
 		if e.complexity.ListRegistrations.Data == nil {
@@ -690,6 +443,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ListRegistrations.TotalCount(childComplexity), true
 
+	case "ListStudents.data":
+		if e.complexity.ListStudents.Data == nil {
+			break
+		}
+
+		return e.complexity.ListStudents.Data(childComplexity), true
+
+	case "ListStudents.totalCount":
+		if e.complexity.ListStudents.TotalCount == nil {
+			break
+		}
+
+		return e.complexity.ListStudents.TotalCount(childComplexity), true
+
 	case "ListTrainerTrainingMapping.data":
 		if e.complexity.ListTrainerTrainingMapping.Data == nil {
 			break
@@ -703,6 +470,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ListTrainerTrainingMapping.TotalCount(childComplexity), true
+
+	case "ListTrainers.data":
+		if e.complexity.ListTrainers.Data == nil {
+			break
+		}
+
+		return e.complexity.ListTrainers.Data(childComplexity), true
+
+	case "ListTrainers.totalCount":
+		if e.complexity.ListTrainers.TotalCount == nil {
+			break
+		}
+
+		return e.complexity.ListTrainers.TotalCount(childComplexity), true
 
 	case "ListTraining.data":
 		if e.complexity.ListTraining.Data == nil {
@@ -746,30 +527,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ListUser.TotalCount(childComplexity), true
 
-	case "Mutation.deleteExternalResourcesByID":
-		if e.complexity.Mutation.DeleteExternalResourcesByID == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteExternalResourcesByID_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteExternalResourcesByID(childComplexity, args["id"].(int)), true
-
-	case "Mutation.deleteInternalResourcesByID":
-		if e.complexity.Mutation.DeleteInternalResourcesByID == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteInternalResourcesByID_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteInternalResourcesByID(childComplexity, args["id"].(int)), true
-
 	case "Mutation.deleteRegistrationsByID":
 		if e.complexity.Mutation.DeleteRegistrationsByID == nil {
 			break
@@ -782,6 +539,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeleteRegistrationsByID(childComplexity, args["id"].(int)), true
 
+	case "Mutation.deleteStudentsByID":
+		if e.complexity.Mutation.DeleteStudentsByID == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteStudentsByID_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.DeleteStudentsByID(childComplexity, args["id"].(int)), true
+
 	case "Mutation.deleteTrainerTrainingMappingByID":
 		if e.complexity.Mutation.DeleteTrainerTrainingMappingByID == nil {
 			break
@@ -793,6 +562,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeleteTrainerTrainingMappingByID(childComplexity, args["id"].(int)), true
+
+	case "Mutation.deleteTrainersByID":
+		if e.complexity.Mutation.DeleteTrainersByID == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteTrainersByID_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.DeleteTrainersByID(childComplexity, args["id"].(int)), true
 
 	case "Mutation.deleteTrainingByID":
 		if e.complexity.Mutation.DeleteTrainingByID == nil {
@@ -830,30 +611,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeleteUserByID(childComplexity, args["id"].(int)), true
 
-	case "Mutation.insertExternalResources":
-		if e.complexity.Mutation.InsertExternalResources == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_insertExternalResources_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.InsertExternalResources(childComplexity, args["data"].(table.ExternalResourcesCreate)), true
-
-	case "Mutation.insertInternalResources":
-		if e.complexity.Mutation.InsertInternalResources == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_insertInternalResources_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.InsertInternalResources(childComplexity, args["data"].(table.InternalResourcesCreate)), true
-
 	case "Mutation.insertRegistrations":
 		if e.complexity.Mutation.InsertRegistrations == nil {
 			break
@@ -866,6 +623,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.InsertRegistrations(childComplexity, args["data"].(table.RegistrationsCreate)), true
 
+	case "Mutation.insertStudents":
+		if e.complexity.Mutation.InsertStudents == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_insertStudents_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.InsertStudents(childComplexity, args["data"].(table.StudentsCreate)), true
+
 	case "Mutation.insertTrainerTrainingMapping":
 		if e.complexity.Mutation.InsertTrainerTrainingMapping == nil {
 			break
@@ -877,6 +646,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.InsertTrainerTrainingMapping(childComplexity, args["data"].(table.TrainerTrainingMappingCreate)), true
+
+	case "Mutation.insertTrainers":
+		if e.complexity.Mutation.InsertTrainers == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_insertTrainers_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.InsertTrainers(childComplexity, args["data"].(table.TrainersCreate)), true
 
 	case "Mutation.insertTraining":
 		if e.complexity.Mutation.InsertTraining == nil {
@@ -914,30 +695,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.InsertUser(childComplexity, args["data"].(table.UserCreate)), true
 
-	case "Mutation.updateExternalResourcesByFields":
-		if e.complexity.Mutation.UpdateExternalResourcesByFields == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateExternalResourcesByFields_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateExternalResourcesByFields(childComplexity, args["id"].(int), args["data"].(table.ExternalResourcesUpdate)), true
-
-	case "Mutation.updateInternalResourcesByFields":
-		if e.complexity.Mutation.UpdateInternalResourcesByFields == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateInternalResourcesByFields_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateInternalResourcesByFields(childComplexity, args["id"].(int), args["data"].(table.InternalResourcesUpdate)), true
-
 	case "Mutation.updateRegistrationsByFields":
 		if e.complexity.Mutation.UpdateRegistrationsByFields == nil {
 			break
@@ -950,6 +707,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateRegistrationsByFields(childComplexity, args["id"].(int), args["data"].(table.RegistrationsUpdate)), true
 
+	case "Mutation.updateStudentsByFields":
+		if e.complexity.Mutation.UpdateStudentsByFields == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateStudentsByFields_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateStudentsByFields(childComplexity, args["id"].(int), args["data"].(table.StudentsUpdate)), true
+
 	case "Mutation.updateTrainerTrainingMappingByFields":
 		if e.complexity.Mutation.UpdateTrainerTrainingMappingByFields == nil {
 			break
@@ -961,6 +730,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateTrainerTrainingMappingByFields(childComplexity, args["id"].(int), args["data"].(table.TrainerTrainingMappingUpdate)), true
+
+	case "Mutation.updateTrainersByFields":
+		if e.complexity.Mutation.UpdateTrainersByFields == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateTrainersByFields_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateTrainersByFields(childComplexity, args["id"].(int), args["data"].(table.TrainersUpdate)), true
 
 	case "Mutation.updateTrainingByFields":
 		if e.complexity.Mutation.UpdateTrainingByFields == nil {
@@ -998,30 +779,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateUserByFields(childComplexity, args["id"].(int), args["data"].(table.UserUpdate)), true
 
-	case "Query.findAllExternalResources":
-		if e.complexity.Query.FindAllExternalResources == nil {
-			break
-		}
-
-		args, err := ec.field_Query_findAllExternalResources_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.FindAllExternalResources(childComplexity, args["filter"].(*table.ExternalResourcesFilter), args["pagination"].(*internal.Pagination)), true
-
-	case "Query.findAllInternalResources":
-		if e.complexity.Query.FindAllInternalResources == nil {
-			break
-		}
-
-		args, err := ec.field_Query_findAllInternalResources_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.FindAllInternalResources(childComplexity, args["filter"].(*table.InternalResourcesFilter), args["pagination"].(*internal.Pagination)), true
-
 	case "Query.findAllRegistrations":
 		if e.complexity.Query.FindAllRegistrations == nil {
 			break
@@ -1034,6 +791,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.FindAllRegistrations(childComplexity, args["filter"].(*table.RegistrationsFilter), args["pagination"].(*internal.Pagination)), true
 
+	case "Query.findAllStudents":
+		if e.complexity.Query.FindAllStudents == nil {
+			break
+		}
+
+		args, err := ec.field_Query_findAllStudents_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.FindAllStudents(childComplexity, args["filter"].(*table.StudentsFilter), args["pagination"].(*internal.Pagination)), true
+
 	case "Query.findAllTrainerTrainingMapping":
 		if e.complexity.Query.FindAllTrainerTrainingMapping == nil {
 			break
@@ -1045,6 +814,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.FindAllTrainerTrainingMapping(childComplexity, args["filter"].(*table.TrainerTrainingMappingFilter), args["pagination"].(*internal.Pagination)), true
+
+	case "Query.findAllTrainers":
+		if e.complexity.Query.FindAllTrainers == nil {
+			break
+		}
+
+		args, err := ec.field_Query_findAllTrainers_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.FindAllTrainers(childComplexity, args["filter"].(*table.TrainersFilter), args["pagination"].(*internal.Pagination)), true
 
 	case "Query.findAllTraining":
 		if e.complexity.Query.FindAllTraining == nil {
@@ -1108,12 +889,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Registrations.CreatedAt(childComplexity), true
 
-	case "Registrations.fkInternalResource":
-		if e.complexity.Registrations.FkInternalResource == nil {
+	case "Registrations.fkStudent":
+		if e.complexity.Registrations.FkStudent == nil {
 			break
 		}
 
-		return e.complexity.Registrations.FkInternalResource(childComplexity), true
+		return e.complexity.Registrations.FkStudent(childComplexity), true
 
 	case "Registrations.fkTraining":
 		if e.complexity.Registrations.FkTraining == nil {
@@ -1129,17 +910,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Registrations.ID(childComplexity), true
 
-	case "Registrations.internalResourcesByFkInternalResource":
-		if e.complexity.Registrations.InternalResourcesByFkInternalResource == nil {
+	case "Registrations.studentsByFkStudent":
+		if e.complexity.Registrations.StudentsByFkStudent == nil {
 			break
 		}
 
-		args, err := ec.field_Registrations_internalResourcesByFkInternalResource_args(context.TODO(), rawArgs)
+		args, err := ec.field_Registrations_studentsByFkStudent_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Registrations.InternalResourcesByFkInternalResource(childComplexity, args["filter"].(*table.InternalResourcesFilter)), true
+		return e.complexity.Registrations.StudentsByFkStudent(childComplexity, args["filter"].(*table.StudentsFilter)), true
 
 	case "Registrations.trainingByFkTraining":
 		if e.complexity.Registrations.TrainingByFkTraining == nil {
@@ -1160,6 +941,131 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Registrations.UpdatedAt(childComplexity), true
 
+	case "Students.active":
+		if e.complexity.Students.Active == nil {
+			break
+		}
+
+		return e.complexity.Students.Active(childComplexity), true
+
+	case "Students.attendancesByFkStudent":
+		if e.complexity.Students.AttendancesByFkStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Students_attendancesByFkStudent_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Students.AttendancesByFkStudent(childComplexity, args["filter"].(*table.AttendancesFilter), args["pagination"].(*internal.Pagination)), true
+
+	case "Students.className":
+		if e.complexity.Students.ClassName == nil {
+			break
+		}
+
+		return e.complexity.Students.ClassName(childComplexity), true
+
+	case "Students.createdAt":
+		if e.complexity.Students.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.Students.CreatedAt(childComplexity), true
+
+	case "Students.createdBy":
+		if e.complexity.Students.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.Students.CreatedBy(childComplexity), true
+
+	case "Students.designation":
+		if e.complexity.Students.Designation == nil {
+			break
+		}
+
+		return e.complexity.Students.Designation(childComplexity), true
+
+	case "Students.email":
+		if e.complexity.Students.Email == nil {
+			break
+		}
+
+		return e.complexity.Students.Email(childComplexity), true
+
+	case "Students.id":
+		if e.complexity.Students.ID == nil {
+			break
+		}
+
+		return e.complexity.Students.ID(childComplexity), true
+
+	case "Students.mobilePhone":
+		if e.complexity.Students.MobilePhone == nil {
+			break
+		}
+
+		return e.complexity.Students.MobilePhone(childComplexity), true
+
+	case "Students.name":
+		if e.complexity.Students.Name == nil {
+			break
+		}
+
+		return e.complexity.Students.Name(childComplexity), true
+
+	case "Students.registrationsByFkStudent":
+		if e.complexity.Students.RegistrationsByFkStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Students_registrationsByFkStudent_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Students.RegistrationsByFkStudent(childComplexity, args["filter"].(*table.RegistrationsFilter), args["pagination"].(*internal.Pagination)), true
+
+	case "Students.trainerTrainingMappingByFkStudent":
+		if e.complexity.Students.TrainerTrainingMappingByFkStudent == nil {
+			break
+		}
+
+		args, err := ec.field_Students_trainerTrainingMappingByFkStudent_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Students.TrainerTrainingMappingByFkStudent(childComplexity, args["filter"].(*table.TrainerTrainingMappingFilter), args["pagination"].(*internal.Pagination)), true
+
+	case "Students.uuid":
+		if e.complexity.Students.UUID == nil {
+			break
+		}
+
+		return e.complexity.Students.UUID(childComplexity), true
+
+	case "Students.updatedAt":
+		if e.complexity.Students.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.Students.UpdatedAt(childComplexity), true
+
+	case "Students.userByCreatedBy":
+		if e.complexity.Students.UserByCreatedBy == nil {
+			break
+		}
+
+		args, err := ec.field_Students_userByCreatedBy_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Students.UserByCreatedBy(childComplexity, args["filter"].(*table.UserFilter)), true
+
 	case "TrainerTrainingMapping.active":
 		if e.complexity.TrainerTrainingMapping.Active == nil {
 			break
@@ -1174,31 +1080,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TrainerTrainingMapping.CreatedAt(childComplexity), true
 
-	case "TrainerTrainingMapping.externalResourcesByFkExternalResource":
-		if e.complexity.TrainerTrainingMapping.ExternalResourcesByFkExternalResource == nil {
+	case "TrainerTrainingMapping.fkStudent":
+		if e.complexity.TrainerTrainingMapping.FkStudent == nil {
 			break
 		}
 
-		args, err := ec.field_TrainerTrainingMapping_externalResourcesByFkExternalResource_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
+		return e.complexity.TrainerTrainingMapping.FkStudent(childComplexity), true
 
-		return e.complexity.TrainerTrainingMapping.ExternalResourcesByFkExternalResource(childComplexity, args["filter"].(*table.ExternalResourcesFilter)), true
-
-	case "TrainerTrainingMapping.fkExternalResource":
-		if e.complexity.TrainerTrainingMapping.FkExternalResource == nil {
+	case "TrainerTrainingMapping.fkTrainer":
+		if e.complexity.TrainerTrainingMapping.FkTrainer == nil {
 			break
 		}
 
-		return e.complexity.TrainerTrainingMapping.FkExternalResource(childComplexity), true
-
-	case "TrainerTrainingMapping.fkInternalResource":
-		if e.complexity.TrainerTrainingMapping.FkInternalResource == nil {
-			break
-		}
-
-		return e.complexity.TrainerTrainingMapping.FkInternalResource(childComplexity), true
+		return e.complexity.TrainerTrainingMapping.FkTrainer(childComplexity), true
 
 	case "TrainerTrainingMapping.fkTrainingEvent":
 		if e.complexity.TrainerTrainingMapping.FkTrainingEvent == nil {
@@ -1214,17 +1108,29 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TrainerTrainingMapping.ID(childComplexity), true
 
-	case "TrainerTrainingMapping.internalResourcesByFkInternalResource":
-		if e.complexity.TrainerTrainingMapping.InternalResourcesByFkInternalResource == nil {
+	case "TrainerTrainingMapping.studentsByFkStudent":
+		if e.complexity.TrainerTrainingMapping.StudentsByFkStudent == nil {
 			break
 		}
 
-		args, err := ec.field_TrainerTrainingMapping_internalResourcesByFkInternalResource_args(context.TODO(), rawArgs)
+		args, err := ec.field_TrainerTrainingMapping_studentsByFkStudent_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.TrainerTrainingMapping.InternalResourcesByFkInternalResource(childComplexity, args["filter"].(*table.InternalResourcesFilter)), true
+		return e.complexity.TrainerTrainingMapping.StudentsByFkStudent(childComplexity, args["filter"].(*table.StudentsFilter)), true
+
+	case "TrainerTrainingMapping.trainersByFkTrainer":
+		if e.complexity.TrainerTrainingMapping.TrainersByFkTrainer == nil {
+			break
+		}
+
+		args, err := ec.field_TrainerTrainingMapping_trainersByFkTrainer_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.TrainerTrainingMapping.TrainersByFkTrainer(childComplexity, args["filter"].(*table.TrainersFilter)), true
 
 	case "TrainerTrainingMapping.trainingEventByFkTrainingEvent":
 		if e.complexity.TrainerTrainingMapping.TrainingEventByFkTrainingEvent == nil {
@@ -1244,6 +1150,100 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TrainerTrainingMapping.UpdatedAt(childComplexity), true
+
+	case "Trainers.active":
+		if e.complexity.Trainers.Active == nil {
+			break
+		}
+
+		return e.complexity.Trainers.Active(childComplexity), true
+
+	case "Trainers.createdAt":
+		if e.complexity.Trainers.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.Trainers.CreatedAt(childComplexity), true
+
+	case "Trainers.createdBy":
+		if e.complexity.Trainers.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.Trainers.CreatedBy(childComplexity), true
+
+	case "Trainers.designation":
+		if e.complexity.Trainers.Designation == nil {
+			break
+		}
+
+		return e.complexity.Trainers.Designation(childComplexity), true
+
+	case "Trainers.email":
+		if e.complexity.Trainers.Email == nil {
+			break
+		}
+
+		return e.complexity.Trainers.Email(childComplexity), true
+
+	case "Trainers.id":
+		if e.complexity.Trainers.ID == nil {
+			break
+		}
+
+		return e.complexity.Trainers.ID(childComplexity), true
+
+	case "Trainers.mobilePhone":
+		if e.complexity.Trainers.MobilePhone == nil {
+			break
+		}
+
+		return e.complexity.Trainers.MobilePhone(childComplexity), true
+
+	case "Trainers.name":
+		if e.complexity.Trainers.Name == nil {
+			break
+		}
+
+		return e.complexity.Trainers.Name(childComplexity), true
+
+	case "Trainers.trainerTrainingMappingByFkTrainer":
+		if e.complexity.Trainers.TrainerTrainingMappingByFkTrainer == nil {
+			break
+		}
+
+		args, err := ec.field_Trainers_trainerTrainingMappingByFkTrainer_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Trainers.TrainerTrainingMappingByFkTrainer(childComplexity, args["filter"].(*table.TrainerTrainingMappingFilter), args["pagination"].(*internal.Pagination)), true
+
+	case "Trainers.uuid":
+		if e.complexity.Trainers.UUID == nil {
+			break
+		}
+
+		return e.complexity.Trainers.UUID(childComplexity), true
+
+	case "Trainers.updatedAt":
+		if e.complexity.Trainers.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.Trainers.UpdatedAt(childComplexity), true
+
+	case "Trainers.userByCreatedBy":
+		if e.complexity.Trainers.UserByCreatedBy == nil {
+			break
+		}
+
+		args, err := ec.field_Trainers_userByCreatedBy_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Trainers.UserByCreatedBy(childComplexity, args["filter"].(*table.UserFilter)), true
 
 	case "Training.active":
 		if e.complexity.Training.Active == nil {
@@ -1509,36 +1509,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Email(childComplexity), true
 
-	case "User.externalResourcesByCreatedBy":
-		if e.complexity.User.ExternalResourcesByCreatedBy == nil {
-			break
-		}
-
-		args, err := ec.field_User_externalResourcesByCreatedBy_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.User.ExternalResourcesByCreatedBy(childComplexity, args["filter"].(*table.ExternalResourcesFilter), args["pagination"].(*internal.Pagination)), true
-
 	case "User.id":
 		if e.complexity.User.ID == nil {
 			break
 		}
 
 		return e.complexity.User.ID(childComplexity), true
-
-	case "User.internalResourcesByCreatedBy":
-		if e.complexity.User.InternalResourcesByCreatedBy == nil {
-			break
-		}
-
-		args, err := ec.field_User_internalResourcesByCreatedBy_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.User.InternalResourcesByCreatedBy(childComplexity, args["filter"].(*table.InternalResourcesFilter), args["pagination"].(*internal.Pagination)), true
 
 	case "User.password":
 		if e.complexity.User.Password == nil {
@@ -1553,6 +1529,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.User.Role(childComplexity), true
+
+	case "User.studentsByCreatedBy":
+		if e.complexity.User.StudentsByCreatedBy == nil {
+			break
+		}
+
+		args, err := ec.field_User_studentsByCreatedBy_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.User.StudentsByCreatedBy(childComplexity, args["filter"].(*table.StudentsFilter), args["pagination"].(*internal.Pagination)), true
+
+	case "User.trainersByCreatedBy":
+		if e.complexity.User.TrainersByCreatedBy == nil {
+			break
+		}
+
+		args, err := ec.field_User_trainersByCreatedBy_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.User.TrainersByCreatedBy(childComplexity, args["filter"].(*table.TrainersFilter), args["pagination"].(*internal.Pagination)), true
 
 	case "User.trainingByCreatedBy":
 		if e.complexity.User.TrainingByCreatedBy == nil {
@@ -1615,19 +1615,19 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAttendancesCreate,
 		ec.unmarshalInputAttendancesFilter,
 		ec.unmarshalInputAttendancesUpdate,
-		ec.unmarshalInputExternalResourcesCreate,
-		ec.unmarshalInputExternalResourcesFilter,
-		ec.unmarshalInputExternalResourcesUpdate,
-		ec.unmarshalInputInternalResourcesCreate,
-		ec.unmarshalInputInternalResourcesFilter,
-		ec.unmarshalInputInternalResourcesUpdate,
 		ec.unmarshalInputPagination,
 		ec.unmarshalInputRegistrationsCreate,
 		ec.unmarshalInputRegistrationsFilter,
 		ec.unmarshalInputRegistrationsUpdate,
+		ec.unmarshalInputStudentsCreate,
+		ec.unmarshalInputStudentsFilter,
+		ec.unmarshalInputStudentsUpdate,
 		ec.unmarshalInputTrainerTrainingMappingCreate,
 		ec.unmarshalInputTrainerTrainingMappingFilter,
 		ec.unmarshalInputTrainerTrainingMappingUpdate,
+		ec.unmarshalInputTrainersCreate,
+		ec.unmarshalInputTrainersFilter,
+		ec.unmarshalInputTrainersUpdate,
 		ec.unmarshalInputTrainingCreate,
 		ec.unmarshalInputTrainingEventCreate,
 		ec.unmarshalInputTrainingEventFilter,
@@ -1742,15 +1742,15 @@ var sources = []*ast.Source{
     updateUserByFields(id: Int!, data: UserUpdate!): User @authenticate
     deleteUserByID(id: Int!): Boolean! @authenticate
 
-    # ExternalResources 
-    insertExternalResources(data: ExternalResourcesCreate!): ExternalResources @authenticate
-    updateExternalResourcesByFields(id: Int!, data: ExternalResourcesUpdate!): ExternalResources @authenticate
-    deleteExternalResourcesByID(id: Int!): Boolean! @authenticate
+    # Trainers
+    insertTrainers(data: TrainersCreate!): Trainers @authenticate
+    updateTrainersByFields(id: Int!, data: TrainersUpdate!): Trainers @authenticate
+    deleteTrainersByID(id: Int!): Boolean! @authenticate
 
-    # InternalResources
-    insertInternalResources(data: InternalResourcesCreate!): InternalResources @authenticate
-    updateInternalResourcesByFields(id: Int!, data: InternalResourcesUpdate!): InternalResources @authenticate
-    deleteInternalResourcesByID(id: Int!): Boolean! @authenticate
+    # Students 
+    insertStudents(data: StudentsCreate!): Students @authenticate
+    updateStudentsByFields(id: Int!, data: StudentsUpdate!): Students @authenticate
+    deleteStudentsByID(id: Int!): Boolean! @authenticate
 
     # Registrations
     insertRegistrations(data: RegistrationsCreate!): Registrations @authenticate
@@ -1772,7 +1772,8 @@ var sources = []*ast.Source{
     updateTrainingByFields(id: Int!, data: TrainingUpdate!): Training @authenticate
     deleteTrainingByID(id: Int!): Boolean! @authenticate
 
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "../schema/pagination.graphql", Input: `# Code generated by Xo. DO NOT EDIT.
 
 input Pagination {
@@ -1785,14 +1786,15 @@ input Pagination {
     login(email: String!, password: String!): String!
     
     findAllUser(filter: UserFilter, pagination: Pagination): ListUser! @authenticate
-    findAllExternalResources(filter: ExternalResourcesFilter, pagination: Pagination): ListExternalResources! @authenticate
-    findAllInternalResources(filter: InternalResourcesFilter, pagination: Pagination): ListInternalResources! @authenticate
+    findAllTrainers(filter: TrainersFilter, pagination: Pagination): ListTrainers! @authenticate
+    findAllStudents(filter: StudentsFilter, pagination: Pagination): ListStudents! @authenticate
     findAllRegistrations(filter: RegistrationsFilter, pagination: Pagination): ListRegistrations! @authenticate
     findAllTrainerTrainingMapping(filter: TrainerTrainingMappingFilter, pagination: Pagination): ListTrainerTrainingMapping! @authenticate
     findAllTrainingEvent(filter: TrainingEventFilter, pagination: Pagination): ListTrainingEvent! @authenticate
     findAllTraining(filter: TrainingFilter, pagination: Pagination): ListTraining! @authenticate
     
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "../schema/scalar.graphql", Input: `scalar Datetime
 scalar IntBool
 scalar NullTime
@@ -1808,14 +1810,14 @@ scalar FilterOnField
 type Attendances {
     id: Int !
     fkTrainingEvent: Int !
-    fkInternalResource: Int !
+    fkStudent: Int !
     active: Boolean !
     createdAt: NullTime 
     updatedAt: NullTime 
 
 
     trainingEventByFkTrainingEvent(filter: TrainingEventFilter): TrainingEvent
-    internalResourcesByFkInternalResource(filter: InternalResourcesFilter): InternalResources
+    studentsByFkStudent(filter: StudentsFilter): Students
 
 
 
@@ -1823,7 +1825,7 @@ type Attendances {
 input AttendancesFilter {
     id: FilterOnField
     fkTrainingEvent: FilterOnField
-    fkInternalResource: FilterOnField
+    fkStudent: FilterOnField
     active: FilterOnField
     createdAt: FilterOnField
     updatedAt: FilterOnField
@@ -1831,12 +1833,12 @@ input AttendancesFilter {
 
 input AttendancesCreate {
     fkTrainingEvent: Int !
-    fkInternalResource: Int !
+    fkStudent: Int !
 }
 
 input AttendancesUpdate {
     fkTrainingEvent: Int 
-    fkInternalResource: Int 
+    fkStudent: Int 
     active: Boolean 
 
 }
@@ -1846,135 +1848,11 @@ type ListAttendances {
     data: [Attendances!]!
 }
 `, BuiltIn: false},
-	{Name: "../../xo_gen/schema/external_resources.graphql", Input: `# Code generated by xo. DO NOT EDIT.
-
-type ExternalResources {
-    id: Int !
-    resourceID: NullString 
-    name: String !
-    email: String !
-    mobilePhone: String !
-    designation: String !
-    active: Boolean !
-    createdAt: NullTime 
-    updatedAt: NullTime 
-    createdBy: NullInt64 
-
-
-    userByCreatedBy(filter: UserFilter): User
-
-
-
-    trainerTrainingMappingByFkExternalResource(filter: TrainerTrainingMappingFilter, pagination: Pagination): ListTrainerTrainingMapping!
-}
-input ExternalResourcesFilter {
-    id: FilterOnField
-    resourceID: FilterOnField
-    name: FilterOnField
-    email: FilterOnField
-    mobilePhone: FilterOnField
-    designation: FilterOnField
-    active: FilterOnField
-    createdAt: FilterOnField
-    updatedAt: FilterOnField
-    createdBy: FilterOnField
-}
-
-input ExternalResourcesCreate {
-    resourceID: NullString 
-    name: String !
-    email: String !
-    mobilePhone: String !
-    designation: String !
-    createdBy: NullInt64 
-}
-
-input ExternalResourcesUpdate {
-    resourceID: NullString 
-    name: String 
-    email: String 
-    mobilePhone: String 
-    designation: String 
-    active: Boolean 
-    createdBy: NullInt64 
-
-}
-
-type ListExternalResources {
-    totalCount: Int!
-    data: [ExternalResources!]!
-}
-`, BuiltIn: false},
-	{Name: "../../xo_gen/schema/internal_resources.graphql", Input: `# Code generated by xo. DO NOT EDIT.
-
-type InternalResources {
-    id: Int !
-    resourceID: String !
-    name: String !
-    email: String !
-    mobilePhone: String !
-    projectName: String !
-    designation: String !
-    active: Boolean !
-    createdAt: NullTime 
-    updatedAt: NullTime 
-    createdBy: NullInt64 
-
-
-    userByCreatedBy(filter: UserFilter): User
-
-
-
-    attendancesByFkInternalResource(filter: AttendancesFilter, pagination: Pagination): ListAttendances!
-    registrationsByFkInternalResource(filter: RegistrationsFilter, pagination: Pagination): ListRegistrations!
-    trainerTrainingMappingByFkInternalResource(filter: TrainerTrainingMappingFilter, pagination: Pagination): ListTrainerTrainingMapping!
-}
-input InternalResourcesFilter {
-    id: FilterOnField
-    resourceID: FilterOnField
-    name: FilterOnField
-    email: FilterOnField
-    mobilePhone: FilterOnField
-    projectName: FilterOnField
-    designation: FilterOnField
-    active: FilterOnField
-    createdAt: FilterOnField
-    updatedAt: FilterOnField
-    createdBy: FilterOnField
-}
-
-input InternalResourcesCreate {
-    resourceID: String !
-    name: String !
-    email: String !
-    mobilePhone: String !
-    projectName: String !
-    designation: String !
-    createdBy: NullInt64 
-}
-
-input InternalResourcesUpdate {
-    resourceID: String 
-    name: String 
-    email: String 
-    mobilePhone: String 
-    projectName: String 
-    designation: String 
-    active: Boolean 
-    createdBy: NullInt64 
-
-}
-
-type ListInternalResources {
-    totalCount: Int!
-    data: [InternalResources!]!
-}
-`, BuiltIn: false},
 	{Name: "../../xo_gen/schema/registrations.graphql", Input: `# Code generated by xo. DO NOT EDIT.
 
 type Registrations {
     id: Int !
-    fkInternalResource: Int !
+    fkStudent: Int !
     fkTraining: Int !
     active: Boolean !
     createdAt: NullTime 
@@ -1982,14 +1860,14 @@ type Registrations {
 
 
     trainingByFkTraining(filter: TrainingFilter): Training
-    internalResourcesByFkInternalResource(filter: InternalResourcesFilter): InternalResources
+    studentsByFkStudent(filter: StudentsFilter): Students
 
 
 
 }
 input RegistrationsFilter {
     id: FilterOnField
-    fkInternalResource: FilterOnField
+    fkStudent: FilterOnField
     fkTraining: FilterOnField
     active: FilterOnField
     createdAt: FilterOnField
@@ -1997,12 +1875,12 @@ input RegistrationsFilter {
 }
 
 input RegistrationsCreate {
-    fkInternalResource: Int !
+    fkStudent: Int !
     fkTraining: Int !
 }
 
 input RegistrationsUpdate {
-    fkInternalResource: Int 
+    fkStudent: Int 
     fkTraining: Int 
     active: Boolean 
 
@@ -2013,21 +1891,86 @@ type ListRegistrations {
     data: [Registrations!]!
 }
 `, BuiltIn: false},
+	{Name: "../../xo_gen/schema/students.graphql", Input: `# Code generated by xo. DO NOT EDIT.
+
+type Students {
+    id: Int !
+    uuid: String !
+    name: String !
+    email: String !
+    mobilePhone: String !
+    className: String !
+    designation: String !
+    active: Boolean !
+    createdAt: NullTime 
+    updatedAt: NullTime 
+    createdBy: NullInt64 
+
+
+    userByCreatedBy(filter: UserFilter): User
+
+
+
+    attendancesByFkStudent(filter: AttendancesFilter, pagination: Pagination): ListAttendances!
+    registrationsByFkStudent(filter: RegistrationsFilter, pagination: Pagination): ListRegistrations!
+    trainerTrainingMappingByFkStudent(filter: TrainerTrainingMappingFilter, pagination: Pagination): ListTrainerTrainingMapping!
+}
+input StudentsFilter {
+    id: FilterOnField
+    uuid: FilterOnField
+    name: FilterOnField
+    email: FilterOnField
+    mobilePhone: FilterOnField
+    className: FilterOnField
+    designation: FilterOnField
+    active: FilterOnField
+    createdAt: FilterOnField
+    updatedAt: FilterOnField
+    createdBy: FilterOnField
+}
+
+input StudentsCreate {
+    uuid: String !
+    name: String !
+    email: String !
+    mobilePhone: String !
+    className: String !
+    designation: String !
+    createdBy: NullInt64 
+}
+
+input StudentsUpdate {
+    uuid: String 
+    name: String 
+    email: String 
+    mobilePhone: String 
+    className: String 
+    designation: String 
+    active: Boolean 
+    createdBy: NullInt64 
+
+}
+
+type ListStudents {
+    totalCount: Int!
+    data: [Students!]!
+}
+`, BuiltIn: false},
 	{Name: "../../xo_gen/schema/trainer_training_mapping.graphql", Input: `# Code generated by xo. DO NOT EDIT.
 
 type TrainerTrainingMapping {
     id: Int !
     fkTrainingEvent: Int !
-    fkExternalResource: Int !
-    fkInternalResource: Int !
+    fkTrainer: Int !
+    fkStudent: Int !
     active: Boolean !
     createdAt: NullTime 
     updatedAt: NullTime 
 
 
     trainingEventByFkTrainingEvent(filter: TrainingEventFilter): TrainingEvent
-    externalResourcesByFkExternalResource(filter: ExternalResourcesFilter): ExternalResources
-    internalResourcesByFkInternalResource(filter: InternalResourcesFilter): InternalResources
+    trainersByFkTrainer(filter: TrainersFilter): Trainers
+    studentsByFkStudent(filter: StudentsFilter): Students
 
 
 
@@ -2035,8 +1978,8 @@ type TrainerTrainingMapping {
 input TrainerTrainingMappingFilter {
     id: FilterOnField
     fkTrainingEvent: FilterOnField
-    fkExternalResource: FilterOnField
-    fkInternalResource: FilterOnField
+    fkTrainer: FilterOnField
+    fkStudent: FilterOnField
     active: FilterOnField
     createdAt: FilterOnField
     updatedAt: FilterOnField
@@ -2044,14 +1987,14 @@ input TrainerTrainingMappingFilter {
 
 input TrainerTrainingMappingCreate {
     fkTrainingEvent: Int !
-    fkExternalResource: Int !
-    fkInternalResource: Int !
+    fkTrainer: Int !
+    fkStudent: Int !
 }
 
 input TrainerTrainingMappingUpdate {
     fkTrainingEvent: Int 
-    fkExternalResource: Int 
-    fkInternalResource: Int 
+    fkTrainer: Int 
+    fkStudent: Int 
     active: Boolean 
 
 }
@@ -2059,6 +2002,65 @@ input TrainerTrainingMappingUpdate {
 type ListTrainerTrainingMapping {
     totalCount: Int!
     data: [TrainerTrainingMapping!]!
+}
+`, BuiltIn: false},
+	{Name: "../../xo_gen/schema/trainers.graphql", Input: `# Code generated by xo. DO NOT EDIT.
+
+type Trainers {
+    id: Int !
+    uuid: NullString 
+    name: String !
+    email: String !
+    mobilePhone: String !
+    designation: String !
+    active: Boolean !
+    createdAt: NullTime 
+    updatedAt: NullTime 
+    createdBy: NullInt64 
+
+
+    userByCreatedBy(filter: UserFilter): User
+
+
+
+    trainerTrainingMappingByFkTrainer(filter: TrainerTrainingMappingFilter, pagination: Pagination): ListTrainerTrainingMapping!
+}
+input TrainersFilter {
+    id: FilterOnField
+    uuid: FilterOnField
+    name: FilterOnField
+    email: FilterOnField
+    mobilePhone: FilterOnField
+    designation: FilterOnField
+    active: FilterOnField
+    createdAt: FilterOnField
+    updatedAt: FilterOnField
+    createdBy: FilterOnField
+}
+
+input TrainersCreate {
+    uuid: NullString 
+    name: String !
+    email: String !
+    mobilePhone: String !
+    designation: String !
+    createdBy: NullInt64 
+}
+
+input TrainersUpdate {
+    uuid: NullString 
+    name: String 
+    email: String 
+    mobilePhone: String 
+    designation: String 
+    active: Boolean 
+    createdBy: NullInt64 
+
+}
+
+type ListTrainers {
+    totalCount: Int!
+    data: [Trainers!]!
 }
 `, BuiltIn: false},
 	{Name: "../../xo_gen/schema/training.graphql", Input: `# Code generated by xo. DO NOT EDIT.
@@ -2203,8 +2205,8 @@ type User {
 
 
 
-    externalResourcesByCreatedBy(filter: ExternalResourcesFilter, pagination: Pagination): ListExternalResources!
-    internalResourcesByCreatedBy(filter: InternalResourcesFilter, pagination: Pagination): ListInternalResources!
+    studentsByCreatedBy(filter: StudentsFilter, pagination: Pagination): ListStudents!
+    trainersByCreatedBy(filter: TrainersFilter, pagination: Pagination): ListTrainers!
     trainingByRequestedBy(filter: TrainingFilter, pagination: Pagination): ListTraining!
     trainingByCreatedBy(filter: TrainingFilter, pagination: Pagination): ListTraining!
     trainingEventByCreatedBy(filter: TrainingEventFilter, pagination: Pagination): ListTrainingEvent!
@@ -2256,13 +2258,13 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
-func (ec *executionContext) field_Attendances_internalResourcesByFkInternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Attendances_studentsByFkStudent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *table.InternalResourcesFilter
+	var arg0 *table.StudentsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOStudentsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2286,162 +2288,6 @@ func (ec *executionContext) field_Attendances_trainingEventByFkTrainingEvent_arg
 	return args, nil
 }
 
-func (ec *executionContext) field_ExternalResources_trainerTrainingMappingByFkExternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.TrainerTrainingMappingFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *internal.Pagination
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_ExternalResources_userByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.UserFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_InternalResources_attendancesByFkInternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.AttendancesFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *internal.Pagination
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_InternalResources_registrationsByFkInternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.RegistrationsFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *internal.Pagination
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_InternalResources_trainerTrainingMappingByFkInternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.TrainerTrainingMappingFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *internal.Pagination
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_InternalResources_userByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.UserFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_deleteExternalResourcesByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_deleteInternalResourcesByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_deleteRegistrationsByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2457,7 +2303,37 @@ func (ec *executionContext) field_Mutation_deleteRegistrationsByID_args(ctx cont
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_deleteStudentsByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deleteTrainerTrainingMappingByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deleteTrainersByID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 int
@@ -2517,36 +2393,6 @@ func (ec *executionContext) field_Mutation_deleteUserByID_args(ctx context.Conte
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_insertExternalResources_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 table.ExternalResourcesCreate
-	if tmp, ok := rawArgs["data"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNExternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesCreate(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["data"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_insertInternalResources_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 table.InternalResourcesCreate
-	if tmp, ok := rawArgs["data"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg0, err = ec.unmarshalNInternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesCreate(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["data"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_insertRegistrations_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2562,6 +2408,21 @@ func (ec *executionContext) field_Mutation_insertRegistrations_args(ctx context.
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_insertStudents_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 table.StudentsCreate
+	if tmp, ok := rawArgs["data"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
+		arg0, err = ec.unmarshalNStudentsCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsCreate(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["data"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_insertTrainerTrainingMapping_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2569,6 +2430,21 @@ func (ec *executionContext) field_Mutation_insertTrainerTrainingMapping_args(ctx
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
 		arg0, err = ec.unmarshalNTrainerTrainingMappingCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingCreate(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["data"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_insertTrainers_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 table.TrainersCreate
+	if tmp, ok := rawArgs["data"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
+		arg0, err = ec.unmarshalNTrainersCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersCreate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2622,54 +2498,6 @@ func (ec *executionContext) field_Mutation_insertUser_args(ctx context.Context, 
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updateExternalResourcesByFields_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 table.ExternalResourcesUpdate
-	if tmp, ok := rawArgs["data"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNExternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesUpdate(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["data"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_updateInternalResourcesByFields_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 table.InternalResourcesUpdate
-	if tmp, ok := rawArgs["data"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
-		arg1, err = ec.unmarshalNInternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesUpdate(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["data"] = arg1
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_updateRegistrationsByFields_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2694,6 +2522,30 @@ func (ec *executionContext) field_Mutation_updateRegistrationsByFields_args(ctx 
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updateStudentsByFields_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 table.StudentsUpdate
+	if tmp, ok := rawArgs["data"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
+		arg1, err = ec.unmarshalNStudentsUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsUpdate(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["data"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updateTrainerTrainingMappingByFields_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2710,6 +2562,30 @@ func (ec *executionContext) field_Mutation_updateTrainerTrainingMappingByFields_
 	if tmp, ok := rawArgs["data"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
 		arg1, err = ec.unmarshalNTrainerTrainingMappingUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingUpdate(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["data"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateTrainersByFields_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 table.TrainersUpdate
+	if tmp, ok := rawArgs["data"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("data"))
+		arg1, err = ec.unmarshalNTrainersUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersUpdate(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2805,54 +2681,6 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_findAllExternalResources_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.ExternalResourcesFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *internal.Pagination
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_findAllInternalResources_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *table.InternalResourcesFilter
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["filter"] = arg0
-	var arg1 *internal.Pagination
-	if tmp, ok := rawArgs["pagination"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["pagination"] = arg1
-	return args, nil
-}
-
 func (ec *executionContext) field_Query_findAllRegistrations_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2877,6 +2705,30 @@ func (ec *executionContext) field_Query_findAllRegistrations_args(ctx context.Co
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_findAllStudents_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.StudentsFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOStudentsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *internal.Pagination
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_findAllTrainerTrainingMapping_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2884,6 +2736,30 @@ func (ec *executionContext) field_Query_findAllTrainerTrainingMapping_args(ctx c
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
 		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *internal.Pagination
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_findAllTrainers_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.TrainersFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOTrainersFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2997,13 +2873,13 @@ func (ec *executionContext) field_Query_login_args(ctx context.Context, rawArgs 
 	return args, nil
 }
 
-func (ec *executionContext) field_Registrations_internalResourcesByFkInternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Registrations_studentsByFkStudent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *table.InternalResourcesFilter
+	var arg0 *table.StudentsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOStudentsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3027,13 +2903,85 @@ func (ec *executionContext) field_Registrations_trainingByFkTraining_args(ctx co
 	return args, nil
 }
 
-func (ec *executionContext) field_TrainerTrainingMapping_externalResourcesByFkExternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Students_attendancesByFkStudent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *table.ExternalResourcesFilter
+	var arg0 *table.AttendancesFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOAttendancesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐAttendancesFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *internal.Pagination
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Students_registrationsByFkStudent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.RegistrationsFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalORegistrationsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐRegistrationsFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *internal.Pagination
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Students_trainerTrainingMappingByFkStudent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.TrainerTrainingMappingFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *internal.Pagination
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Students_userByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.UserFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3042,13 +2990,28 @@ func (ec *executionContext) field_TrainerTrainingMapping_externalResourcesByFkEx
 	return args, nil
 }
 
-func (ec *executionContext) field_TrainerTrainingMapping_internalResourcesByFkInternalResource_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_TrainerTrainingMapping_studentsByFkStudent_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *table.InternalResourcesFilter
+	var arg0 *table.StudentsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOStudentsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_TrainerTrainingMapping_trainersByFkTrainer_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.TrainersFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOTrainersFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3064,6 +3027,45 @@ func (ec *executionContext) field_TrainerTrainingMapping_trainingEventByFkTraini
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
 		arg0, err = ec.unmarshalOTrainingEventFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainingEventFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Trainers_trainerTrainingMappingByFkTrainer_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.TrainerTrainingMappingFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingFilter(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 *internal.Pagination
+	if tmp, ok := rawArgs["pagination"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
+		arg1, err = ec.unmarshalOPagination2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐPagination(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["pagination"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Trainers_userByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *table.UserFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOUserFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUserFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3228,13 +3230,13 @@ func (ec *executionContext) field_Training_userByRequestedBy_args(ctx context.Co
 	return args, nil
 }
 
-func (ec *executionContext) field_User_externalResourcesByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_User_studentsByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *table.ExternalResourcesFilter
+	var arg0 *table.StudentsFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOStudentsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3252,13 +3254,13 @@ func (ec *executionContext) field_User_externalResourcesByCreatedBy_args(ctx con
 	return args, nil
 }
 
-func (ec *executionContext) field_User_internalResourcesByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_User_trainersByCreatedBy_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *table.InternalResourcesFilter
+	var arg0 *table.TrainersFilter
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOTrainersFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3474,8 +3476,8 @@ func (ec *executionContext) fieldContext_Attendances_fkTrainingEvent(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Attendances_fkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.Attendances) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Attendances_fkInternalResource(ctx, field)
+func (ec *executionContext) _Attendances_fkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Attendances) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Attendances_fkStudent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -3488,7 +3490,7 @@ func (ec *executionContext) _Attendances_fkInternalResource(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FkInternalResource, nil
+		return obj.FkStudent, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3505,7 +3507,7 @@ func (ec *executionContext) _Attendances_fkInternalResource(ctx context.Context,
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Attendances_fkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Attendances_fkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Attendances",
 		Field:      field,
@@ -3726,8 +3728,8 @@ func (ec *executionContext) fieldContext_Attendances_trainingEventByFkTrainingEv
 	return fc, nil
 }
 
-func (ec *executionContext) _Attendances_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.Attendances) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Attendances_internalResourcesByFkInternalResource(ctx, field)
+func (ec *executionContext) _Attendances_studentsByFkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Attendances) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Attendances_studentsByFkStudent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -3740,7 +3742,7 @@ func (ec *executionContext) _Attendances_internalResourcesByFkInternalResource(c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Attendances().InternalResourcesByFkInternalResource(rctx, obj, fc.Args["filter"].(*table.InternalResourcesFilter))
+		return ec.resolvers.Attendances().StudentsByFkStudent(rctx, obj, fc.Args["filter"].(*table.StudentsFilter))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3749,12 +3751,12 @@ func (ec *executionContext) _Attendances_internalResourcesByFkInternalResource(c
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.InternalResources)
+	res := resTmp.(*table.Students)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Attendances_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Attendances_studentsByFkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Attendances",
 		Field:      field,
@@ -3763,37 +3765,37 @@ func (ec *executionContext) fieldContext_Attendances_internalResourcesByFkIntern
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_InternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_InternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Students_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Students_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_InternalResources_name(ctx, field)
+				return ec.fieldContext_Students_name(ctx, field)
 			case "email":
-				return ec.fieldContext_InternalResources_email(ctx, field)
+				return ec.fieldContext_Students_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-			case "projectName":
-				return ec.fieldContext_InternalResources_projectName(ctx, field)
+				return ec.fieldContext_Students_mobilePhone(ctx, field)
+			case "className":
+				return ec.fieldContext_Students_className(ctx, field)
 			case "designation":
-				return ec.fieldContext_InternalResources_designation(ctx, field)
+				return ec.fieldContext_Students_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_InternalResources_active(ctx, field)
+				return ec.fieldContext_Students_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_InternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Students_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_InternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Students_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_InternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Students_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-			case "attendancesByFkInternalResource":
-				return ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-			case "registrationsByFkInternalResource":
-				return ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-			case "trainerTrainingMappingByFkInternalResource":
-				return ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
+				return ec.fieldContext_Students_userByCreatedBy(ctx, field)
+			case "attendancesByFkStudent":
+				return ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+			case "registrationsByFkStudent":
+				return ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+			case "trainerTrainingMappingByFkStudent":
+				return ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type InternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Students", field.Name)
 		},
 	}
 	defer func() {
@@ -3803,1314 +3805,7 @@ func (ec *executionContext) fieldContext_Attendances_internalResourcesByFkIntern
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Attendances_internalResourcesByFkInternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_id(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_resourceID(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_resourceID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ResourceID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullString)
-	fc.Result = res
-	return ec.marshalONullString2databaseᚋsqlᚐNullString(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_resourceID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullString does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_name(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_name(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Name, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_email(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_email(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Email, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_email(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_mobilePhone(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_mobilePhone(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.MobilePhone, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_mobilePhone(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_designation(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_designation(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Designation, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_designation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_active(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_active(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Active, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_active(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_createdAt(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullTime)
-	fc.Result = res
-	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_createdAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullTime does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_updatedAt(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_updatedAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullTime)
-	fc.Result = res
-	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_updatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullTime does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_createdBy(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_createdBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedBy, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullInt64)
-	fc.Result = res
-	return ec.marshalONullInt642databaseᚋsqlᚐNullInt64(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullInt64 does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_userByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_userByCreatedBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ExternalResources().UserByCreatedBy(rctx, obj, fc.Args["filter"].(*table.UserFilter))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*table.User)
-	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "password":
-				return ec.fieldContext_User_password(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "active":
-				return ec.fieldContext_User_active(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_User_createdAt(ctx, field)
-			case "updatedAt":
-				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
-			case "trainingByRequestedBy":
-				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
-			case "trainingByCreatedBy":
-				return ec.fieldContext_User_trainingByCreatedBy(ctx, field)
-			case "trainingEventByCreatedBy":
-				return ec.fieldContext_User_trainingEventByCreatedBy(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_ExternalResources_userByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ExternalResources_trainerTrainingMappingByFkExternalResource(ctx context.Context, field graphql.CollectedField, obj *table.ExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ExternalResources().TrainerTrainingMappingByFkExternalResource(rctx, obj, fc.Args["filter"].(*table.TrainerTrainingMappingFilter), fc.Args["pagination"].(*internal.Pagination))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*table.ListTrainerTrainingMapping)
-	fc.Result = res
-	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ExternalResources",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "totalCount":
-				return ec.fieldContext_ListTrainerTrainingMapping_totalCount(ctx, field)
-			case "data":
-				return ec.fieldContext_ListTrainerTrainingMapping_data(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ListTrainerTrainingMapping", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_ExternalResources_trainerTrainingMappingByFkExternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_id(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_resourceID(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_resourceID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ResourceID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_resourceID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_name(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_name(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Name, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_email(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_email(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Email, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_email(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_mobilePhone(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.MobilePhone, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_mobilePhone(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_projectName(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_projectName(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ProjectName, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_projectName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_designation(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_designation(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Designation, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_designation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_active(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_active(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Active, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_active(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_createdAt(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_createdAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullTime)
-	fc.Result = res
-	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_createdAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullTime does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_updatedAt(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_updatedAt(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedAt, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullTime)
-	fc.Result = res
-	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_updatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullTime does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_createdBy(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_createdBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedBy, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(sql.NullInt64)
-	fc.Result = res
-	return ec.marshalONullInt642databaseᚋsqlᚐNullInt64(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type NullInt64 does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_userByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.InternalResources().UserByCreatedBy(rctx, obj, fc.Args["filter"].(*table.UserFilter))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*table.User)
-	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "password":
-				return ec.fieldContext_User_password(ctx, field)
-			case "role":
-				return ec.fieldContext_User_role(ctx, field)
-			case "active":
-				return ec.fieldContext_User_active(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_User_createdAt(ctx, field)
-			case "updatedAt":
-				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
-			case "trainingByRequestedBy":
-				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
-			case "trainingByCreatedBy":
-				return ec.fieldContext_User_trainingByCreatedBy(ctx, field)
-			case "trainingEventByCreatedBy":
-				return ec.fieldContext_User_trainingEventByCreatedBy(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_InternalResources_userByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_attendancesByFkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.InternalResources().AttendancesByFkInternalResource(rctx, obj, fc.Args["filter"].(*table.AttendancesFilter), fc.Args["pagination"].(*internal.Pagination))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*table.ListAttendances)
-	fc.Result = res
-	return ec.marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_attendancesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "totalCount":
-				return ec.fieldContext_ListAttendances_totalCount(ctx, field)
-			case "data":
-				return ec.fieldContext_ListAttendances_data(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ListAttendances", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_InternalResources_attendancesByFkInternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_registrationsByFkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.InternalResources().RegistrationsByFkInternalResource(rctx, obj, fc.Args["filter"].(*table.RegistrationsFilter), fc.Args["pagination"].(*internal.Pagination))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*table.ListRegistrations)
-	fc.Result = res
-	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_registrationsByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "totalCount":
-				return ec.fieldContext_ListRegistrations_totalCount(ctx, field)
-			case "data":
-				return ec.fieldContext_ListRegistrations_data(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ListRegistrations", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_InternalResources_registrationsByFkInternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _InternalResources_trainerTrainingMappingByFkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.InternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.InternalResources().TrainerTrainingMappingByFkInternalResource(rctx, obj, fc.Args["filter"].(*table.TrainerTrainingMappingFilter), fc.Args["pagination"].(*internal.Pagination))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*table.ListTrainerTrainingMapping)
-	fc.Result = res
-	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "InternalResources",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "totalCount":
-				return ec.fieldContext_ListTrainerTrainingMapping_totalCount(ctx, field)
-			case "data":
-				return ec.fieldContext_ListTrainerTrainingMapping_data(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ListTrainerTrainingMapping", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_InternalResources_trainerTrainingMappingByFkInternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Attendances_studentsByFkStudent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -5204,8 +3899,8 @@ func (ec *executionContext) fieldContext_ListAttendances_data(ctx context.Contex
 				return ec.fieldContext_Attendances_id(ctx, field)
 			case "fkTrainingEvent":
 				return ec.fieldContext_Attendances_fkTrainingEvent(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_Attendances_fkInternalResource(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_Attendances_fkStudent(ctx, field)
 			case "active":
 				return ec.fieldContext_Attendances_active(ctx, field)
 			case "createdAt":
@@ -5214,244 +3909,10 @@ func (ec *executionContext) fieldContext_ListAttendances_data(ctx context.Contex
 				return ec.fieldContext_Attendances_updatedAt(ctx, field)
 			case "trainingEventByFkTrainingEvent":
 				return ec.fieldContext_Attendances_trainingEventByFkTrainingEvent(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_Attendances_internalResourcesByFkInternalResource(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_Attendances_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Attendances", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ListExternalResources_totalCount(ctx context.Context, field graphql.CollectedField, obj *table.ListExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ListExternalResources_totalCount(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.TotalCount, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ListExternalResources_totalCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ListExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ListExternalResources_data(ctx context.Context, field graphql.CollectedField, obj *table.ListExternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ListExternalResources_data(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Data, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]table.ExternalResources)
-	fc.Result = res
-	return ec.marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ListExternalResources_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ListExternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ExternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_ExternalResources_resourceID(ctx, field)
-			case "name":
-				return ec.fieldContext_ExternalResources_name(ctx, field)
-			case "email":
-				return ec.fieldContext_ExternalResources_email(ctx, field)
-			case "mobilePhone":
-				return ec.fieldContext_ExternalResources_mobilePhone(ctx, field)
-			case "designation":
-				return ec.fieldContext_ExternalResources_designation(ctx, field)
-			case "active":
-				return ec.fieldContext_ExternalResources_active(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_ExternalResources_createdAt(ctx, field)
-			case "updatedAt":
-				return ec.fieldContext_ExternalResources_updatedAt(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ExternalResources_createdBy(ctx, field)
-			case "userByCreatedBy":
-				return ec.fieldContext_ExternalResources_userByCreatedBy(ctx, field)
-			case "trainerTrainingMappingByFkExternalResource":
-				return ec.fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ExternalResources", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ListInternalResources_totalCount(ctx context.Context, field graphql.CollectedField, obj *table.ListInternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ListInternalResources_totalCount(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.TotalCount, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ListInternalResources_totalCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ListInternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ListInternalResources_data(ctx context.Context, field graphql.CollectedField, obj *table.ListInternalResources) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ListInternalResources_data(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Data, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]table.InternalResources)
-	fc.Result = res
-	return ec.marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ListInternalResources_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ListInternalResources",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_InternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_InternalResources_resourceID(ctx, field)
-			case "name":
-				return ec.fieldContext_InternalResources_name(ctx, field)
-			case "email":
-				return ec.fieldContext_InternalResources_email(ctx, field)
-			case "mobilePhone":
-				return ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-			case "projectName":
-				return ec.fieldContext_InternalResources_projectName(ctx, field)
-			case "designation":
-				return ec.fieldContext_InternalResources_designation(ctx, field)
-			case "active":
-				return ec.fieldContext_InternalResources_active(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_InternalResources_createdAt(ctx, field)
-			case "updatedAt":
-				return ec.fieldContext_InternalResources_updatedAt(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_InternalResources_createdBy(ctx, field)
-			case "userByCreatedBy":
-				return ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-			case "attendancesByFkInternalResource":
-				return ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-			case "registrationsByFkInternalResource":
-				return ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-			case "trainerTrainingMappingByFkInternalResource":
-				return ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type InternalResources", field.Name)
 		},
 	}
 	return fc, nil
@@ -5542,8 +4003,8 @@ func (ec *executionContext) fieldContext_ListRegistrations_data(ctx context.Cont
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Registrations_id(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_Registrations_fkInternalResource(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_Registrations_fkStudent(ctx, field)
 			case "fkTraining":
 				return ec.fieldContext_Registrations_fkTraining(ctx, field)
 			case "active":
@@ -5554,10 +4015,130 @@ func (ec *executionContext) fieldContext_ListRegistrations_data(ctx context.Cont
 				return ec.fieldContext_Registrations_updatedAt(ctx, field)
 			case "trainingByFkTraining":
 				return ec.fieldContext_Registrations_trainingByFkTraining(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_Registrations_internalResourcesByFkInternalResource(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_Registrations_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Registrations", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ListStudents_totalCount(ctx context.Context, field graphql.CollectedField, obj *table.ListStudents) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ListStudents_totalCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ListStudents_totalCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ListStudents",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ListStudents_data(ctx context.Context, field graphql.CollectedField, obj *table.ListStudents) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ListStudents_data(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Data, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]table.Students)
+	fc.Result = res
+	return ec.marshalNStudents2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ListStudents_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ListStudents",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Students_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Students_uuid(ctx, field)
+			case "name":
+				return ec.fieldContext_Students_name(ctx, field)
+			case "email":
+				return ec.fieldContext_Students_email(ctx, field)
+			case "mobilePhone":
+				return ec.fieldContext_Students_mobilePhone(ctx, field)
+			case "className":
+				return ec.fieldContext_Students_className(ctx, field)
+			case "designation":
+				return ec.fieldContext_Students_designation(ctx, field)
+			case "active":
+				return ec.fieldContext_Students_active(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Students_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_Students_updatedAt(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_Students_createdBy(ctx, field)
+			case "userByCreatedBy":
+				return ec.fieldContext_Students_userByCreatedBy(ctx, field)
+			case "attendancesByFkStudent":
+				return ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+			case "registrationsByFkStudent":
+				return ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+			case "trainerTrainingMappingByFkStudent":
+				return ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Students", field.Name)
 		},
 	}
 	return fc, nil
@@ -5650,10 +4231,10 @@ func (ec *executionContext) fieldContext_ListTrainerTrainingMapping_data(ctx con
 				return ec.fieldContext_TrainerTrainingMapping_id(ctx, field)
 			case "fkTrainingEvent":
 				return ec.fieldContext_TrainerTrainingMapping_fkTrainingEvent(ctx, field)
-			case "fkExternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_fkExternalResource(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_fkInternalResource(ctx, field)
+			case "fkTrainer":
+				return ec.fieldContext_TrainerTrainingMapping_fkTrainer(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_TrainerTrainingMapping_fkStudent(ctx, field)
 			case "active":
 				return ec.fieldContext_TrainerTrainingMapping_active(ctx, field)
 			case "createdAt":
@@ -5662,12 +4243,126 @@ func (ec *executionContext) fieldContext_ListTrainerTrainingMapping_data(ctx con
 				return ec.fieldContext_TrainerTrainingMapping_updatedAt(ctx, field)
 			case "trainingEventByFkTrainingEvent":
 				return ec.fieldContext_TrainerTrainingMapping_trainingEventByFkTrainingEvent(ctx, field)
-			case "externalResourcesByFkExternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx, field)
+			case "trainersByFkTrainer":
+				return ec.fieldContext_TrainerTrainingMapping_trainersByFkTrainer(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_TrainerTrainingMapping_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TrainerTrainingMapping", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ListTrainers_totalCount(ctx context.Context, field graphql.CollectedField, obj *table.ListTrainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ListTrainers_totalCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ListTrainers_totalCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ListTrainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ListTrainers_data(ctx context.Context, field graphql.CollectedField, obj *table.ListTrainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ListTrainers_data(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Data, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]table.Trainers)
+	fc.Result = res
+	return ec.marshalNTrainers2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ListTrainers_data(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ListTrainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Trainers_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Trainers_uuid(ctx, field)
+			case "name":
+				return ec.fieldContext_Trainers_name(ctx, field)
+			case "email":
+				return ec.fieldContext_Trainers_email(ctx, field)
+			case "mobilePhone":
+				return ec.fieldContext_Trainers_mobilePhone(ctx, field)
+			case "designation":
+				return ec.fieldContext_Trainers_designation(ctx, field)
+			case "active":
+				return ec.fieldContext_Trainers_active(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Trainers_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_Trainers_updatedAt(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_Trainers_createdBy(ctx, field)
+			case "userByCreatedBy":
+				return ec.fieldContext_Trainers_userByCreatedBy(ctx, field)
+			case "trainerTrainingMappingByFkTrainer":
+				return ec.fieldContext_Trainers_trainerTrainingMappingByFkTrainer(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Trainers", field.Name)
 		},
 	}
 	return fc, nil
@@ -6010,10 +4705,10 @@ func (ec *executionContext) fieldContext_ListUser_data(ctx context.Context, fiel
 				return ec.fieldContext_User_createdAt(ctx, field)
 			case "updatedAt":
 				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 			case "trainingByRequestedBy":
 				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
 			case "trainingByCreatedBy":
@@ -6099,10 +4794,10 @@ func (ec *executionContext) fieldContext_Mutation_insertUser(ctx context.Context
 				return ec.fieldContext_User_createdAt(ctx, field)
 			case "updatedAt":
 				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 			case "trainingByRequestedBy":
 				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
 			case "trainingByCreatedBy":
@@ -6199,10 +4894,10 @@ func (ec *executionContext) fieldContext_Mutation_updateUserByFields(ctx context
 				return ec.fieldContext_User_createdAt(ctx, field)
 			case "updatedAt":
 				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 			case "trainingByRequestedBy":
 				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
 			case "trainingByCreatedBy":
@@ -6302,8 +4997,8 @@ func (ec *executionContext) fieldContext_Mutation_deleteUserByID(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_insertExternalResources(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_insertExternalResources(ctx, field)
+func (ec *executionContext) _Mutation_insertTrainers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_insertTrainers(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -6317,7 +5012,7 @@ func (ec *executionContext) _Mutation_insertExternalResources(ctx context.Contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().InsertExternalResources(rctx, fc.Args["data"].(table.ExternalResourcesCreate))
+			return ec.resolvers.Mutation().InsertTrainers(rctx, fc.Args["data"].(table.TrainersCreate))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -6333,10 +5028,10 @@ func (ec *executionContext) _Mutation_insertExternalResources(ctx context.Contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*table.ExternalResources); ok {
+		if data, ok := tmp.(*table.Trainers); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ExternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Trainers`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6345,12 +5040,12 @@ func (ec *executionContext) _Mutation_insertExternalResources(ctx context.Contex
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.ExternalResources)
+	res := resTmp.(*table.Trainers)
 	fc.Result = res
-	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
+	return ec.marshalOTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainers(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_insertExternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_insertTrainers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -6359,31 +5054,31 @@ func (ec *executionContext) fieldContext_Mutation_insertExternalResources(ctx co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_ExternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_ExternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Trainers_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Trainers_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_ExternalResources_name(ctx, field)
+				return ec.fieldContext_Trainers_name(ctx, field)
 			case "email":
-				return ec.fieldContext_ExternalResources_email(ctx, field)
+				return ec.fieldContext_Trainers_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_ExternalResources_mobilePhone(ctx, field)
+				return ec.fieldContext_Trainers_mobilePhone(ctx, field)
 			case "designation":
-				return ec.fieldContext_ExternalResources_designation(ctx, field)
+				return ec.fieldContext_Trainers_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_ExternalResources_active(ctx, field)
+				return ec.fieldContext_Trainers_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_ExternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Trainers_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_ExternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Trainers_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_ExternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Trainers_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_ExternalResources_userByCreatedBy(ctx, field)
-			case "trainerTrainingMappingByFkExternalResource":
-				return ec.fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx, field)
+				return ec.fieldContext_Trainers_userByCreatedBy(ctx, field)
+			case "trainerTrainingMappingByFkTrainer":
+				return ec.fieldContext_Trainers_trainerTrainingMappingByFkTrainer(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ExternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Trainers", field.Name)
 		},
 	}
 	defer func() {
@@ -6393,15 +5088,15 @@ func (ec *executionContext) fieldContext_Mutation_insertExternalResources(ctx co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_insertExternalResources_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_insertTrainers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateExternalResourcesByFields(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateExternalResourcesByFields(ctx, field)
+func (ec *executionContext) _Mutation_updateTrainersByFields(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateTrainersByFields(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -6415,7 +5110,7 @@ func (ec *executionContext) _Mutation_updateExternalResourcesByFields(ctx contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateExternalResourcesByFields(rctx, fc.Args["id"].(int), fc.Args["data"].(table.ExternalResourcesUpdate))
+			return ec.resolvers.Mutation().UpdateTrainersByFields(rctx, fc.Args["id"].(int), fc.Args["data"].(table.TrainersUpdate))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -6431,10 +5126,10 @@ func (ec *executionContext) _Mutation_updateExternalResourcesByFields(ctx contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*table.ExternalResources); ok {
+		if data, ok := tmp.(*table.Trainers); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ExternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Trainers`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6443,12 +5138,12 @@ func (ec *executionContext) _Mutation_updateExternalResourcesByFields(ctx contex
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.ExternalResources)
+	res := resTmp.(*table.Trainers)
 	fc.Result = res
-	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
+	return ec.marshalOTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainers(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updateExternalResourcesByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateTrainersByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -6457,31 +5152,31 @@ func (ec *executionContext) fieldContext_Mutation_updateExternalResourcesByField
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_ExternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_ExternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Trainers_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Trainers_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_ExternalResources_name(ctx, field)
+				return ec.fieldContext_Trainers_name(ctx, field)
 			case "email":
-				return ec.fieldContext_ExternalResources_email(ctx, field)
+				return ec.fieldContext_Trainers_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_ExternalResources_mobilePhone(ctx, field)
+				return ec.fieldContext_Trainers_mobilePhone(ctx, field)
 			case "designation":
-				return ec.fieldContext_ExternalResources_designation(ctx, field)
+				return ec.fieldContext_Trainers_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_ExternalResources_active(ctx, field)
+				return ec.fieldContext_Trainers_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_ExternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Trainers_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_ExternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Trainers_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_ExternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Trainers_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_ExternalResources_userByCreatedBy(ctx, field)
-			case "trainerTrainingMappingByFkExternalResource":
-				return ec.fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx, field)
+				return ec.fieldContext_Trainers_userByCreatedBy(ctx, field)
+			case "trainerTrainingMappingByFkTrainer":
+				return ec.fieldContext_Trainers_trainerTrainingMappingByFkTrainer(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ExternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Trainers", field.Name)
 		},
 	}
 	defer func() {
@@ -6491,15 +5186,15 @@ func (ec *executionContext) fieldContext_Mutation_updateExternalResourcesByField
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateExternalResourcesByFields_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateTrainersByFields_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deleteExternalResourcesByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteExternalResourcesByID(ctx, field)
+func (ec *executionContext) _Mutation_deleteTrainersByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deleteTrainersByID(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -6513,7 +5208,7 @@ func (ec *executionContext) _Mutation_deleteExternalResourcesByID(ctx context.Co
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteExternalResourcesByID(rctx, fc.Args["id"].(int))
+			return ec.resolvers.Mutation().DeleteTrainersByID(rctx, fc.Args["id"].(int))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -6549,7 +5244,7 @@ func (ec *executionContext) _Mutation_deleteExternalResourcesByID(ctx context.Co
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deleteExternalResourcesByID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_deleteTrainersByID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -6566,15 +5261,15 @@ func (ec *executionContext) fieldContext_Mutation_deleteExternalResourcesByID(ct
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteExternalResourcesByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_deleteTrainersByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_insertInternalResources(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_insertInternalResources(ctx, field)
+func (ec *executionContext) _Mutation_insertStudents(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_insertStudents(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -6588,7 +5283,7 @@ func (ec *executionContext) _Mutation_insertInternalResources(ctx context.Contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().InsertInternalResources(rctx, fc.Args["data"].(table.InternalResourcesCreate))
+			return ec.resolvers.Mutation().InsertStudents(rctx, fc.Args["data"].(table.StudentsCreate))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -6604,10 +5299,10 @@ func (ec *executionContext) _Mutation_insertInternalResources(ctx context.Contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*table.InternalResources); ok {
+		if data, ok := tmp.(*table.Students); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.InternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Students`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6616,12 +5311,12 @@ func (ec *executionContext) _Mutation_insertInternalResources(ctx context.Contex
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.InternalResources)
+	res := resTmp.(*table.Students)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_insertInternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_insertStudents(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -6630,37 +5325,37 @@ func (ec *executionContext) fieldContext_Mutation_insertInternalResources(ctx co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_InternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_InternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Students_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Students_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_InternalResources_name(ctx, field)
+				return ec.fieldContext_Students_name(ctx, field)
 			case "email":
-				return ec.fieldContext_InternalResources_email(ctx, field)
+				return ec.fieldContext_Students_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-			case "projectName":
-				return ec.fieldContext_InternalResources_projectName(ctx, field)
+				return ec.fieldContext_Students_mobilePhone(ctx, field)
+			case "className":
+				return ec.fieldContext_Students_className(ctx, field)
 			case "designation":
-				return ec.fieldContext_InternalResources_designation(ctx, field)
+				return ec.fieldContext_Students_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_InternalResources_active(ctx, field)
+				return ec.fieldContext_Students_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_InternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Students_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_InternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Students_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_InternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Students_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-			case "attendancesByFkInternalResource":
-				return ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-			case "registrationsByFkInternalResource":
-				return ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-			case "trainerTrainingMappingByFkInternalResource":
-				return ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
+				return ec.fieldContext_Students_userByCreatedBy(ctx, field)
+			case "attendancesByFkStudent":
+				return ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+			case "registrationsByFkStudent":
+				return ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+			case "trainerTrainingMappingByFkStudent":
+				return ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type InternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Students", field.Name)
 		},
 	}
 	defer func() {
@@ -6670,15 +5365,15 @@ func (ec *executionContext) fieldContext_Mutation_insertInternalResources(ctx co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_insertInternalResources_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_insertStudents_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateInternalResourcesByFields(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateInternalResourcesByFields(ctx, field)
+func (ec *executionContext) _Mutation_updateStudentsByFields(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateStudentsByFields(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -6692,7 +5387,7 @@ func (ec *executionContext) _Mutation_updateInternalResourcesByFields(ctx contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateInternalResourcesByFields(rctx, fc.Args["id"].(int), fc.Args["data"].(table.InternalResourcesUpdate))
+			return ec.resolvers.Mutation().UpdateStudentsByFields(rctx, fc.Args["id"].(int), fc.Args["data"].(table.StudentsUpdate))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -6708,10 +5403,10 @@ func (ec *executionContext) _Mutation_updateInternalResourcesByFields(ctx contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*table.InternalResources); ok {
+		if data, ok := tmp.(*table.Students); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.InternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.Students`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6720,12 +5415,12 @@ func (ec *executionContext) _Mutation_updateInternalResourcesByFields(ctx contex
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.InternalResources)
+	res := resTmp.(*table.Students)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updateInternalResourcesByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateStudentsByFields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -6734,37 +5429,37 @@ func (ec *executionContext) fieldContext_Mutation_updateInternalResourcesByField
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_InternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_InternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Students_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Students_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_InternalResources_name(ctx, field)
+				return ec.fieldContext_Students_name(ctx, field)
 			case "email":
-				return ec.fieldContext_InternalResources_email(ctx, field)
+				return ec.fieldContext_Students_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-			case "projectName":
-				return ec.fieldContext_InternalResources_projectName(ctx, field)
+				return ec.fieldContext_Students_mobilePhone(ctx, field)
+			case "className":
+				return ec.fieldContext_Students_className(ctx, field)
 			case "designation":
-				return ec.fieldContext_InternalResources_designation(ctx, field)
+				return ec.fieldContext_Students_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_InternalResources_active(ctx, field)
+				return ec.fieldContext_Students_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_InternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Students_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_InternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Students_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_InternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Students_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-			case "attendancesByFkInternalResource":
-				return ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-			case "registrationsByFkInternalResource":
-				return ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-			case "trainerTrainingMappingByFkInternalResource":
-				return ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
+				return ec.fieldContext_Students_userByCreatedBy(ctx, field)
+			case "attendancesByFkStudent":
+				return ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+			case "registrationsByFkStudent":
+				return ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+			case "trainerTrainingMappingByFkStudent":
+				return ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type InternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Students", field.Name)
 		},
 	}
 	defer func() {
@@ -6774,15 +5469,15 @@ func (ec *executionContext) fieldContext_Mutation_updateInternalResourcesByField
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateInternalResourcesByFields_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateStudentsByFields_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deleteInternalResourcesByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteInternalResourcesByID(ctx, field)
+func (ec *executionContext) _Mutation_deleteStudentsByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deleteStudentsByID(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -6796,7 +5491,7 @@ func (ec *executionContext) _Mutation_deleteInternalResourcesByID(ctx context.Co
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteInternalResourcesByID(rctx, fc.Args["id"].(int))
+			return ec.resolvers.Mutation().DeleteStudentsByID(rctx, fc.Args["id"].(int))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -6832,7 +5527,7 @@ func (ec *executionContext) _Mutation_deleteInternalResourcesByID(ctx context.Co
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deleteInternalResourcesByID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_deleteStudentsByID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -6849,7 +5544,7 @@ func (ec *executionContext) fieldContext_Mutation_deleteInternalResourcesByID(ct
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteInternalResourcesByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_deleteStudentsByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -6914,8 +5609,8 @@ func (ec *executionContext) fieldContext_Mutation_insertRegistrations(ctx contex
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Registrations_id(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_Registrations_fkInternalResource(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_Registrations_fkStudent(ctx, field)
 			case "fkTraining":
 				return ec.fieldContext_Registrations_fkTraining(ctx, field)
 			case "active":
@@ -6926,8 +5621,8 @@ func (ec *executionContext) fieldContext_Mutation_insertRegistrations(ctx contex
 				return ec.fieldContext_Registrations_updatedAt(ctx, field)
 			case "trainingByFkTraining":
 				return ec.fieldContext_Registrations_trainingByFkTraining(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_Registrations_internalResourcesByFkInternalResource(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_Registrations_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Registrations", field.Name)
 		},
@@ -7004,8 +5699,8 @@ func (ec *executionContext) fieldContext_Mutation_updateRegistrationsByFields(ct
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Registrations_id(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_Registrations_fkInternalResource(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_Registrations_fkStudent(ctx, field)
 			case "fkTraining":
 				return ec.fieldContext_Registrations_fkTraining(ctx, field)
 			case "active":
@@ -7016,8 +5711,8 @@ func (ec *executionContext) fieldContext_Mutation_updateRegistrationsByFields(ct
 				return ec.fieldContext_Registrations_updatedAt(ctx, field)
 			case "trainingByFkTraining":
 				return ec.fieldContext_Registrations_trainingByFkTraining(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_Registrations_internalResourcesByFkInternalResource(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_Registrations_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Registrations", field.Name)
 		},
@@ -7171,10 +5866,10 @@ func (ec *executionContext) fieldContext_Mutation_insertTrainerTrainingMapping(c
 				return ec.fieldContext_TrainerTrainingMapping_id(ctx, field)
 			case "fkTrainingEvent":
 				return ec.fieldContext_TrainerTrainingMapping_fkTrainingEvent(ctx, field)
-			case "fkExternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_fkExternalResource(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_fkInternalResource(ctx, field)
+			case "fkTrainer":
+				return ec.fieldContext_TrainerTrainingMapping_fkTrainer(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_TrainerTrainingMapping_fkStudent(ctx, field)
 			case "active":
 				return ec.fieldContext_TrainerTrainingMapping_active(ctx, field)
 			case "createdAt":
@@ -7183,10 +5878,10 @@ func (ec *executionContext) fieldContext_Mutation_insertTrainerTrainingMapping(c
 				return ec.fieldContext_TrainerTrainingMapping_updatedAt(ctx, field)
 			case "trainingEventByFkTrainingEvent":
 				return ec.fieldContext_TrainerTrainingMapping_trainingEventByFkTrainingEvent(ctx, field)
-			case "externalResourcesByFkExternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx, field)
+			case "trainersByFkTrainer":
+				return ec.fieldContext_TrainerTrainingMapping_trainersByFkTrainer(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_TrainerTrainingMapping_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TrainerTrainingMapping", field.Name)
 		},
@@ -7265,10 +5960,10 @@ func (ec *executionContext) fieldContext_Mutation_updateTrainerTrainingMappingBy
 				return ec.fieldContext_TrainerTrainingMapping_id(ctx, field)
 			case "fkTrainingEvent":
 				return ec.fieldContext_TrainerTrainingMapping_fkTrainingEvent(ctx, field)
-			case "fkExternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_fkExternalResource(ctx, field)
-			case "fkInternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_fkInternalResource(ctx, field)
+			case "fkTrainer":
+				return ec.fieldContext_TrainerTrainingMapping_fkTrainer(ctx, field)
+			case "fkStudent":
+				return ec.fieldContext_TrainerTrainingMapping_fkStudent(ctx, field)
 			case "active":
 				return ec.fieldContext_TrainerTrainingMapping_active(ctx, field)
 			case "createdAt":
@@ -7277,10 +5972,10 @@ func (ec *executionContext) fieldContext_Mutation_updateTrainerTrainingMappingBy
 				return ec.fieldContext_TrainerTrainingMapping_updatedAt(ctx, field)
 			case "trainingEventByFkTrainingEvent":
 				return ec.fieldContext_TrainerTrainingMapping_trainingEventByFkTrainingEvent(ctx, field)
-			case "externalResourcesByFkExternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx, field)
-			case "internalResourcesByFkInternalResource":
-				return ec.fieldContext_TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx, field)
+			case "trainersByFkTrainer":
+				return ec.fieldContext_TrainerTrainingMapping_trainersByFkTrainer(ctx, field)
+			case "studentsByFkStudent":
+				return ec.fieldContext_TrainerTrainingMapping_studentsByFkStudent(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TrainerTrainingMapping", field.Name)
 		},
@@ -8072,8 +6767,8 @@ func (ec *executionContext) fieldContext_Query_findAllUser(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_findAllExternalResources(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_findAllExternalResources(ctx, field)
+func (ec *executionContext) _Query_findAllTrainers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_findAllTrainers(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8087,7 +6782,7 @@ func (ec *executionContext) _Query_findAllExternalResources(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().FindAllExternalResources(rctx, fc.Args["filter"].(*table.ExternalResourcesFilter), fc.Args["pagination"].(*internal.Pagination))
+			return ec.resolvers.Query().FindAllTrainers(rctx, fc.Args["filter"].(*table.TrainersFilter), fc.Args["pagination"].(*internal.Pagination))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -8103,10 +6798,10 @@ func (ec *executionContext) _Query_findAllExternalResources(ctx context.Context,
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*table.ListExternalResources); ok {
+		if data, ok := tmp.(*table.ListTrainers); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListExternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListTrainers`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8118,12 +6813,12 @@ func (ec *executionContext) _Query_findAllExternalResources(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*table.ListExternalResources)
+	res := resTmp.(*table.ListTrainers)
 	fc.Result = res
-	return ec.marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx, field.Selections, res)
+	return ec.marshalNListTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainers(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_findAllExternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_findAllTrainers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -8132,11 +6827,11 @@ func (ec *executionContext) fieldContext_Query_findAllExternalResources(ctx cont
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "totalCount":
-				return ec.fieldContext_ListExternalResources_totalCount(ctx, field)
+				return ec.fieldContext_ListTrainers_totalCount(ctx, field)
 			case "data":
-				return ec.fieldContext_ListExternalResources_data(ctx, field)
+				return ec.fieldContext_ListTrainers_data(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ListExternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ListTrainers", field.Name)
 		},
 	}
 	defer func() {
@@ -8146,15 +6841,15 @@ func (ec *executionContext) fieldContext_Query_findAllExternalResources(ctx cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_findAllExternalResources_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_findAllTrainers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_findAllInternalResources(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_findAllInternalResources(ctx, field)
+func (ec *executionContext) _Query_findAllStudents(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_findAllStudents(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8168,7 +6863,7 @@ func (ec *executionContext) _Query_findAllInternalResources(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().FindAllInternalResources(rctx, fc.Args["filter"].(*table.InternalResourcesFilter), fc.Args["pagination"].(*internal.Pagination))
+			return ec.resolvers.Query().FindAllStudents(rctx, fc.Args["filter"].(*table.StudentsFilter), fc.Args["pagination"].(*internal.Pagination))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.Authenticate == nil {
@@ -8184,10 +6879,10 @@ func (ec *executionContext) _Query_findAllInternalResources(ctx context.Context,
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*table.ListInternalResources); ok {
+		if data, ok := tmp.(*table.ListStudents); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListInternalResources`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/ketan-10/training/backend/xo_gen/table.ListStudents`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8199,12 +6894,12 @@ func (ec *executionContext) _Query_findAllInternalResources(ctx context.Context,
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*table.ListInternalResources)
+	res := resTmp.(*table.ListStudents)
 	fc.Result = res
-	return ec.marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx, field.Selections, res)
+	return ec.marshalNListStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_findAllInternalResources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_findAllStudents(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -8213,11 +6908,11 @@ func (ec *executionContext) fieldContext_Query_findAllInternalResources(ctx cont
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "totalCount":
-				return ec.fieldContext_ListInternalResources_totalCount(ctx, field)
+				return ec.fieldContext_ListStudents_totalCount(ctx, field)
 			case "data":
-				return ec.fieldContext_ListInternalResources_data(ctx, field)
+				return ec.fieldContext_ListStudents_data(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ListInternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ListStudents", field.Name)
 		},
 	}
 	defer func() {
@@ -8227,7 +6922,7 @@ func (ec *executionContext) fieldContext_Query_findAllInternalResources(ctx cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_findAllInternalResources_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_findAllStudents_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -8731,8 +7426,8 @@ func (ec *executionContext) fieldContext_Registrations_id(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _Registrations_fkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.Registrations) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Registrations_fkInternalResource(ctx, field)
+func (ec *executionContext) _Registrations_fkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Registrations) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Registrations_fkStudent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8745,7 +7440,7 @@ func (ec *executionContext) _Registrations_fkInternalResource(ctx context.Contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FkInternalResource, nil
+		return obj.FkStudent, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8762,7 +7457,7 @@ func (ec *executionContext) _Registrations_fkInternalResource(ctx context.Contex
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Registrations_fkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Registrations_fkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Registrations",
 		Field:      field,
@@ -9029,8 +7724,8 @@ func (ec *executionContext) fieldContext_Registrations_trainingByFkTraining(ctx 
 	return fc, nil
 }
 
-func (ec *executionContext) _Registrations_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.Registrations) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Registrations_internalResourcesByFkInternalResource(ctx, field)
+func (ec *executionContext) _Registrations_studentsByFkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Registrations) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Registrations_studentsByFkStudent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9043,7 +7738,7 @@ func (ec *executionContext) _Registrations_internalResourcesByFkInternalResource
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Registrations().InternalResourcesByFkInternalResource(rctx, obj, fc.Args["filter"].(*table.InternalResourcesFilter))
+		return ec.resolvers.Registrations().StudentsByFkStudent(rctx, obj, fc.Args["filter"].(*table.StudentsFilter))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9052,12 +7747,12 @@ func (ec *executionContext) _Registrations_internalResourcesByFkInternalResource
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.InternalResources)
+	res := resTmp.(*table.Students)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Registrations_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Registrations_studentsByFkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Registrations",
 		Field:      field,
@@ -9066,37 +7761,37 @@ func (ec *executionContext) fieldContext_Registrations_internalResourcesByFkInte
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_InternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_InternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Students_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Students_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_InternalResources_name(ctx, field)
+				return ec.fieldContext_Students_name(ctx, field)
 			case "email":
-				return ec.fieldContext_InternalResources_email(ctx, field)
+				return ec.fieldContext_Students_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-			case "projectName":
-				return ec.fieldContext_InternalResources_projectName(ctx, field)
+				return ec.fieldContext_Students_mobilePhone(ctx, field)
+			case "className":
+				return ec.fieldContext_Students_className(ctx, field)
 			case "designation":
-				return ec.fieldContext_InternalResources_designation(ctx, field)
+				return ec.fieldContext_Students_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_InternalResources_active(ctx, field)
+				return ec.fieldContext_Students_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_InternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Students_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_InternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Students_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_InternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Students_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-			case "attendancesByFkInternalResource":
-				return ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-			case "registrationsByFkInternalResource":
-				return ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-			case "trainerTrainingMappingByFkInternalResource":
-				return ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
+				return ec.fieldContext_Students_userByCreatedBy(ctx, field)
+			case "attendancesByFkStudent":
+				return ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+			case "registrationsByFkStudent":
+				return ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+			case "trainerTrainingMappingByFkStudent":
+				return ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type InternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Students", field.Name)
 		},
 	}
 	defer func() {
@@ -9106,7 +7801,745 @@ func (ec *executionContext) fieldContext_Registrations_internalResourcesByFkInte
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Registrations_internalResourcesByFkInternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Registrations_studentsByFkStudent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_id(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_uuid(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_uuid(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_uuid(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_name(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_email(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_email(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Email, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_email(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_mobilePhone(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_mobilePhone(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MobilePhone, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_mobilePhone(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_className(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_className(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ClassName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_className(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_designation(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_designation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Designation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_designation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_active(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_active(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Active, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_active(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_createdAt(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_createdAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullTime)
+	fc.Result = res
+	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_createdAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullTime does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_updatedAt(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_updatedAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullTime)
+	fc.Result = res
+	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_updatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullTime does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_createdBy(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullInt64)
+	fc.Result = res
+	return ec.marshalONullInt642databaseᚋsqlᚐNullInt64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullInt64 does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_userByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_userByCreatedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Students().UserByCreatedBy(rctx, obj, fc.Args["filter"].(*table.UserFilter))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*table.User)
+	fc.Result = res
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_User_id(ctx, field)
+			case "username":
+				return ec.fieldContext_User_username(ctx, field)
+			case "email":
+				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
+			case "role":
+				return ec.fieldContext_User_role(ctx, field)
+			case "active":
+				return ec.fieldContext_User_active(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_User_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_User_updatedAt(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
+			case "trainingByRequestedBy":
+				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
+			case "trainingByCreatedBy":
+				return ec.fieldContext_User_trainingByCreatedBy(ctx, field)
+			case "trainingEventByCreatedBy":
+				return ec.fieldContext_User_trainingEventByCreatedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Students_userByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_attendancesByFkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Students().AttendancesByFkStudent(rctx, obj, fc.Args["filter"].(*table.AttendancesFilter), fc.Args["pagination"].(*internal.Pagination))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*table.ListAttendances)
+	fc.Result = res
+	return ec.marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_attendancesByFkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "totalCount":
+				return ec.fieldContext_ListAttendances_totalCount(ctx, field)
+			case "data":
+				return ec.fieldContext_ListAttendances_data(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ListAttendances", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Students_attendancesByFkStudent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_registrationsByFkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Students().RegistrationsByFkStudent(rctx, obj, fc.Args["filter"].(*table.RegistrationsFilter), fc.Args["pagination"].(*internal.Pagination))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*table.ListRegistrations)
+	fc.Result = res
+	return ec.marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_registrationsByFkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "totalCount":
+				return ec.fieldContext_ListRegistrations_totalCount(ctx, field)
+			case "data":
+				return ec.fieldContext_ListRegistrations_data(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ListRegistrations", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Students_registrationsByFkStudent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Students_trainerTrainingMappingByFkStudent(ctx context.Context, field graphql.CollectedField, obj *table.Students) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Students().TrainerTrainingMappingByFkStudent(rctx, obj, fc.Args["filter"].(*table.TrainerTrainingMappingFilter), fc.Args["pagination"].(*internal.Pagination))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*table.ListTrainerTrainingMapping)
+	fc.Result = res
+	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Students_trainerTrainingMappingByFkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Students",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "totalCount":
+				return ec.fieldContext_ListTrainerTrainingMapping_totalCount(ctx, field)
+			case "data":
+				return ec.fieldContext_ListTrainerTrainingMapping_data(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ListTrainerTrainingMapping", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Students_trainerTrainingMappingByFkStudent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -9201,8 +8634,8 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_fkTrainingEvent(
 	return fc, nil
 }
 
-func (ec *executionContext) _TrainerTrainingMapping_fkExternalResource(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TrainerTrainingMapping_fkExternalResource(ctx, field)
+func (ec *executionContext) _TrainerTrainingMapping_fkTrainer(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TrainerTrainingMapping_fkTrainer(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9215,7 +8648,7 @@ func (ec *executionContext) _TrainerTrainingMapping_fkExternalResource(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FkExternalResource, nil
+		return obj.FkTrainer, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9232,7 +8665,7 @@ func (ec *executionContext) _TrainerTrainingMapping_fkExternalResource(ctx conte
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TrainerTrainingMapping_fkExternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TrainerTrainingMapping_fkTrainer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "TrainerTrainingMapping",
 		Field:      field,
@@ -9245,8 +8678,8 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_fkExternalResour
 	return fc, nil
 }
 
-func (ec *executionContext) _TrainerTrainingMapping_fkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TrainerTrainingMapping_fkInternalResource(ctx, field)
+func (ec *executionContext) _TrainerTrainingMapping_fkStudent(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TrainerTrainingMapping_fkStudent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9259,7 +8692,7 @@ func (ec *executionContext) _TrainerTrainingMapping_fkInternalResource(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FkInternalResource, nil
+		return obj.FkStudent, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9276,7 +8709,7 @@ func (ec *executionContext) _TrainerTrainingMapping_fkInternalResource(ctx conte
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TrainerTrainingMapping_fkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TrainerTrainingMapping_fkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "TrainerTrainingMapping",
 		Field:      field,
@@ -9497,8 +8930,8 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_trainingEventByF
 	return fc, nil
 }
 
-func (ec *executionContext) _TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx, field)
+func (ec *executionContext) _TrainerTrainingMapping_trainersByFkTrainer(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TrainerTrainingMapping_trainersByFkTrainer(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9511,7 +8944,7 @@ func (ec *executionContext) _TrainerTrainingMapping_externalResourcesByFkExterna
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.TrainerTrainingMapping().ExternalResourcesByFkExternalResource(rctx, obj, fc.Args["filter"].(*table.ExternalResourcesFilter))
+		return ec.resolvers.TrainerTrainingMapping().TrainersByFkTrainer(rctx, obj, fc.Args["filter"].(*table.TrainersFilter))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9520,12 +8953,12 @@ func (ec *executionContext) _TrainerTrainingMapping_externalResourcesByFkExterna
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.ExternalResources)
+	res := resTmp.(*table.Trainers)
 	fc.Result = res
-	return ec.marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, field.Selections, res)
+	return ec.marshalOTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainers(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TrainerTrainingMapping_trainersByFkTrainer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "TrainerTrainingMapping",
 		Field:      field,
@@ -9534,31 +8967,31 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_externalResource
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_ExternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_ExternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Trainers_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Trainers_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_ExternalResources_name(ctx, field)
+				return ec.fieldContext_Trainers_name(ctx, field)
 			case "email":
-				return ec.fieldContext_ExternalResources_email(ctx, field)
+				return ec.fieldContext_Trainers_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_ExternalResources_mobilePhone(ctx, field)
+				return ec.fieldContext_Trainers_mobilePhone(ctx, field)
 			case "designation":
-				return ec.fieldContext_ExternalResources_designation(ctx, field)
+				return ec.fieldContext_Trainers_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_ExternalResources_active(ctx, field)
+				return ec.fieldContext_Trainers_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_ExternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Trainers_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_ExternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Trainers_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_ExternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Trainers_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_ExternalResources_userByCreatedBy(ctx, field)
-			case "trainerTrainingMappingByFkExternalResource":
-				return ec.fieldContext_ExternalResources_trainerTrainingMappingByFkExternalResource(ctx, field)
+				return ec.fieldContext_Trainers_userByCreatedBy(ctx, field)
+			case "trainerTrainingMappingByFkTrainer":
+				return ec.fieldContext_Trainers_trainerTrainingMappingByFkTrainer(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ExternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Trainers", field.Name)
 		},
 	}
 	defer func() {
@@ -9568,15 +9001,15 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_externalResource
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_TrainerTrainingMapping_externalResourcesByFkExternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_TrainerTrainingMapping_trainersByFkTrainer_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx, field)
+func (ec *executionContext) _TrainerTrainingMapping_studentsByFkStudent(ctx context.Context, field graphql.CollectedField, obj *table.TrainerTrainingMapping) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TrainerTrainingMapping_studentsByFkStudent(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9589,7 +9022,7 @@ func (ec *executionContext) _TrainerTrainingMapping_internalResourcesByFkInterna
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.TrainerTrainingMapping().InternalResourcesByFkInternalResource(rctx, obj, fc.Args["filter"].(*table.InternalResourcesFilter))
+		return ec.resolvers.TrainerTrainingMapping().StudentsByFkStudent(rctx, obj, fc.Args["filter"].(*table.StudentsFilter))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9598,12 +9031,12 @@ func (ec *executionContext) _TrainerTrainingMapping_internalResourcesByFkInterna
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*table.InternalResources)
+	res := resTmp.(*table.Students)
 	fc.Result = res
-	return ec.marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, field.Selections, res)
+	return ec.marshalOStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TrainerTrainingMapping_studentsByFkStudent(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "TrainerTrainingMapping",
 		Field:      field,
@@ -9612,37 +9045,37 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_internalResource
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_InternalResources_id(ctx, field)
-			case "resourceID":
-				return ec.fieldContext_InternalResources_resourceID(ctx, field)
+				return ec.fieldContext_Students_id(ctx, field)
+			case "uuid":
+				return ec.fieldContext_Students_uuid(ctx, field)
 			case "name":
-				return ec.fieldContext_InternalResources_name(ctx, field)
+				return ec.fieldContext_Students_name(ctx, field)
 			case "email":
-				return ec.fieldContext_InternalResources_email(ctx, field)
+				return ec.fieldContext_Students_email(ctx, field)
 			case "mobilePhone":
-				return ec.fieldContext_InternalResources_mobilePhone(ctx, field)
-			case "projectName":
-				return ec.fieldContext_InternalResources_projectName(ctx, field)
+				return ec.fieldContext_Students_mobilePhone(ctx, field)
+			case "className":
+				return ec.fieldContext_Students_className(ctx, field)
 			case "designation":
-				return ec.fieldContext_InternalResources_designation(ctx, field)
+				return ec.fieldContext_Students_designation(ctx, field)
 			case "active":
-				return ec.fieldContext_InternalResources_active(ctx, field)
+				return ec.fieldContext_Students_active(ctx, field)
 			case "createdAt":
-				return ec.fieldContext_InternalResources_createdAt(ctx, field)
+				return ec.fieldContext_Students_createdAt(ctx, field)
 			case "updatedAt":
-				return ec.fieldContext_InternalResources_updatedAt(ctx, field)
+				return ec.fieldContext_Students_updatedAt(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_InternalResources_createdBy(ctx, field)
+				return ec.fieldContext_Students_createdBy(ctx, field)
 			case "userByCreatedBy":
-				return ec.fieldContext_InternalResources_userByCreatedBy(ctx, field)
-			case "attendancesByFkInternalResource":
-				return ec.fieldContext_InternalResources_attendancesByFkInternalResource(ctx, field)
-			case "registrationsByFkInternalResource":
-				return ec.fieldContext_InternalResources_registrationsByFkInternalResource(ctx, field)
-			case "trainerTrainingMappingByFkInternalResource":
-				return ec.fieldContext_InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field)
+				return ec.fieldContext_Students_userByCreatedBy(ctx, field)
+			case "attendancesByFkStudent":
+				return ec.fieldContext_Students_attendancesByFkStudent(ctx, field)
+			case "registrationsByFkStudent":
+				return ec.fieldContext_Students_registrationsByFkStudent(ctx, field)
+			case "trainerTrainingMappingByFkStudent":
+				return ec.fieldContext_Students_trainerTrainingMappingByFkStudent(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type InternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Students", field.Name)
 		},
 	}
 	defer func() {
@@ -9652,7 +9085,576 @@ func (ec *executionContext) fieldContext_TrainerTrainingMapping_internalResource
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_TrainerTrainingMapping_internalResourcesByFkInternalResource_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_TrainerTrainingMapping_studentsByFkStudent_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_id(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_uuid(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_uuid(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UUID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullString)
+	fc.Result = res
+	return ec.marshalONullString2databaseᚋsqlᚐNullString(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_uuid(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullString does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_name(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_name(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_email(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_email(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Email, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_email(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_mobilePhone(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_mobilePhone(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MobilePhone, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_mobilePhone(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_designation(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_designation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Designation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_designation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_active(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_active(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Active, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_active(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_createdAt(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_createdAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullTime)
+	fc.Result = res
+	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_createdAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullTime does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_updatedAt(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_updatedAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullTime)
+	fc.Result = res
+	return ec.marshalONullTime2databaseᚋsqlᚐNullTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_updatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullTime does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_createdBy(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(sql.NullInt64)
+	fc.Result = res
+	return ec.marshalONullInt642databaseᚋsqlᚐNullInt64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NullInt64 does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_userByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_userByCreatedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Trainers().UserByCreatedBy(rctx, obj, fc.Args["filter"].(*table.UserFilter))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*table.User)
+	fc.Result = res
+	return ec.marshalOUser2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_userByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_User_id(ctx, field)
+			case "username":
+				return ec.fieldContext_User_username(ctx, field)
+			case "email":
+				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
+			case "role":
+				return ec.fieldContext_User_role(ctx, field)
+			case "active":
+				return ec.fieldContext_User_active(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_User_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_User_updatedAt(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
+			case "trainingByRequestedBy":
+				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
+			case "trainingByCreatedBy":
+				return ec.fieldContext_User_trainingByCreatedBy(ctx, field)
+			case "trainingEventByCreatedBy":
+				return ec.fieldContext_User_trainingEventByCreatedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Trainers_userByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Trainers_trainerTrainingMappingByFkTrainer(ctx context.Context, field graphql.CollectedField, obj *table.Trainers) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Trainers_trainerTrainingMappingByFkTrainer(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Trainers().TrainerTrainingMappingByFkTrainer(rctx, obj, fc.Args["filter"].(*table.TrainerTrainingMappingFilter), fc.Args["pagination"].(*internal.Pagination))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*table.ListTrainerTrainingMapping)
+	fc.Result = res
+	return ec.marshalNListTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Trainers_trainerTrainingMappingByFkTrainer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Trainers",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "totalCount":
+				return ec.fieldContext_ListTrainerTrainingMapping_totalCount(ctx, field)
+			case "data":
+				return ec.fieldContext_ListTrainerTrainingMapping_data(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ListTrainerTrainingMapping", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Trainers_trainerTrainingMappingByFkTrainer_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -10171,10 +10173,10 @@ func (ec *executionContext) fieldContext_Training_userByRequestedBy(ctx context.
 				return ec.fieldContext_User_createdAt(ctx, field)
 			case "updatedAt":
 				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 			case "trainingByRequestedBy":
 				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
 			case "trainingByCreatedBy":
@@ -10251,10 +10253,10 @@ func (ec *executionContext) fieldContext_Training_userByCreatedBy(ctx context.Co
 				return ec.fieldContext_User_createdAt(ctx, field)
 			case "updatedAt":
 				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 			case "trainingByRequestedBy":
 				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
 			case "trainingByCreatedBy":
@@ -10965,10 +10967,10 @@ func (ec *executionContext) fieldContext_TrainingEvent_userByCreatedBy(ctx conte
 				return ec.fieldContext_User_createdAt(ctx, field)
 			case "updatedAt":
 				return ec.fieldContext_User_updatedAt(ctx, field)
-			case "externalResourcesByCreatedBy":
-				return ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
-			case "internalResourcesByCreatedBy":
-				return ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+			case "studentsByCreatedBy":
+				return ec.fieldContext_User_studentsByCreatedBy(ctx, field)
+			case "trainersByCreatedBy":
+				return ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 			case "trainingByRequestedBy":
 				return ec.fieldContext_User_trainingByRequestedBy(ctx, field)
 			case "trainingByCreatedBy":
@@ -11455,8 +11457,8 @@ func (ec *executionContext) fieldContext_User_updatedAt(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _User_externalResourcesByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.User) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_User_externalResourcesByCreatedBy(ctx, field)
+func (ec *executionContext) _User_studentsByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.User) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_User_studentsByCreatedBy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -11469,7 +11471,7 @@ func (ec *executionContext) _User_externalResourcesByCreatedBy(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.User().ExternalResourcesByCreatedBy(rctx, obj, fc.Args["filter"].(*table.ExternalResourcesFilter), fc.Args["pagination"].(*internal.Pagination))
+		return ec.resolvers.User().StudentsByCreatedBy(rctx, obj, fc.Args["filter"].(*table.StudentsFilter), fc.Args["pagination"].(*internal.Pagination))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11481,12 +11483,12 @@ func (ec *executionContext) _User_externalResourcesByCreatedBy(ctx context.Conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*table.ListExternalResources)
+	res := resTmp.(*table.ListStudents)
 	fc.Result = res
-	return ec.marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx, field.Selections, res)
+	return ec.marshalNListStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListStudents(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_User_externalResourcesByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_User_studentsByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "User",
 		Field:      field,
@@ -11495,11 +11497,11 @@ func (ec *executionContext) fieldContext_User_externalResourcesByCreatedBy(ctx c
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "totalCount":
-				return ec.fieldContext_ListExternalResources_totalCount(ctx, field)
+				return ec.fieldContext_ListStudents_totalCount(ctx, field)
 			case "data":
-				return ec.fieldContext_ListExternalResources_data(ctx, field)
+				return ec.fieldContext_ListStudents_data(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ListExternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ListStudents", field.Name)
 		},
 	}
 	defer func() {
@@ -11509,15 +11511,15 @@ func (ec *executionContext) fieldContext_User_externalResourcesByCreatedBy(ctx c
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_User_externalResourcesByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_User_studentsByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _User_internalResourcesByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.User) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_User_internalResourcesByCreatedBy(ctx, field)
+func (ec *executionContext) _User_trainersByCreatedBy(ctx context.Context, field graphql.CollectedField, obj *table.User) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_User_trainersByCreatedBy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -11530,7 +11532,7 @@ func (ec *executionContext) _User_internalResourcesByCreatedBy(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.User().InternalResourcesByCreatedBy(rctx, obj, fc.Args["filter"].(*table.InternalResourcesFilter), fc.Args["pagination"].(*internal.Pagination))
+		return ec.resolvers.User().TrainersByCreatedBy(rctx, obj, fc.Args["filter"].(*table.TrainersFilter), fc.Args["pagination"].(*internal.Pagination))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11542,12 +11544,12 @@ func (ec *executionContext) _User_internalResourcesByCreatedBy(ctx context.Conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*table.ListInternalResources)
+	res := resTmp.(*table.ListTrainers)
 	fc.Result = res
-	return ec.marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx, field.Selections, res)
+	return ec.marshalNListTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainers(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_User_internalResourcesByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_User_trainersByCreatedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "User",
 		Field:      field,
@@ -11556,11 +11558,11 @@ func (ec *executionContext) fieldContext_User_internalResourcesByCreatedBy(ctx c
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "totalCount":
-				return ec.fieldContext_ListInternalResources_totalCount(ctx, field)
+				return ec.fieldContext_ListTrainers_totalCount(ctx, field)
 			case "data":
-				return ec.fieldContext_ListInternalResources_data(ctx, field)
+				return ec.fieldContext_ListTrainers_data(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ListInternalResources", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type ListTrainers", field.Name)
 		},
 	}
 	defer func() {
@@ -11570,7 +11572,7 @@ func (ec *executionContext) fieldContext_User_internalResourcesByCreatedBy(ctx c
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_User_internalResourcesByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_User_trainersByCreatedBy_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -13540,7 +13542,7 @@ func (ec *executionContext) unmarshalInputAttendancesCreate(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fkTrainingEvent", "fkInternalResource"}
+	fieldsInOrder := [...]string{"fkTrainingEvent", "fkStudent"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -13556,15 +13558,15 @@ func (ec *executionContext) unmarshalInputAttendancesCreate(ctx context.Context,
 				return it, err
 			}
 			it.FkTrainingEvent = data
-		case "fkInternalResource":
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		}
 	}
 
@@ -13578,7 +13580,7 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "fkTrainingEvent", "fkInternalResource", "active", "createdAt", "updatedAt"}
+	fieldsInOrder := [...]string{"id", "fkTrainingEvent", "fkStudent", "active", "createdAt", "updatedAt"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -13603,15 +13605,15 @@ func (ec *executionContext) unmarshalInputAttendancesFilter(ctx context.Context,
 				return it, err
 			}
 			it.FkTrainingEvent = data
-		case "fkInternalResource":
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "active":
 			var err error
 
@@ -13652,7 +13654,7 @@ func (ec *executionContext) unmarshalInputAttendancesUpdate(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fkTrainingEvent", "fkInternalResource", "active"}
+	fieldsInOrder := [...]string{"fkTrainingEvent", "fkStudent", "active"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -13668,15 +13670,15 @@ func (ec *executionContext) unmarshalInputAttendancesUpdate(ctx context.Context,
 				return it, err
 			}
 			it.FkTrainingEvent = data
-		case "fkInternalResource":
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "active":
 			var err error
 
@@ -13686,567 +13688,6 @@ func (ec *executionContext) unmarshalInputAttendancesUpdate(ctx context.Context,
 				return it, err
 			}
 			it.Active = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputExternalResourcesCreate(ctx context.Context, obj interface{}) (table.ExternalResourcesCreate, error) {
-	var it table.ExternalResourcesCreate
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"resourceID", "name", "email", "mobilePhone", "designation", "createdBy"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "resourceID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalONullString2databaseᚋsqlᚐNullString(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ResourceID = data
-		case "name":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Name = data
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Email = data
-		case "mobilePhone":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MobilePhone = data
-		case "designation":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Designation = data
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalONullInt642databaseᚋsqlᚐNullInt64(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedBy = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputExternalResourcesFilter(ctx context.Context, obj interface{}) (table.ExternalResourcesFilter, error) {
-	var it table.ExternalResourcesFilter
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"id", "resourceID", "name", "email", "mobilePhone", "designation", "active", "createdAt", "updatedAt", "createdBy"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ID = data
-		case "resourceID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ResourceID = data
-		case "name":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Name = data
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Email = data
-		case "mobilePhone":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MobilePhone = data
-		case "designation":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Designation = data
-		case "active":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Active = data
-		case "createdAt":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedAt = data
-		case "updatedAt":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.UpdatedAt = data
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedBy = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputExternalResourcesUpdate(ctx context.Context, obj interface{}) (table.ExternalResourcesUpdate, error) {
-	var it table.ExternalResourcesUpdate
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"resourceID", "name", "email", "mobilePhone", "designation", "active", "createdBy"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "resourceID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalONullString2ᚖdatabaseᚋsqlᚐNullString(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ResourceID = data
-		case "name":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Name = data
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Email = data
-		case "mobilePhone":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MobilePhone = data
-		case "designation":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Designation = data
-		case "active":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Active = data
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalONullInt642ᚖdatabaseᚋsqlᚐNullInt64(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedBy = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputInternalResourcesCreate(ctx context.Context, obj interface{}) (table.InternalResourcesCreate, error) {
-	var it table.InternalResourcesCreate
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"resourceID", "name", "email", "mobilePhone", "projectName", "designation", "createdBy"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "resourceID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ResourceID = data
-		case "name":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Name = data
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Email = data
-		case "mobilePhone":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MobilePhone = data
-		case "projectName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("projectName"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ProjectName = data
-		case "designation":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Designation = data
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalONullInt642databaseᚋsqlᚐNullInt64(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedBy = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputInternalResourcesFilter(ctx context.Context, obj interface{}) (table.InternalResourcesFilter, error) {
-	var it table.InternalResourcesFilter
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"id", "resourceID", "name", "email", "mobilePhone", "projectName", "designation", "active", "createdAt", "updatedAt", "createdBy"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ID = data
-		case "resourceID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ResourceID = data
-		case "name":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Name = data
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Email = data
-		case "mobilePhone":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MobilePhone = data
-		case "projectName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("projectName"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ProjectName = data
-		case "designation":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Designation = data
-		case "active":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Active = data
-		case "createdAt":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedAt = data
-		case "updatedAt":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.UpdatedAt = data
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedBy = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputInternalResourcesUpdate(ctx context.Context, obj interface{}) (table.InternalResourcesUpdate, error) {
-	var it table.InternalResourcesUpdate
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"resourceID", "name", "email", "mobilePhone", "projectName", "designation", "active", "createdBy"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "resourceID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resourceID"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ResourceID = data
-		case "name":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Name = data
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Email = data
-		case "mobilePhone":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MobilePhone = data
-		case "projectName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("projectName"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ProjectName = data
-		case "designation":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Designation = data
-		case "active":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
-			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Active = data
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			data, err := ec.unmarshalONullInt642ᚖdatabaseᚋsqlᚐNullInt64(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CreatedBy = data
 		}
 	}
 
@@ -14307,22 +13748,22 @@ func (ec *executionContext) unmarshalInputRegistrationsCreate(ctx context.Contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fkInternalResource", "fkTraining"}
+	fieldsInOrder := [...]string{"fkStudent", "fkTraining"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "fkInternalResource":
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "fkTraining":
 			var err error
 
@@ -14345,7 +13786,7 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "fkInternalResource", "fkTraining", "active", "createdAt", "updatedAt"}
+	fieldsInOrder := [...]string{"id", "fkStudent", "fkTraining", "active", "createdAt", "updatedAt"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -14361,15 +13802,15 @@ func (ec *executionContext) unmarshalInputRegistrationsFilter(ctx context.Contex
 				return it, err
 			}
 			it.ID = data
-		case "fkInternalResource":
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "fkTraining":
 			var err error
 
@@ -14419,22 +13860,22 @@ func (ec *executionContext) unmarshalInputRegistrationsUpdate(ctx context.Contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fkInternalResource", "fkTraining", "active"}
+	fieldsInOrder := [...]string{"fkStudent", "fkTraining", "active"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "fkInternalResource":
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "fkTraining":
 			var err error
 
@@ -14459,6 +13900,300 @@ func (ec *executionContext) unmarshalInputRegistrationsUpdate(ctx context.Contex
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputStudentsCreate(ctx context.Context, obj interface{}) (table.StudentsCreate, error) {
+	var it table.StudentsCreate
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"uuid", "name", "email", "mobilePhone", "className", "designation", "createdBy"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UUID = data
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Email = data
+		case "mobilePhone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MobilePhone = data
+		case "className":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("className"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassName = data
+		case "designation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Designation = data
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			data, err := ec.unmarshalONullInt642databaseᚋsqlᚐNullInt64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedBy = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputStudentsFilter(ctx context.Context, obj interface{}) (table.StudentsFilter, error) {
+	var it table.StudentsFilter
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id", "uuid", "name", "email", "mobilePhone", "className", "designation", "active", "createdAt", "updatedAt", "createdBy"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UUID = data
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Email = data
+		case "mobilePhone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MobilePhone = data
+		case "className":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("className"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassName = data
+		case "designation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Designation = data
+		case "active":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Active = data
+		case "createdAt":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedAt = data
+		case "updatedAt":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UpdatedAt = data
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedBy = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputStudentsUpdate(ctx context.Context, obj interface{}) (table.StudentsUpdate, error) {
+	var it table.StudentsUpdate
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"uuid", "name", "email", "mobilePhone", "className", "designation", "active", "createdBy"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UUID = data
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Email = data
+		case "mobilePhone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MobilePhone = data
+		case "className":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("className"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ClassName = data
+		case "designation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Designation = data
+		case "active":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Active = data
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			data, err := ec.unmarshalONullInt642ᚖdatabaseᚋsqlᚐNullInt64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedBy = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputTrainerTrainingMappingCreate(ctx context.Context, obj interface{}) (table.TrainerTrainingMappingCreate, error) {
 	var it table.TrainerTrainingMappingCreate
 	asMap := map[string]interface{}{}
@@ -14466,7 +14201,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingCreate(ctx conte
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fkTrainingEvent", "fkExternalResource", "fkInternalResource"}
+	fieldsInOrder := [...]string{"fkTrainingEvent", "fkTrainer", "fkStudent"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -14482,24 +14217,24 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingCreate(ctx conte
 				return it, err
 			}
 			it.FkTrainingEvent = data
-		case "fkExternalResource":
+		case "fkTrainer":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkExternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTrainer"))
 			data, err := ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkExternalResource = data
-		case "fkInternalResource":
+			it.FkTrainer = data
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		}
 	}
 
@@ -14513,7 +14248,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "fkTrainingEvent", "fkExternalResource", "fkInternalResource", "active", "createdAt", "updatedAt"}
+	fieldsInOrder := [...]string{"id", "fkTrainingEvent", "fkTrainer", "fkStudent", "active", "createdAt", "updatedAt"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -14538,24 +14273,24 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingFilter(ctx conte
 				return it, err
 			}
 			it.FkTrainingEvent = data
-		case "fkExternalResource":
+		case "fkTrainer":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkExternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTrainer"))
 			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkExternalResource = data
-		case "fkInternalResource":
+			it.FkTrainer = data
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "active":
 			var err error
 
@@ -14596,7 +14331,7 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingUpdate(ctx conte
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fkTrainingEvent", "fkExternalResource", "fkInternalResource", "active"}
+	fieldsInOrder := [...]string{"fkTrainingEvent", "fkTrainer", "fkStudent", "active"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -14612,24 +14347,24 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingUpdate(ctx conte
 				return it, err
 			}
 			it.FkTrainingEvent = data
-		case "fkExternalResource":
+		case "fkTrainer":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkExternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkTrainer"))
 			data, err := ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkExternalResource = data
-		case "fkInternalResource":
+			it.FkTrainer = data
+		case "fkStudent":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkInternalResource"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fkStudent"))
 			data, err := ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.FkInternalResource = data
+			it.FkStudent = data
 		case "active":
 			var err error
 
@@ -14639,6 +14374,273 @@ func (ec *executionContext) unmarshalInputTrainerTrainingMappingUpdate(ctx conte
 				return it, err
 			}
 			it.Active = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputTrainersCreate(ctx context.Context, obj interface{}) (table.TrainersCreate, error) {
+	var it table.TrainersCreate
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"uuid", "name", "email", "mobilePhone", "designation", "createdBy"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			data, err := ec.unmarshalONullString2databaseᚋsqlᚐNullString(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UUID = data
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Email = data
+		case "mobilePhone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MobilePhone = data
+		case "designation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Designation = data
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			data, err := ec.unmarshalONullInt642databaseᚋsqlᚐNullInt64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedBy = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputTrainersFilter(ctx context.Context, obj interface{}) (table.TrainersFilter, error) {
+	var it table.TrainersFilter
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id", "uuid", "name", "email", "mobilePhone", "designation", "active", "createdAt", "updatedAt", "createdBy"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UUID = data
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Email = data
+		case "mobilePhone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MobilePhone = data
+		case "designation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Designation = data
+		case "active":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Active = data
+		case "createdAt":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdAt"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedAt = data
+		case "updatedAt":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("updatedAt"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UpdatedAt = data
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedBy = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputTrainersUpdate(ctx context.Context, obj interface{}) (table.TrainersUpdate, error) {
+	var it table.TrainersUpdate
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"uuid", "name", "email", "mobilePhone", "designation", "active", "createdBy"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "uuid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("uuid"))
+			data, err := ec.unmarshalONullString2ᚖdatabaseᚋsqlᚐNullString(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UUID = data
+		case "name":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Email = data
+		case "mobilePhone":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mobilePhone"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MobilePhone = data
+		case "designation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("designation"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Designation = data
+		case "active":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("active"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Active = data
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			data, err := ec.unmarshalONullInt642ᚖdatabaseᚋsqlᚐNullInt64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CreatedBy = data
 		}
 	}
 
@@ -15448,8 +15450,8 @@ func (ec *executionContext) _Attendances(ctx context.Context, sel ast.SelectionS
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "fkInternalResource":
-			out.Values[i] = ec._Attendances_fkInternalResource(ctx, field, obj)
+		case "fkStudent":
+			out.Values[i] = ec._Attendances_fkStudent(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -15495,7 +15497,7 @@ func (ec *executionContext) _Attendances(ctx context.Context, sel ast.SelectionS
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "internalResourcesByFkInternalResource":
+		case "studentsByFkStudent":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -15504,369 +15506,7 @@ func (ec *executionContext) _Attendances(ctx context.Context, sel ast.SelectionS
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Attendances_internalResourcesByFkInternalResource(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var externalResourcesImplementors = []string{"ExternalResources"}
-
-func (ec *executionContext) _ExternalResources(ctx context.Context, sel ast.SelectionSet, obj *table.ExternalResources) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, externalResourcesImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ExternalResources")
-		case "id":
-			out.Values[i] = ec._ExternalResources_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "resourceID":
-			out.Values[i] = ec._ExternalResources_resourceID(ctx, field, obj)
-		case "name":
-			out.Values[i] = ec._ExternalResources_name(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "email":
-			out.Values[i] = ec._ExternalResources_email(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "mobilePhone":
-			out.Values[i] = ec._ExternalResources_mobilePhone(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "designation":
-			out.Values[i] = ec._ExternalResources_designation(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "active":
-			out.Values[i] = ec._ExternalResources_active(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "createdAt":
-			out.Values[i] = ec._ExternalResources_createdAt(ctx, field, obj)
-		case "updatedAt":
-			out.Values[i] = ec._ExternalResources_updatedAt(ctx, field, obj)
-		case "createdBy":
-			out.Values[i] = ec._ExternalResources_createdBy(ctx, field, obj)
-		case "userByCreatedBy":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ExternalResources_userByCreatedBy(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "trainerTrainingMappingByFkExternalResource":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ExternalResources_trainerTrainingMappingByFkExternalResource(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var internalResourcesImplementors = []string{"InternalResources"}
-
-func (ec *executionContext) _InternalResources(ctx context.Context, sel ast.SelectionSet, obj *table.InternalResources) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, internalResourcesImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("InternalResources")
-		case "id":
-			out.Values[i] = ec._InternalResources_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "resourceID":
-			out.Values[i] = ec._InternalResources_resourceID(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "name":
-			out.Values[i] = ec._InternalResources_name(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "email":
-			out.Values[i] = ec._InternalResources_email(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "mobilePhone":
-			out.Values[i] = ec._InternalResources_mobilePhone(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "projectName":
-			out.Values[i] = ec._InternalResources_projectName(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "designation":
-			out.Values[i] = ec._InternalResources_designation(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "active":
-			out.Values[i] = ec._InternalResources_active(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "createdAt":
-			out.Values[i] = ec._InternalResources_createdAt(ctx, field, obj)
-		case "updatedAt":
-			out.Values[i] = ec._InternalResources_updatedAt(ctx, field, obj)
-		case "createdBy":
-			out.Values[i] = ec._InternalResources_createdBy(ctx, field, obj)
-		case "userByCreatedBy":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._InternalResources_userByCreatedBy(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "attendancesByFkInternalResource":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._InternalResources_attendancesByFkInternalResource(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "registrationsByFkInternalResource":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._InternalResources_registrationsByFkInternalResource(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "trainerTrainingMappingByFkInternalResource":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._InternalResources_trainerTrainingMappingByFkInternalResource(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
+				res = ec._Attendances_studentsByFkStudent(ctx, field, obj)
 				return res
 			}
 
@@ -15957,94 +15597,6 @@ func (ec *executionContext) _ListAttendances(ctx context.Context, sel ast.Select
 	return out
 }
 
-var listExternalResourcesImplementors = []string{"ListExternalResources"}
-
-func (ec *executionContext) _ListExternalResources(ctx context.Context, sel ast.SelectionSet, obj *table.ListExternalResources) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, listExternalResourcesImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ListExternalResources")
-		case "totalCount":
-			out.Values[i] = ec._ListExternalResources_totalCount(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "data":
-			out.Values[i] = ec._ListExternalResources_data(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
-var listInternalResourcesImplementors = []string{"ListInternalResources"}
-
-func (ec *executionContext) _ListInternalResources(ctx context.Context, sel ast.SelectionSet, obj *table.ListInternalResources) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, listInternalResourcesImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	deferred := make(map[string]*graphql.FieldSet)
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ListInternalResources")
-		case "totalCount":
-			out.Values[i] = ec._ListInternalResources_totalCount(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "data":
-			out.Values[i] = ec._ListInternalResources_data(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch(ctx)
-	if out.Invalids > 0 {
-		return graphql.Null
-	}
-
-	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
-
-	for label, dfs := range deferred {
-		ec.processDeferredGroup(graphql.DeferredGroup{
-			Label:    label,
-			Path:     graphql.GetPath(ctx),
-			FieldSet: dfs,
-			Context:  ctx,
-		})
-	}
-
-	return out
-}
-
 var listRegistrationsImplementors = []string{"ListRegistrations"}
 
 func (ec *executionContext) _ListRegistrations(ctx context.Context, sel ast.SelectionSet, obj *table.ListRegistrations) graphql.Marshaler {
@@ -16089,6 +15641,50 @@ func (ec *executionContext) _ListRegistrations(ctx context.Context, sel ast.Sele
 	return out
 }
 
+var listStudentsImplementors = []string{"ListStudents"}
+
+func (ec *executionContext) _ListStudents(ctx context.Context, sel ast.SelectionSet, obj *table.ListStudents) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, listStudentsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ListStudents")
+		case "totalCount":
+			out.Values[i] = ec._ListStudents_totalCount(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "data":
+			out.Values[i] = ec._ListStudents_data(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var listTrainerTrainingMappingImplementors = []string{"ListTrainerTrainingMapping"}
 
 func (ec *executionContext) _ListTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, obj *table.ListTrainerTrainingMapping) graphql.Marshaler {
@@ -16107,6 +15703,50 @@ func (ec *executionContext) _ListTrainerTrainingMapping(ctx context.Context, sel
 			}
 		case "data":
 			out.Values[i] = ec._ListTrainerTrainingMapping_data(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var listTrainersImplementors = []string{"ListTrainers"}
+
+func (ec *executionContext) _ListTrainers(ctx context.Context, sel ast.SelectionSet, obj *table.ListTrainers) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, listTrainersImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ListTrainers")
+		case "totalCount":
+			out.Values[i] = ec._ListTrainers_totalCount(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "data":
+			out.Values[i] = ec._ListTrainers_data(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -16299,32 +15939,32 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "insertExternalResources":
+		case "insertTrainers":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_insertExternalResources(ctx, field)
+				return ec._Mutation_insertTrainers(ctx, field)
 			})
-		case "updateExternalResourcesByFields":
+		case "updateTrainersByFields":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateExternalResourcesByFields(ctx, field)
+				return ec._Mutation_updateTrainersByFields(ctx, field)
 			})
-		case "deleteExternalResourcesByID":
+		case "deleteTrainersByID":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteExternalResourcesByID(ctx, field)
+				return ec._Mutation_deleteTrainersByID(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "insertInternalResources":
+		case "insertStudents":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_insertInternalResources(ctx, field)
+				return ec._Mutation_insertStudents(ctx, field)
 			})
-		case "updateInternalResourcesByFields":
+		case "updateStudentsByFields":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateInternalResourcesByFields(ctx, field)
+				return ec._Mutation_updateStudentsByFields(ctx, field)
 			})
-		case "deleteInternalResourcesByID":
+		case "deleteStudentsByID":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteInternalResourcesByID(ctx, field)
+				return ec._Mutation_deleteStudentsByID(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -16475,7 +16115,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "findAllExternalResources":
+		case "findAllTrainers":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -16484,7 +16124,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_findAllExternalResources(ctx, field)
+				res = ec._Query_findAllTrainers(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -16497,7 +16137,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "findAllInternalResources":
+		case "findAllStudents":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -16506,7 +16146,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_findAllInternalResources(ctx, field)
+				res = ec._Query_findAllStudents(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -16654,8 +16294,8 @@ func (ec *executionContext) _Registrations(ctx context.Context, sel ast.Selectio
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "fkInternalResource":
-			out.Values[i] = ec._Registrations_fkInternalResource(ctx, field, obj)
+		case "fkStudent":
+			out.Values[i] = ec._Registrations_fkStudent(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -16706,7 +16346,7 @@ func (ec *executionContext) _Registrations(ctx context.Context, sel ast.Selectio
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "internalResourcesByFkInternalResource":
+		case "studentsByFkStudent":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -16715,7 +16355,228 @@ func (ec *executionContext) _Registrations(ctx context.Context, sel ast.Selectio
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Registrations_internalResourcesByFkInternalResource(ctx, field, obj)
+				res = ec._Registrations_studentsByFkStudent(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var studentsImplementors = []string{"Students"}
+
+func (ec *executionContext) _Students(ctx context.Context, sel ast.SelectionSet, obj *table.Students) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, studentsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Students")
+		case "id":
+			out.Values[i] = ec._Students_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "uuid":
+			out.Values[i] = ec._Students_uuid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "name":
+			out.Values[i] = ec._Students_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "email":
+			out.Values[i] = ec._Students_email(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "mobilePhone":
+			out.Values[i] = ec._Students_mobilePhone(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "className":
+			out.Values[i] = ec._Students_className(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "designation":
+			out.Values[i] = ec._Students_designation(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "active":
+			out.Values[i] = ec._Students_active(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdAt":
+			out.Values[i] = ec._Students_createdAt(ctx, field, obj)
+		case "updatedAt":
+			out.Values[i] = ec._Students_updatedAt(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._Students_createdBy(ctx, field, obj)
+		case "userByCreatedBy":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Students_userByCreatedBy(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "attendancesByFkStudent":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Students_attendancesByFkStudent(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "registrationsByFkStudent":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Students_registrationsByFkStudent(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "trainerTrainingMappingByFkStudent":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Students_trainerTrainingMappingByFkStudent(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -16783,13 +16644,13 @@ func (ec *executionContext) _TrainerTrainingMapping(ctx context.Context, sel ast
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "fkExternalResource":
-			out.Values[i] = ec._TrainerTrainingMapping_fkExternalResource(ctx, field, obj)
+		case "fkTrainer":
+			out.Values[i] = ec._TrainerTrainingMapping_fkTrainer(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "fkInternalResource":
-			out.Values[i] = ec._TrainerTrainingMapping_fkInternalResource(ctx, field, obj)
+		case "fkStudent":
+			out.Values[i] = ec._TrainerTrainingMapping_fkStudent(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -16835,7 +16696,7 @@ func (ec *executionContext) _TrainerTrainingMapping(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "externalResourcesByFkExternalResource":
+		case "trainersByFkTrainer":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -16844,7 +16705,7 @@ func (ec *executionContext) _TrainerTrainingMapping(ctx context.Context, sel ast
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._TrainerTrainingMapping_externalResourcesByFkExternalResource(ctx, field, obj)
+				res = ec._TrainerTrainingMapping_trainersByFkTrainer(ctx, field, obj)
 				return res
 			}
 
@@ -16868,7 +16729,7 @@ func (ec *executionContext) _TrainerTrainingMapping(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "internalResourcesByFkInternalResource":
+		case "studentsByFkStudent":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -16877,7 +16738,148 @@ func (ec *executionContext) _TrainerTrainingMapping(ctx context.Context, sel ast
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._TrainerTrainingMapping_internalResourcesByFkInternalResource(ctx, field, obj)
+				res = ec._TrainerTrainingMapping_studentsByFkStudent(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var trainersImplementors = []string{"Trainers"}
+
+func (ec *executionContext) _Trainers(ctx context.Context, sel ast.SelectionSet, obj *table.Trainers) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, trainersImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Trainers")
+		case "id":
+			out.Values[i] = ec._Trainers_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "uuid":
+			out.Values[i] = ec._Trainers_uuid(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._Trainers_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "email":
+			out.Values[i] = ec._Trainers_email(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "mobilePhone":
+			out.Values[i] = ec._Trainers_mobilePhone(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "designation":
+			out.Values[i] = ec._Trainers_designation(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "active":
+			out.Values[i] = ec._Trainers_active(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdAt":
+			out.Values[i] = ec._Trainers_createdAt(ctx, field, obj)
+		case "updatedAt":
+			out.Values[i] = ec._Trainers_updatedAt(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._Trainers_createdBy(ctx, field, obj)
+		case "userByCreatedBy":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Trainers_userByCreatedBy(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "trainerTrainingMappingByFkTrainer":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Trainers_trainerTrainingMappingByFkTrainer(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -17376,7 +17378,7 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			out.Values[i] = ec._User_createdAt(ctx, field, obj)
 		case "updatedAt":
 			out.Values[i] = ec._User_updatedAt(ctx, field, obj)
-		case "externalResourcesByCreatedBy":
+		case "studentsByCreatedBy":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -17385,7 +17387,7 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._User_externalResourcesByCreatedBy(ctx, field, obj)
+				res = ec._User_studentsByCreatedBy(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -17412,7 +17414,7 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "internalResourcesByCreatedBy":
+		case "trainersByCreatedBy":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -17421,7 +17423,7 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._User_internalResourcesByCreatedBy(ctx, field, obj)
+				res = ec._User_trainersByCreatedBy(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -17983,64 +17985,6 @@ func (ec *executionContext) marshalNDatetime2timeᚐTime(ctx context.Context, se
 	return res
 }
 
-func (ec *executionContext) marshalNExternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx context.Context, sel ast.SelectionSet, v table.ExternalResources) graphql.Marshaler {
-	return ec._ExternalResources(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNExternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.ExternalResources) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNExternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalNExternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesCreate(ctx context.Context, v interface{}) (table.ExternalResourcesCreate, error) {
-	res, err := ec.unmarshalInputExternalResourcesCreate(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalNExternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesUpdate(ctx context.Context, v interface{}) (table.ExternalResourcesUpdate, error) {
-	res, err := ec.unmarshalInputExternalResourcesUpdate(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
 	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -18054,64 +17998,6 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNInternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx context.Context, sel ast.SelectionSet, v table.InternalResources) graphql.Marshaler {
-	return ec._InternalResources(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNInternalResources2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesᚄ(ctx context.Context, sel ast.SelectionSet, v []table.InternalResources) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNInternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalNInternalResourcesCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesCreate(ctx context.Context, v interface{}) (table.InternalResourcesCreate, error) {
-	res, err := ec.unmarshalInputInternalResourcesCreate(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalNInternalResourcesUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesUpdate(ctx context.Context, v interface{}) (table.InternalResourcesUpdate, error) {
-	res, err := ec.unmarshalInputInternalResourcesUpdate(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) marshalNListAttendances2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListAttendances(ctx context.Context, sel ast.SelectionSet, v table.ListAttendances) graphql.Marshaler {
@@ -18128,34 +18014,6 @@ func (ec *executionContext) marshalNListAttendances2ᚖgithubᚗcomᚋketanᚑ10
 	return ec._ListAttendances(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNListExternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx context.Context, sel ast.SelectionSet, v table.ListExternalResources) graphql.Marshaler {
-	return ec._ListExternalResources(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNListExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListExternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ListExternalResources) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._ListExternalResources(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNListInternalResources2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx context.Context, sel ast.SelectionSet, v table.ListInternalResources) graphql.Marshaler {
-	return ec._ListInternalResources(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNListInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListInternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ListInternalResources) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._ListInternalResources(ctx, sel, v)
-}
-
 func (ec *executionContext) marshalNListRegistrations2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListRegistrations(ctx context.Context, sel ast.SelectionSet, v table.ListRegistrations) graphql.Marshaler {
 	return ec._ListRegistrations(ctx, sel, &v)
 }
@@ -18170,6 +18028,20 @@ func (ec *executionContext) marshalNListRegistrations2ᚖgithubᚗcomᚋketanᚑ
 	return ec._ListRegistrations(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNListStudents2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListStudents(ctx context.Context, sel ast.SelectionSet, v table.ListStudents) graphql.Marshaler {
+	return ec._ListStudents(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNListStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListStudents(ctx context.Context, sel ast.SelectionSet, v *table.ListStudents) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ListStudents(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalNListTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v table.ListTrainerTrainingMapping) graphql.Marshaler {
 	return ec._ListTrainerTrainingMapping(ctx, sel, &v)
 }
@@ -18182,6 +18054,20 @@ func (ec *executionContext) marshalNListTrainerTrainingMapping2ᚖgithubᚗcom�
 		return graphql.Null
 	}
 	return ec._ListTrainerTrainingMapping(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNListTrainers2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainers(ctx context.Context, sel ast.SelectionSet, v table.ListTrainers) graphql.Marshaler {
+	return ec._ListTrainers(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNListTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTrainers(ctx context.Context, sel ast.SelectionSet, v *table.ListTrainers) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ListTrainers(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNListTraining2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐListTraining(ctx context.Context, sel ast.SelectionSet, v table.ListTraining) graphql.Marshaler {
@@ -18299,6 +18185,64 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
+func (ec *executionContext) marshalNStudents2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx context.Context, sel ast.SelectionSet, v table.Students) graphql.Marshaler {
+	return ec._Students(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNStudents2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Students) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNStudents2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNStudentsCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsCreate(ctx context.Context, v interface{}) (table.StudentsCreate, error) {
+	res, err := ec.unmarshalInputStudentsCreate(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNStudentsUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsUpdate(ctx context.Context, v interface{}) (table.StudentsUpdate, error) {
+	res, err := ec.unmarshalInputStudentsUpdate(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalNTrainerTrainingMapping2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v table.TrainerTrainingMapping) graphql.Marshaler {
 	return ec._TrainerTrainingMapping(ctx, sel, &v)
 }
@@ -18354,6 +18298,64 @@ func (ec *executionContext) unmarshalNTrainerTrainingMappingCreate2githubᚗcom�
 
 func (ec *executionContext) unmarshalNTrainerTrainingMappingUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMappingUpdate(ctx context.Context, v interface{}) (table.TrainerTrainingMappingUpdate, error) {
 	res, err := ec.unmarshalInputTrainerTrainingMappingUpdate(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTrainers2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainers(ctx context.Context, sel ast.SelectionSet, v table.Trainers) graphql.Marshaler {
+	return ec._Trainers(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNTrainers2ᚕgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersᚄ(ctx context.Context, sel ast.SelectionSet, v []table.Trainers) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNTrainers2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainers(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNTrainersCreate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersCreate(ctx context.Context, v interface{}) (table.TrainersCreate, error) {
+	res, err := ec.unmarshalInputTrainersCreate(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNTrainersUpdate2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersUpdate(ctx context.Context, v interface{}) (table.TrainersUpdate, error) {
+	res, err := ec.unmarshalInputTrainersUpdate(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -18844,21 +18846,6 @@ func (ec *executionContext) marshalODatetime2ᚖtimeᚐTime(ctx context.Context,
 	return res
 }
 
-func (ec *executionContext) marshalOExternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResources(ctx context.Context, sel ast.SelectionSet, v *table.ExternalResources) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._ExternalResources(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalOExternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐExternalResourcesFilter(ctx context.Context, v interface{}) (*table.ExternalResourcesFilter, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputExternalResourcesFilter(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx context.Context, v interface{}) (internal.FilterOnField, error) {
 	if v == nil {
 		return nil, nil
@@ -18889,21 +18876,6 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	}
 	res := graphql.MarshalInt(*v)
 	return res
-}
-
-func (ec *executionContext) marshalOInternalResources2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResources(ctx context.Context, sel ast.SelectionSet, v *table.InternalResources) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._InternalResources(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalOInternalResourcesFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐInternalResourcesFilter(ctx context.Context, v interface{}) (*table.InternalResourcesFilter, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputInternalResourcesFilter(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalONullBool2databaseᚋsqlᚐNullBool(ctx context.Context, v interface{}) (sql.NullBool, error) {
@@ -19071,6 +19043,21 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
+func (ec *executionContext) marshalOStudents2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudents(ctx context.Context, sel ast.SelectionSet, v *table.Students) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Students(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOStudentsFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐStudentsFilter(ctx context.Context, v interface{}) (*table.StudentsFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputStudentsFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalOTrainerTrainingMapping2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainerTrainingMapping(ctx context.Context, sel ast.SelectionSet, v *table.TrainerTrainingMapping) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -19083,6 +19070,21 @@ func (ec *executionContext) unmarshalOTrainerTrainingMappingFilter2ᚖgithubᚗc
 		return nil, nil
 	}
 	res, err := ec.unmarshalInputTrainerTrainingMappingFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTrainers2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainers(ctx context.Context, sel ast.SelectionSet, v *table.Trainers) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Trainers(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOTrainersFilter2ᚖgithubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋxo_genᚋtableᚐTrainersFilter(ctx context.Context, v interface{}) (*table.TrainersFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputTrainersFilter(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 

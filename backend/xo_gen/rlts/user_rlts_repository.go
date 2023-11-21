@@ -17,17 +17,17 @@ type IUserRltsRepository interface {
 	// This Table Pointing to Other Table!!!, ManyToOne <- As Many records from other table can point to this table one record
 
 	//  Other Table Pointing to This Table!!!, OneToMany <- As This Table record can point to Multiple Other table record
-	ExternalResourcesByCreatedBy(ctx context.Context, obj *table.User, filter *table.ExternalResourcesFilter, pagination *internal.Pagination) (*table.ListExternalResources, error)
-	InternalResourcesByCreatedBy(ctx context.Context, obj *table.User, filter *table.InternalResourcesFilter, pagination *internal.Pagination) (*table.ListInternalResources, error)
+	StudentsByCreatedBy(ctx context.Context, obj *table.User, filter *table.StudentsFilter, pagination *internal.Pagination) (*table.ListStudents, error)
+	TrainersByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainersFilter, pagination *internal.Pagination) (*table.ListTrainers, error)
 	TrainingByRequestedBy(ctx context.Context, obj *table.User, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 	TrainingByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error)
 	TrainingEventByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
 }
 
 type UserRltsRepository struct {
-	ExternalResourcesRepository repo.IExternalResourcesRepository
+	StudentsRepository repo.IStudentsRepository
 
-	InternalResourcesRepository repo.IInternalResourcesRepository
+	TrainersRepository repo.ITrainersRepository
 
 	TrainingRepository repo.ITrainingRepository
 
@@ -39,17 +39,17 @@ var NewUserRltsRepository = wire.NewSet(
 	wire.Bind(new(IUserRltsRepository), new(*UserRltsRepository)),
 )
 
-func (ur *UserRltsRepository) ExternalResourcesByCreatedBy(ctx context.Context, obj *table.User, filter *table.ExternalResourcesFilter, pagination *internal.Pagination) (*table.ListExternalResources, error) {
+func (ur *UserRltsRepository) StudentsByCreatedBy(ctx context.Context, obj *table.User, filter *table.StudentsFilter, pagination *internal.Pagination) (*table.ListStudents, error) {
 	if obj == nil {
-		return &table.ListExternalResources{}, nil
+		return &table.ListStudents{}, nil
 	}
-	return ur.ExternalResourcesRepository.ExternalResourcesByCreatedBy(ctx, sql.NullInt64{Valid: true, Int64: int64(obj.ID)}, filter, pagination)
+	return ur.StudentsRepository.StudentsByCreatedBy(ctx, sql.NullInt64{Valid: true, Int64: int64(obj.ID)}, filter, pagination)
 }
-func (ur *UserRltsRepository) InternalResourcesByCreatedBy(ctx context.Context, obj *table.User, filter *table.InternalResourcesFilter, pagination *internal.Pagination) (*table.ListInternalResources, error) {
+func (ur *UserRltsRepository) TrainersByCreatedBy(ctx context.Context, obj *table.User, filter *table.TrainersFilter, pagination *internal.Pagination) (*table.ListTrainers, error) {
 	if obj == nil {
-		return &table.ListInternalResources{}, nil
+		return &table.ListTrainers{}, nil
 	}
-	return ur.InternalResourcesRepository.InternalResourcesByCreatedBy(ctx, sql.NullInt64{Valid: true, Int64: int64(obj.ID)}, filter, pagination)
+	return ur.TrainersRepository.TrainersByCreatedBy(ctx, sql.NullInt64{Valid: true, Int64: int64(obj.ID)}, filter, pagination)
 }
 func (ur *UserRltsRepository) TrainingByRequestedBy(ctx context.Context, obj *table.User, filter *table.TrainingFilter, pagination *internal.Pagination) (*table.ListTraining, error) {
 	if obj == nil {

@@ -2,7 +2,7 @@
 
 type Registrations {
     id: Int !
-    fkInternalResource: Int !
+    fkStudent: Int !
     fkTraining: Int !
     active: Boolean !
     createdAt: NullTime 
@@ -10,14 +10,14 @@ type Registrations {
 
 
     trainingByFkTraining(filter: TrainingFilter): Training
-    internalResourcesByFkInternalResource(filter: InternalResourcesFilter): InternalResources
+    studentsByFkStudent(filter: StudentsFilter): Students
 
 
 
 }
 input RegistrationsFilter {
     id: FilterOnField
-    fkInternalResource: FilterOnField
+    fkStudent: FilterOnField
     fkTraining: FilterOnField
     active: FilterOnField
     createdAt: FilterOnField
@@ -25,12 +25,12 @@ input RegistrationsFilter {
 }
 
 input RegistrationsCreate {
-    fkInternalResource: Int !
+    fkStudent: Int !
     fkTraining: Int !
 }
 
 input RegistrationsUpdate {
-    fkInternalResource: Int 
+    fkStudent: Int 
     fkTraining: Int 
     active: Boolean 
 

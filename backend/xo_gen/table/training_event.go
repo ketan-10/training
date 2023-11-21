@@ -263,6 +263,13 @@ func (l *ListTrainingEvent) Find(f func(item TrainingEvent) bool) (res TrainingE
 	}
 	return TrainingEvent{}, false
 }
+func (l *ListTrainingEvent) MapByID() (m map[int]TrainingEvent) {
+	m = make(map[int]TrainingEvent, len(l.Data))
+	for _, item := range l.Data {
+		m[item.ID] = item
+	}
+	return m
+}
 
 func (l *ListTrainingEvent) MapByCreatedBy() (m map[sql.NullInt64]ListTrainingEvent) {
 	m = make(map[sql.NullInt64]ListTrainingEvent)
@@ -290,14 +297,6 @@ func (l *ListTrainingEvent) MapByFkTraining() (m map[int]ListTrainingEvent) {
 	for k, v := range m {
 		v.TotalCount = len(v.Data)
 		m[k] = v
-	}
-	return m
-}
-
-func (l *ListTrainingEvent) MapByID() (m map[int]TrainingEvent) {
-	m = make(map[int]TrainingEvent, len(l.Data))
-	for _, item := range l.Data {
-		m[item.ID] = item
 	}
 	return m
 }

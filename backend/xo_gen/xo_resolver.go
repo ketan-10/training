@@ -12,14 +12,14 @@ import (
 type XoResolver struct {
 	repo.IAttendancesRepository
 	rlts.IAttendancesRltsRepository
-	repo.IExternalResourcesRepository
-	rlts.IExternalResourcesRltsRepository
-	repo.IInternalResourcesRepository
-	rlts.IInternalResourcesRltsRepository
 	repo.IRegistrationsRepository
 	rlts.IRegistrationsRltsRepository
+	repo.IStudentsRepository
+	rlts.IStudentsRltsRepository
 	repo.ITrainerTrainingMappingRepository
 	rlts.ITrainerTrainingMappingRltsRepository
+	repo.ITrainersRepository
+	rlts.ITrainersRltsRepository
 	repo.ITrainingRepository
 	rlts.ITrainingRltsRepository
 	repo.ITrainingEventRepository
@@ -30,10 +30,10 @@ type XoResolver struct {
 
 //type IXoResolver interface {
 //    Attendances() gen.AttendancesResolver
-//    ExternalResources() gen.ExternalResourcesResolver
-//    InternalResources() gen.InternalResourcesResolver
 //    Registrations() gen.RegistrationsResolver
+//    Students() gen.StudentsResolver
 //    TrainerTrainingMapping() gen.TrainerTrainingMappingResolver
+//    Trainers() gen.TrainersResolver
 //    Training() gen.TrainingResolver
 //    TrainingEvent() gen.TrainingEventResolver
 //    User() gen.UserResolver
@@ -48,17 +48,17 @@ var NewXoResolver = wire.NewSet(
 func (r *XoResolver) Attendances() gen.AttendancesResolver {
 	return r.IAttendancesRltsRepository
 }
-func (r *XoResolver) ExternalResources() gen.ExternalResourcesResolver {
-	return r.IExternalResourcesRltsRepository
-}
-func (r *XoResolver) InternalResources() gen.InternalResourcesResolver {
-	return r.IInternalResourcesRltsRepository
-}
 func (r *XoResolver) Registrations() gen.RegistrationsResolver {
 	return r.IRegistrationsRltsRepository
 }
+func (r *XoResolver) Students() gen.StudentsResolver {
+	return r.IStudentsRltsRepository
+}
 func (r *XoResolver) TrainerTrainingMapping() gen.TrainerTrainingMappingResolver {
 	return r.ITrainerTrainingMappingRltsRepository
+}
+func (r *XoResolver) Trainers() gen.TrainersResolver {
+	return r.ITrainersRltsRepository
 }
 func (r *XoResolver) Training() gen.TrainingResolver {
 	return r.ITrainingRltsRepository
