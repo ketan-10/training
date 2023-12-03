@@ -2,7 +2,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 CREATE TABLE IF NOT EXISTS `user` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `username` varchar(255) NOT NULL,
+    `name` varchar(255) NOT NULL,
     `email` varchar(255) NOT NULL,
     `password` varchar(255) DEFAULT NULL,
     `role` ENUM('admin', 'requester') NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE `user_email`(`email`, `active`),
-    FULLTEXT KEY `user_username` (`username`)
+    FULLTEXT KEY `user_name` (`name`)
 ) ENGINE=INNODB;
 
 

@@ -242,6 +242,7 @@ type ComplexityRoot struct {
 		CreatedAt                func(childComplexity int) int
 		Email                    func(childComplexity int) int
 		ID                       func(childComplexity int) int
+		Name                     func(childComplexity int) int
 		Password                 func(childComplexity int) int
 		Role                     func(childComplexity int) int
 		StudentsByCreatedBy      func(childComplexity int, filter *table.StudentsFilter, pagination *internal.Pagination) int
@@ -250,7 +251,6 @@ type ComplexityRoot struct {
 		TrainingByRequestedBy    func(childComplexity int, filter *table.TrainingFilter, pagination *internal.Pagination) int
 		TrainingEventByCreatedBy func(childComplexity int, filter *table.TrainingEventFilter, pagination *internal.Pagination) int
 		UpdatedAt                func(childComplexity int) int
-		Username                 func(childComplexity int) int
 	}
 }
 
@@ -1516,6 +1516,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.ID(childComplexity), true
 
+	case "User.name":
+		if e.complexity.User.Name == nil {
+			break
+		}
+
+		return e.complexity.User.Name(childComplexity), true
+
 	case "User.password":
 		if e.complexity.User.Password == nil {
 			break
@@ -1596,13 +1603,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.User.UpdatedAt(childComplexity), true
-
-	case "User.username":
-		if e.complexity.User.Username == nil {
-			break
-		}
-
-		return e.complexity.User.Username(childComplexity), true
 
 	}
 	return 0, false
@@ -2193,7 +2193,7 @@ type ListTrainingEvent {
 
 type User {
     id: Int !
-    username: String !
+    name: String !
     email: String !
     password: NullString 
     role:  UserRole 
@@ -2213,7 +2213,7 @@ type User {
 }
 input UserFilter {
     id: FilterOnField
-    username: FilterOnField
+    name: FilterOnField
     email: FilterOnField
     password: FilterOnField
     role: FilterOnField
@@ -2223,14 +2223,14 @@ input UserFilter {
 }
 
 input UserCreate {
-    username: String !
+    name: String !
     email: String !
     password: NullString 
     role:  UserRole 
 }
 
 input UserUpdate {
-    username: String 
+    name: String 
     email: String 
     password: NullString 
     role:  UserRole 
@@ -4691,8 +4691,8 @@ func (ec *executionContext) fieldContext_ListUser_data(ctx context.Context, fiel
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -4780,8 +4780,8 @@ func (ec *executionContext) fieldContext_Mutation_insertUser(ctx context.Context
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -4880,8 +4880,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUserByFields(ctx context
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -8321,8 +8321,8 @@ func (ec *executionContext) fieldContext_Students_userByCreatedBy(ctx context.Co
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -9558,8 +9558,8 @@ func (ec *executionContext) fieldContext_Trainers_userByCreatedBy(ctx context.Co
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -10159,8 +10159,8 @@ func (ec *executionContext) fieldContext_Training_userByRequestedBy(ctx context.
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -10239,8 +10239,8 @@ func (ec *executionContext) fieldContext_Training_userByCreatedBy(ctx context.Co
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -10953,8 +10953,8 @@ func (ec *executionContext) fieldContext_TrainingEvent_userByCreatedBy(ctx conte
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_User_id(ctx, field)
-			case "username":
-				return ec.fieldContext_User_username(ctx, field)
+			case "name":
+				return ec.fieldContext_User_name(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
 			case "password":
@@ -11161,8 +11161,8 @@ func (ec *executionContext) fieldContext_User_id(ctx context.Context, field grap
 	return fc, nil
 }
 
-func (ec *executionContext) _User_username(ctx context.Context, field graphql.CollectedField, obj *table.User) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_User_username(ctx, field)
+func (ec *executionContext) _User_name(ctx context.Context, field graphql.CollectedField, obj *table.User) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_User_name(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -11175,7 +11175,7 @@ func (ec *executionContext) _User_username(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Username, nil
+		return obj.Name, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11192,7 +11192,7 @@ func (ec *executionContext) _User_username(ctx context.Context, field graphql.Co
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_User_username(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_User_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "User",
 		Field:      field,
@@ -15215,22 +15215,22 @@ func (ec *executionContext) unmarshalInputUserCreate(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"username", "email", "password", "role"}
+	fieldsInOrder := [...]string{"name", "email", "password", "role"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "username":
+		case "name":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Username = data
+			it.Name = data
 		case "email":
 			var err error
 
@@ -15271,7 +15271,7 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "username", "email", "password", "role", "active", "createdAt", "updatedAt"}
+	fieldsInOrder := [...]string{"id", "name", "email", "password", "role", "active", "createdAt", "updatedAt"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -15287,15 +15287,15 @@ func (ec *executionContext) unmarshalInputUserFilter(ctx context.Context, obj in
 				return it, err
 			}
 			it.ID = data
-		case "username":
+		case "name":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
 			data, err := ec.unmarshalOFilterOnField2githubᚗcomᚋketanᚑ10ᚋtrainingᚋbackendᚋinternalᚐFilterOnField(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Username = data
+			it.Name = data
 		case "email":
 			var err error
 
@@ -15363,22 +15363,22 @@ func (ec *executionContext) unmarshalInputUserUpdate(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"username", "email", "password", "role", "active"}
+	fieldsInOrder := [...]string{"name", "email", "password", "role", "active"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "username":
+		case "name":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("username"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Username = data
+			it.Name = data
 		case "email":
 			var err error
 
@@ -17355,8 +17355,8 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "username":
-			out.Values[i] = ec._User_username(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._User_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}

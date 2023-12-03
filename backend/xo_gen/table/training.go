@@ -276,21 +276,6 @@ func (l *ListTraining) Find(f func(item Training) bool) (res Training, found boo
 	return Training{}, false
 }
 
-func (l *ListTraining) MapByTrainingName() (m map[string]ListTraining) {
-	m = make(map[string]ListTraining)
-	for _, item := range l.Data {
-		list := m[item.TrainingName]
-		list.Data = append(list.Data, item)
-
-		m[item.TrainingName] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
-	}
-	return m
-}
-
 func (l *ListTraining) MapByCreatedBy() (m map[sql.NullInt64]ListTraining) {
 	m = make(map[sql.NullInt64]ListTraining)
 	for _, item := range l.Data {
@@ -321,6 +306,21 @@ func (l *ListTraining) MapByRequestedBy() (m map[sql.NullInt64]ListTraining) {
 		list.Data = append(list.Data, item)
 
 		m[item.RequestedBy] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
+func (l *ListTraining) MapByTrainingName() (m map[string]ListTraining) {
+	m = make(map[string]ListTraining)
+	for _, item := range l.Data {
+		list := m[item.TrainingName]
+		list.Data = append(list.Data, item)
+
+		m[item.TrainingName] = list
 	}
 	for k, v := range m {
 		v.TotalCount = len(v.Data)

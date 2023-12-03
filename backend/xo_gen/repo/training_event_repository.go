@@ -27,9 +27,6 @@ type ITrainingEventRepository interface {
 
 	FindAllTrainingEvent(ctx context.Context, te *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
 	FindAllTrainingEventWithSuffix(ctx context.Context, te *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error)
-	TrainingEventByID(ctx context.Context, id int, filter *table.TrainingEventFilter) (table.TrainingEvent, error)
-
-	TrainingEventByIDWithSuffix(ctx context.Context, id int, filter *table.TrainingEventFilter, suffixes ...sq.Sqlizer) (table.TrainingEvent, error)
 
 	TrainingEventByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
 
@@ -38,6 +35,9 @@ type ITrainingEventRepository interface {
 	TrainingEventByFkTraining(ctx context.Context, fkTraining int, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error)
 
 	TrainingEventByFkTrainingWithSuffix(ctx context.Context, fkTraining int, filter *table.TrainingEventFilter, pagination *internal.Pagination, suffixes ...sq.Sqlizer) (*table.ListTrainingEvent, error)
+	TrainingEventByID(ctx context.Context, id int, filter *table.TrainingEventFilter) (table.TrainingEvent, error)
+
+	TrainingEventByIDWithSuffix(ctx context.Context, id int, filter *table.TrainingEventFilter, suffixes ...sq.Sqlizer) (table.TrainingEvent, error)
 }
 
 type ITrainingEventRepositoryQueryBuilder interface {
@@ -345,28 +345,6 @@ func (ter *TrainingEventRepository) FindAllTrainingEventWithSuffix(ctx context.C
 
 	return &list, err
 }
-func (ter *TrainingEventRepository) TrainingEventByID(ctx context.Context, id int, filter *table.TrainingEventFilter) (table.TrainingEvent, error) {
-	return ter.TrainingEventByIDWithSuffix(ctx, id, filter)
-}
-
-func (ter *TrainingEventRepository) TrainingEventByIDWithSuffix(ctx context.Context, id int, filter *table.TrainingEventFilter, suffixes ...sq.Sqlizer) (table.TrainingEvent, error) {
-	var err error
-
-	// sql query
-	qb, err := ter.FindAllTrainingEventBaseQuery(ctx, filter, "`training_event`.*", suffixes...)
-	if err != nil {
-		return table.TrainingEvent{}, err
-	}
-	qb = qb.Where(sq.Eq{"`training_event`.`id`": id})
-
-	// run query
-	te := table.TrainingEvent{}
-	err = ter.DB.Get(ctx, &te, qb)
-	if err != nil {
-		return table.TrainingEvent{}, err
-	}
-	return te, nil
-}
 
 func (ter *TrainingEventRepository) TrainingEventByCreatedBy(ctx context.Context, createdBy sql.NullInt64, filter *table.TrainingEventFilter, pagination *internal.Pagination) (*table.ListTrainingEvent, error) {
 	return ter.TrainingEventByCreatedByWithSuffix(ctx, createdBy, filter, pagination)
@@ -458,4 +436,26 @@ func (ter *TrainingEventRepository) TrainingEventByFkTrainingWithSuffix(ctx cont
 
 	return &list, nil
 
+}
+func (ter *TrainingEventRepository) TrainingEventByID(ctx context.Context, id int, filter *table.TrainingEventFilter) (table.TrainingEvent, error) {
+	return ter.TrainingEventByIDWithSuffix(ctx, id, filter)
+}
+
+func (ter *TrainingEventRepository) TrainingEventByIDWithSuffix(ctx context.Context, id int, filter *table.TrainingEventFilter, suffixes ...sq.Sqlizer) (table.TrainingEvent, error) {
+	var err error
+
+	// sql query
+	qb, err := ter.FindAllTrainingEventBaseQuery(ctx, filter, "`training_event`.*", suffixes...)
+	if err != nil {
+		return table.TrainingEvent{}, err
+	}
+	qb = qb.Where(sq.Eq{"`training_event`.`id`": id})
+
+	// run query
+	te := table.TrainingEvent{}
+	err = ter.DB.Get(ctx, &te, qb)
+	if err != nil {
+		return table.TrainingEvent{}, err
+	}
+	return te, nil
 }

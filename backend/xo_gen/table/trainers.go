@@ -261,28 +261,6 @@ func (l *ListTrainers) Find(f func(item Trainers) bool) (res Trainers, found boo
 	}
 	return Trainers{}, false
 }
-func (l *ListTrainers) MapByID() (m map[int]Trainers) {
-	m = make(map[int]Trainers, len(l.Data))
-	for _, item := range l.Data {
-		m[item.ID] = item
-	}
-	return m
-}
-
-func (l *ListTrainers) MapByEmail() (m map[string]ListTrainers) {
-	m = make(map[string]ListTrainers)
-	for _, item := range l.Data {
-		list := m[item.Email]
-		list.Data = append(list.Data, item)
-
-		m[item.Email] = list
-	}
-	for k, v := range m {
-		v.TotalCount = len(v.Data)
-		m[k] = v
-	}
-	return m
-}
 
 func (l *ListTrainers) MapByName() (m map[string]ListTrainers) {
 	m = make(map[string]ListTrainers)
@@ -306,6 +284,29 @@ func (l *ListTrainers) MapByCreatedBy() (m map[sql.NullInt64]ListTrainers) {
 		list.Data = append(list.Data, item)
 
 		m[item.CreatedBy] = list
+	}
+	for k, v := range m {
+		v.TotalCount = len(v.Data)
+		m[k] = v
+	}
+	return m
+}
+
+func (l *ListTrainers) MapByID() (m map[int]Trainers) {
+	m = make(map[int]Trainers, len(l.Data))
+	for _, item := range l.Data {
+		m[item.ID] = item
+	}
+	return m
+}
+
+func (l *ListTrainers) MapByEmail() (m map[string]ListTrainers) {
+	m = make(map[string]ListTrainers)
+	for _, item := range l.Data {
+		list := m[item.Email]
+		list.Data = append(list.Data, item)
+
+		m[item.Email] = list
 	}
 	for k, v := range m {
 		v.TotalCount = len(v.Data)
