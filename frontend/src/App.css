@@ -1,0 +1,14 @@
+/* body {
+  font-family: 'Ubuntu', cursive;
+  background-color: #f2f6f3 !important;
+} */
+
+
+
+#application-title {
+  font-size: clamp(20px, 3.5vw, 35px);
+}
+
+#grid-template-colum-auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}

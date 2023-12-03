@@ -68,6 +68,8 @@ wire() {
 }
 
 if [[ $1 = 'migrate' ]]; then
+    runMigration ${MYSQL_DATABASE}  
+elif [[ $1 = 'cleanMigrate' ]]; then
     cleanMigrate
 elif [[ $1 = 'xo' ]]; then
     xo

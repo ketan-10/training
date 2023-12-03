@@ -1,0 +1,71 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: true
+
+spring:
+  datasource:
+    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/training"
+    username: root
+    password: root
+  jpa:
+    properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _audit
+            revision_listener: com.ketan.training.utils.audit.CustomRevisionListener
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    # show-sql: true
+  error: 
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: always
+    include-path: always
+    include-query: always
+  
+custom:
+  jwt-secret: laksdjlfuqoiwlj4k2j0098304503lsslkdjflkjlkjoksjlkdfkJZlkJSLKJD09ljlgjlksjfglkdjg
+  allowed-origins: http://localhost:5173, http://localhost:4000, http://localhost:4001, http://localhost:4002, http://localhost:4003, http://127.0.0.1:5173
+
+minio:
+  url: http://${MINIO_HOST:localhost}:${MINIO_PORT:9001}
+  access-key: Q3AM3UQ867SPQQA43P2F
+  secret-key: tfteSlswRu7BJ86wekitnifILbZam1KYY3TG
+  bucket-name: training
+  
+admin:
+  email: admin@gmail.com
+  password: admin 
+
+# monitor actuators
+management:
+  security: 
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+
+logging: 
+  level: 
+    root: INFO
+    org: 
+      hibernate: 
+        SQL: DEBUG
+        type.descriptor.sql.BasicBinder: TRACE
+  file: 
+    path: ./target/app.log

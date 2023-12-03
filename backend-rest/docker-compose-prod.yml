@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  web: 
+    build: .
+    container_name: web
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+    
+    # Depends On and link does not work as expected.
+    # depends_on:
+    #   - db
+    #   - minio
+    # links:
+    #   - db
+    #   - minio
+  
+  

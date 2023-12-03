@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - docker.env
+
+  minio:
+    image: bitnami/minio:2021.3.1
+    container_name: minio
+    env_file:
+      - docker.env
+    ports:
+      - "9001:9000"

@@ -1,0 +1,17 @@
+
+.logo_animation #animate_target {
+  transform-origin: center center;
+  animation: logo_1_rotate 1000ms infinite;
+}
+
+@keyframes logo_1_rotate {
+  0% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
