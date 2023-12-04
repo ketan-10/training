@@ -20,6 +20,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import request from '../../utils/axios.config';
 import LogoLoader from '../../components/Common/LogoLoader';
+import Logo from '/logo.svg';
 
 const formSchema = z.object({
   // Temporary solution for email bcz it is not taking the ncs email formate.
@@ -68,7 +69,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen">
       <div className="min-h-full flex-grow-[3] w-0 flex justify-center p-3">
         <div className="h-10 absolute top-5 left-5">
-          <img className="object-contain h-full" src="/logo.svg" />
+          <img className="object-contain h-full" src={Logo} />
         </div>
         <div className="flex flex-col justify-center items-center min-w-full">
           <div

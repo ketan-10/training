@@ -6,12 +6,13 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import AuthProvider from './components/Auth/AuthProvider.jsx';
 import './index.css';
+import { BASE_URL } from './Constants.js';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/">
+    <BrowserRouter basename={BASE_URL}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <App />

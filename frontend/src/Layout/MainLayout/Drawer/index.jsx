@@ -7,6 +7,7 @@ import { useAuth } from '../../../components/Auth/AuthProvider';
 import { Label } from '../../../components/ui/label';
 import { RadioGroup, RadioGroupItem } from '../../../components/ui/radio-group';
 import './drawer.css';
+import Logo from '/logo.svg';
 
 const ROUTES = [
   {
@@ -50,7 +51,7 @@ const DrawerMain = () => {
   return (
     <div className="z-[1000] fixed shadow flex flex-col w-[9rem] justify-start p-3 min-h-screen">
       <div className="h-10 top-5 left-5 self-center">
-        <img className="object-contain h-full" src="/logo.svg" />
+        <img className="object-contain h-full" src={Logo} />
       </div>
 
       <RadioGroup
