@@ -2,3 +2,6 @@
 # graphql/gen
 # wire_app/wire_gen.go
 # graphql/gqlgen.yml
+
+.DS_Store
+
