@@ -13,6 +13,10 @@ spec:
       labels:
         app: web
     spec:
+      initContainers:
+      - name: dependsOn
+        image: busybox
+        command: ['sh', '-c', 'until nc -zv mysql 3306 && nc -zv minio 9000; do sleep 1; done']
       containers:
         - image: <<<image>>>:<<<version>>>
           name: web
@@ -28,6 +32,15 @@ spec:
           ports:
             - containerPort: 8080
               name: minio
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
 
 ---
 

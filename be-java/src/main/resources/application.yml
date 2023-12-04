@@ -24,31 +24,31 @@ spring:
     hibernate:
       ddl-auto: update
     # show-sql: true
-  error: 
+  error:
     include-message: always
     include-binding-errors: always
     include-stacktrace: always
     include-exception: always
     include-path: always
     include-query: always
-  
+
 custom:
   jwt-secret: laksdjlfuqoiwlj4k2j0098304503lsslkdjflkjlkjoksjlkdfkJZlkJSLKJD09ljlgjlksjfglkdjg
-  allowed-origins: http://localhost:5173, http://localhost:4000, http://localhost:4001, http://localhost:4002, http://localhost:4003, http://127.0.0.1:5173
+  allowed-origins: https://ketan.link, http://ketan.link, http://localhost:5173, http://localhost:4000, http://localhost:4001, http://localhost:4002, http://localhost:4003, http://127.0.0.1:5173
 
 minio:
   url: http://${MINIO_HOST:localhost}:${MINIO_PORT:9001}
   access-key: Q3AM3UQ867SPQQA43P2F
   secret-key: tfteSlswRu7BJ86wekitnifILbZam1KYY3TG
   bucket-name: training
-  
+
 admin:
   email: admin@gmail.com
-  password: admin 
+  password: admin
 
 # monitor actuators
 management:
-  security: 
+  security:
     enabled: false
   endpoints:
     web:
@@ -60,12 +60,12 @@ management:
     metrics:
       enabled: true
 
-logging: 
-  level: 
+logging:
+  level:
     root: INFO
-    org: 
-      hibernate: 
+    org:
+      hibernate:
         SQL: DEBUG
         type.descriptor.sql.BasicBinder: TRACE
-  file: 
+  file:
     path: ./target/app.log
