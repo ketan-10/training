@@ -2,7 +2,9 @@
 
 ![db-diagram](training.svg)
 
-- This project created to be used as a starter template.
+## This project is created to be used as a starter template.
+
+## TODO fix README, (currently these are napkin notes)
 - Overview
   - Goose to Write MYSQL code with versioning.
     - Create a `<int>_<name>.sql` file. and run `bash do.sh migrate`.
