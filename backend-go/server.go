@@ -7,7 +7,6 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/go-chi/chi/v5"
 	_ "github.com/go-sql-driver/mysql" // empty import, to load drivers
 	"github.com/ketan-10/training/backend/graphql/gen"
 	"github.com/ketan-10/training/backend/internal/context_manager"
@@ -30,13 +29,11 @@ func main() {
 
 	srv := handler.NewDefaultServer(gen.NewExecutableSchema(c))
 
-	router := chi.NewRouter()
-	router.Use(app.HeaderMiddleware.Handle)
-
+	router := http.NewServeMux()
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", srv)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Fatal(http.ListenAndServe(":"+port, app.HeaderMiddleware.Handle(router)))
 
 }

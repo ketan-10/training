@@ -23,17 +23,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        working-directory: ./frontend
-        run: yarn
+        working-directory: ./frontend-vue
+        run: npm i
 
       - name: Build
-        working-directory: ./frontend
-        run: yarn build
+        working-directory: ./frontend-vue
+        run: npm run build-only
 
       - name: Deploy GH-Pages
-        working-directory: ./frontend
+        working-directory: ./frontend-vue
         run: |
           git config --global user.email ${{secrets.MY_EMAIL}}
           git config --global user.name ${{secrets.MY_USERNAME}}
           git remote set-url origin https://${{secrets.MY_PERSONAL_TOKEN_PUBLIC}}@github.com/${{github.repository}}
-          yarn deploy
+          npm run deploy

@@ -1,13 +1,12 @@
 module github.com/ketan-10/training/backend
 
-go 1.21.3
+go 1.22
 
 replace github.com/ketan-10/training/xo => ../xo
 
 require (
 	github.com/99designs/gqlgen v0.17.40
 	github.com/elgris/sqrl v0.0.0-20210727210741-7e0198b30236
-	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/wire v0.5.0
