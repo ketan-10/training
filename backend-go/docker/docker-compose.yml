@@ -1,9 +1,9 @@
 version: "3.3"
 services:
   db:
-    image: mysql:8
+    image: mysql:9.3
     container_name: db
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    command: --character-set-server=utf8mb4
     ports:
       - "3306:3306"
     env_file:

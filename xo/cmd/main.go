@@ -67,7 +67,8 @@ func generateFiles(args *internal.Args) {
 		}
 
 		if _, err := os.Stat(dirName); os.IsNotExist(err) {
-			os.MkdirAll(dirName, os.ModeDir)
+			os.MkdirAll(dirName, 0755)
+			// os.MkdirAll(dirName, os.ModeDir)
 		}
 		file, err := os.Create(dirName + "/" + gen.FileName + "." + gen.TemplateType.Extension())
 		if err != nil {
