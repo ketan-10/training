@@ -5,8 +5,6 @@ import (
 	"database/sql"
 	"text/template"
 
-	tplbin "github.com/ketan-10/training/xo/templates/go_binddata_gen"
-
 	"github.com/ketan-10/training/xo/templates"
 )
 
@@ -20,7 +18,6 @@ type Args struct {
 	GeneratedDir string
 	Generated    []*GeneratedTemplate
 }
-
 func GetDefaultArgs() *Args {
 	return &Args{
 		GeneratedDir: "xo_gen",
@@ -34,7 +31,6 @@ type GeneratedTemplate struct {
 }
 
 func (arg *Args) ExecuteTemplate(tt templates.TemplateType, fileName string, obj interface{}) error {
-	// v, err := i.ReadFile("templates/" + fileName)
 
 	genTmp := &GeneratedTemplate{
 		TemplateType: tt,
@@ -43,8 +39,8 @@ func (arg *Args) ExecuteTemplate(tt templates.TemplateType, fileName string, obj
 	}
 
 	// read template file
-	templateFileLocation := "templates/" + arg.DatabaseType.String() + "/" + tt.String() + "." + tt.Extension() + ".tpl"
-	file, err := tplbin.Asset(templateFileLocation)
+	templateFileLocation := arg.DatabaseType.String() + "/" + tt.String() + "." + tt.Extension() + ".tpl"
+	fileContent, err := templates.TemplatesFS.ReadFile(templateFileLocation)
 	if err != nil {
 		return err
 	}
@@ -52,7 +48,7 @@ func (arg *Args) ExecuteTemplate(tt templates.TemplateType, fileName string, obj
 	t, err := template.
 		New(templateFileLocation).
 		Funcs(template.FuncMap(templates.HelperFunc)).
-		Parse(string(file))
+		Parse(string(fileContent))
 	if err != nil {
 		return err
 	}
