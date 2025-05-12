@@ -12,13 +12,13 @@ import (
 
 type Args struct {
 	// DBC is database connection string
-	DBC          string               `arg:"--connection,required"`
-	DB           *sql.DB              `arg:"-"`
-	Loader       ILoader              `arg:"-"`
-	LoaderType   LoaderType           `arg:"-"`
-	DatabaseName string               `arg:"-"`
-	GeneratedDir string               `arg:"-"`
-	Generated    []*GeneratedTemplate `arg:"-"`
+	DBC          string
+	DB           *sql.DB
+	Loader       ILoader
+	DatabaseType DatabaseType
+	DatabaseName string
+	GeneratedDir string
+	Generated    []*GeneratedTemplate
 }
 
 func GetDefaultArgs() *Args {
@@ -43,7 +43,7 @@ func (arg *Args) ExecuteTemplate(tt templates.TemplateType, fileName string, obj
 	}
 
 	// read template file
-	templateFileLocation := "templates/" + arg.LoaderType.String() + "/" + tt.String() + "." + tt.Extension() + ".tpl"
+	templateFileLocation := "templates/" + arg.DatabaseType.String() + "/" + tt.String() + "." + tt.Extension() + ".tpl"
 	file, err := tplbin.Asset(templateFileLocation)
 	if err != nil {
 		return err

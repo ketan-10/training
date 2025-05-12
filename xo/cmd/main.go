@@ -11,7 +11,7 @@ import (
 	"github.com/ketan-10/training/xo/internal"
 	"gopkg.in/yaml.v3"
 
-	// empty import, so that init method will be called, and drivers will be loaded
+	// empty import, so that init method will be called, and drivers will be loaded, this has driver import
 	_ "github.com/ketan-10/training/xo/loaders"
 )
 
@@ -117,7 +117,7 @@ func openDB(args *internal.Args) error {
 		return err
 	}
 
-	args.LoaderType = internal.MYSQL
+	args.DatabaseType = internal.MYSQL
 
 	// open mysql connection
 	args.DB, err = sql.Open("mysql", url)
@@ -129,9 +129,9 @@ func openDB(args *internal.Args) error {
 
 func getLoaderOfDriver(args *internal.Args) error {
 	var ok bool
-	args.Loader, ok = internal.AllLoaders[args.LoaderType]
+	args.Loader, ok = internal.AllLoaders[args.DatabaseType]
 	if !ok {
-		return fmt.Errorf("for driver %s, no registered loader found", args.LoaderType.String())
+		return fmt.Errorf("for driver %s, no registered loader found", args.DatabaseType.String())
 	}
 	return nil
 }

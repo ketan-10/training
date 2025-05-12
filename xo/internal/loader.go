@@ -14,7 +14,7 @@ type ILoader interface {
 	LoadSchema(*Args) error
 }
 
-var AllLoaders = map[LoaderType]ILoader{}
+var AllLoaders = map[DatabaseType]ILoader{}
 
 // The loader implementation
 // Drivers like mysql will create object for this.
@@ -142,7 +142,7 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 
 func (lt *LoaderImp) loadDatabaseName(args *Args) (string, error) {
 	if lt.DatabaseName == nil {
-		return "", fmt.Errorf("schema name loader is not implemented for %s", args.LoaderType.String())
+		return "", fmt.Errorf("schema name loader is not implemented for %s", args.DatabaseType.String())
 	}
 	return lt.DatabaseName(args.DB)
 }
@@ -265,7 +265,7 @@ func (lt *LoaderImp) loadEnums(args *Args) ([]*models.EnumDTO, error) {
 
 func (lt *LoaderImp) loadEnumValues(args *Args, enum *models.Enum) ([]string, error) {
 	if lt.EnumValueList == nil {
-		return nil, fmt.Errorf("enumValue loader is not implemented for %s", args.LoaderType.String())
+		return nil, fmt.Errorf("enumValue loader is not implemented for %s", args.DatabaseType.String())
 	}
 
 	values, err := lt.EnumValueList(args.DB, args.DatabaseName, enum.TableName, enum.ColumnName)
