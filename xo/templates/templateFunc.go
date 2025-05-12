@@ -5,17 +5,17 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/kenshaw/snaker"
+	"github.com/ketan-10/training/xo/utils"
 )
 
 var removeSpecialChar = regexp.MustCompile(`[^a-zA-Z0-9]`)
 
 var HelperFunc template.FuncMap = template.FuncMap{
 	"camelCase": func(input string) string {
-		return snaker.SnakeToCamel(removeSpecialChar.ReplaceAllLiteralString(input, "_"))
+		return utils.SnakeToCamel(removeSpecialChar.ReplaceAllLiteralString(input, "_"))
 	},
 	"camelCaseVar": func(input string) string {
-		return snaker.ForceLowerCamelIdentifier(removeSpecialChar.ReplaceAllLiteralString(input, "_"))
+		return utils.LowCaseFirst(utils.SnakeToCamel((removeSpecialChar.ReplaceAllLiteralString(input, "_"))))
 	},
 	"joinWith":      joinWith,
 	"shortName":     shortName,

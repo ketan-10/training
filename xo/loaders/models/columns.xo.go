@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/kenshaw/snaker"
+	"github.com/ketan-10/training/xo/utils"
 )
 
 type Column struct {
@@ -78,7 +78,7 @@ func MySqlColumns(db XODB, databaseName string, tableName string) ([]*Column, er
 
 func parseSQL2GoType(c Column) string {
 	if c.IsEnum {
-		return "enum." + snaker.SnakeToCamel(c.TableName + "_" + c.ColumnName)
+		return "enum." + utils.SnakeToCamel(c.TableName + "_" + c.ColumnName)
 	}
 	// remove unsigned
 	dt := strings.TrimSuffix(c.DataType, " unsigned")
