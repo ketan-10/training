@@ -15,12 +15,3 @@ func (lt *LoaderType) String() string {
 	}
 	return ""
 }
-
-func (lt *LoaderType) Unmarshal(value string) error {
-	switch value {
-	case "mysql":
-		*lt = MYSQL
-	}
-	return nil
-
-}
