@@ -6,8 +6,20 @@ import (
 
 	"github.com/ketan-10/training/xo/loaders/models"
 	"github.com/ketan-10/training/xo/templates"
-	"github.com/ketan-10/training/xo/utils"
 )
+
+// DatabaseType enum currently only mysql is supported.
+type DatabaseType uint16
+
+const MYSQL = DatabaseType(1)
+
+func (lt *DatabaseType) String() string {
+	switch *lt {
+	case MYSQL:
+		return "mysql"
+	}
+	return ""
+}
 
 // The loader interface
 type ILoader interface {
@@ -75,7 +87,7 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 	for _, tableWithIndex := range tableWithIndexes {
 		tableDto := &models.TableWithIndex{
 			Table:   tableWithIndex.Table,
-			Indexes: utils.FilterIndexesOnlyFirstColumn(tableWithIndex.Indexes),
+			Indexes: filterIndexesOnlyFirstColumn(tableWithIndex.Indexes),
 		}
 		err := args.ExecuteTemplate(templates.TABLE, tableWithIndex.Table.TableName, tableDto)
 		if err != nil {
@@ -93,7 +105,7 @@ func (lt *LoaderImp) LoadSchema(args *Args) error {
 
 	// execute rlts
 	for _, tableRelation := range tableRelations {
-		uniqueTableNames := utils.GetUniqueRepoDependeciesTableNameForRLTS(tableRelation)
+		uniqueTableNames := getUniqueRepoDependeciesTableNameForRLTS(tableRelation)
 		rltsDto := &models.RltsDTO{
 			TableRelations:                tableRelation,
 			UniqueTablesForRepoDependency: uniqueTableNames,
@@ -154,9 +166,9 @@ func (lt *LoaderImp) loadIndex(args *Args, tables []*models.TableDTO) ([]*models
 	for _, table := range tables {
 		indexes, err := lt.IndexList(args.DB, args.DatabaseName, table.TableName)
 
-		all_indexes := utils.ExpandIndex(indexes)
+		all_indexes := expandIndex(indexes)
 		// add column details to index for ease of use
-		utils.AttachColumnDetailsToIndex(all_indexes, table)
+		attachColumnDetailsToIndex(all_indexes, table)
 
 		if err != nil {
 			return nil, err
@@ -195,7 +207,7 @@ func (lt *LoaderImp) loadForeignKeys(args *Args, tablesAndIndexes []*models.Tabl
 		}
 
 		// add column details to foreign keys for ease of use
-		utils.AttachDetailsToForeignKeys(foreignKeys, tablesAndIndex.Table, tablesAndIndexes)
+		attachDetailsToForeignKeys(foreignKeys, tablesAndIndex.Table, tablesAndIndexes)
 
 		// empty ref
 		var foreignKeyRef []*models.ForeignKey
@@ -210,7 +222,7 @@ func (lt *LoaderImp) loadForeignKeys(args *Args, tablesAndIndexes []*models.Tabl
 		res = append(res, tableRelations)
 	}
 
-	utils.AttachManyToOneForeignKeys(res)
+	attachManyToOneForeignKeys(res)
 
 	return res, nil
 }

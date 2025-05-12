@@ -1,6 +1,9 @@
-package utils
+package internal
 
-import "github.com/ketan-10/training/xo/loaders/models"
+import (
+	"github.com/ketan-10/training/xo/loaders/models"
+	"github.com/ketan-10/training/xo/utils"
+)
 
 // --> input
 // {
@@ -46,7 +49,7 @@ import "github.com/ketan-10/training/xo/loaders/models"
 // A multi-column index can still be effective even if you are only searching by a single column that is part of index.
 // For example if you create an index on column (A, B, C). Mysql will create 3 seperate index (A), (A, B), (A, B, C)
 
-func ExpandIndex(indexes []*models.Index) []*models.Index {
+func expandIndex(indexes []*models.Index) []*models.Index {
 	var all_indexes []*models.Index
 	for _, index := range indexes {
 		all_indexes = append(all_indexes, index)
@@ -54,7 +57,7 @@ func ExpandIndex(indexes []*models.Index) []*models.Index {
 		for i := 1; i < len(index.Columns); i++ {
 			new_idx := *index
 			new_idx.IsUnique = false
-			new_idx.Columns = Filter[*models.IndexColumn](index.Columns, func(v *models.IndexColumn) bool {
+			new_idx.Columns = utils.Filter[*models.IndexColumn](index.Columns, func(v *models.IndexColumn) bool {
 				return v.SequenceNo <= i
 			})
 			all_indexes = append(all_indexes, &new_idx)
@@ -62,12 +65,12 @@ func ExpandIndex(indexes []*models.Index) []*models.Index {
 
 	}
 
-	return FilterIndexes(all_indexes)
+	return filterIndexes(all_indexes)
 }
 
 // {{ $tableNameCamel }}By{{range .Columns}}{{camelCase .ColumnName}}{{end}}
 // Filter due to duplicate function names
-func FilterIndexes(indexes []*models.Index) []*models.Index {
+func filterIndexes(indexes []*models.Index) []*models.Index {
 	var filtered_indexes []*models.Index
 	unique := make(map[string]*models.Index)
 	for _, index := range indexes {
@@ -83,7 +86,7 @@ func FilterIndexes(indexes []*models.Index) []*models.Index {
 	return filtered_indexes
 }
 
-func FilterIndexesOnlyFirstColumn(indexes []*models.Index) []*models.Index {
+func filterIndexesOnlyFirstColumn(indexes []*models.Index) []*models.Index {
 	var filtered_indexes []*models.Index
 	unique := make(map[string]*models.Index)
 	for _, index := range indexes {
@@ -97,7 +100,7 @@ func FilterIndexesOnlyFirstColumn(indexes []*models.Index) []*models.Index {
 }
 
 // attach more detials for ease of use in template
-func AttachColumnDetailsToIndex(indexes []*models.Index, table *models.TableDTO) {
+func attachColumnDetailsToIndex(indexes []*models.Index, table *models.TableDTO) {
 	for _, index := range indexes {
 		for _, col := range index.Columns {
 			for _, tableCol := range table.Columns {
@@ -110,7 +113,7 @@ func AttachColumnDetailsToIndex(indexes []*models.Index, table *models.TableDTO)
 }
 
 // attach more detials for ease of use in template
-func AttachDetailsToForeignKeys(foreignKeys []*models.ForeignKey, table *models.TableDTO, tableWithIndexes []*models.TableWithIndex) {
+func attachDetailsToForeignKeys(foreignKeys []*models.ForeignKey, table *models.TableDTO, tableWithIndexes []*models.TableWithIndex) {
 	for _, key := range foreignKeys {
 		key.Table = table
 		for _, tableCol := range table.Columns {
@@ -137,7 +140,7 @@ func AttachDetailsToForeignKeys(foreignKeys []*models.ForeignKey, table *models.
 	}
 }
 
-func AttachManyToOneForeignKeys(res []*models.TableRelations) {
+func attachManyToOneForeignKeys(res []*models.TableRelations) {
 	for _, tableRelation := range res {
 		for _, key := range tableRelation.ForeignKeys {
 			for _, tr := range res {
@@ -149,7 +152,7 @@ func AttachManyToOneForeignKeys(res []*models.TableRelations) {
 	}
 }
 
-func GetUniqueRepoDependeciesTableNameForRLTS(tableRelation *models.TableRelations) []string {
+func getUniqueRepoDependeciesTableNameForRLTS(tableRelation *models.TableRelations) []string {
 
 	mymap := make(map[string]bool)
 	var res []string
